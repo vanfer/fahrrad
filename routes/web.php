@@ -36,6 +36,23 @@ Route::get("mobile", "MobileController@index");
 
 /*
 |--------------------------------------------------------------------------
+| Administrative Ansicht
+|--------------------------------------------------------------------------
+*/
+
+Route::get("admin/login", "AdminController@getLogin");
+Route::post("admin/login", "AdminController@login");
+
+Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
+    Route::get("admin", "AdminController@index");
+    Route::get("admin/logout", "AdminController@logout");
+});
+
+
+
+
+/*
+|--------------------------------------------------------------------------
 | Datenaustausch
 |--------------------------------------------------------------------------
 */

@@ -15,10 +15,10 @@
 
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-8 pull-left">
+                                    <div class="col-md-9 pull-left">
                                         <input id="name" type="name" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
                                     </div>
-                                    <div class="col-md-4 pull-left">
+                                    <div class="col-md-3 pull-left">
                                         <input id="btnGenerateName" type="button" class="form-control btn-success" value="Zufall" autofocus>
                                     </div>
                                 </div>
@@ -33,8 +33,19 @@
                                             <small>{{ $err_msg }}</small>
                                         </div>
                                     </div>
-
                                 @endif
+                            </div>
+                        </div>
+                        
+                        <div class="form-group{{ $errors->has('fahrrad') ? ' has-error' : '' }}">
+                            <label for="fahrrad" class="col-md-4 control-label">Fahrrad w&auml;hlen</label>
+
+                            <div class="col-md-6">
+                                <select name="fahrrad" id="selFahrrad" class="form-control">
+                                    <option value="1">Fahrrad 1</option>
+                                    <option value="2">Fahrrad 2</option>
+                                    <option value="3">Fahrrad 3</option>
+                                </select>
                             </div>
                         </div>
 
@@ -47,6 +58,34 @@
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('groesse') ? ' has-error' : '' }}">
+                            <label for="groesse" class="col-md-4 control-label">Gr&ouml;&szlig;e <small>(optional)</small></label>
+
+                            <div class="col-md-6">
+                                <input id="groesse" type="text" class="form-control" name="groesse" value="{{ old('groesse') }}" placeholder="1.80" autofocus>
+
+                                @if ($errors->has('groesse'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('groesse') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                        <div class="form-group{{ $errors->has('gewicht') ? ' has-error' : '' }}">
+                            <label for="gewicht" class="col-md-4 control-label">Gewicht <small>(optional)</small></label>
+
+                            <div class="col-md-6">
+                                <input id="gewicht" type="text" class="form-control" name="gewicht" value="{{ old('gewicht') }}" placeholder="80" autofocus>
+
+                                @if ($errors->has('gewicht'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('gewicht') }}</strong>
                                     </span>
                                 @endif
                             </div>

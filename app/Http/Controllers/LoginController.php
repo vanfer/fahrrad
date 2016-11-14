@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Fahrer;
+use App\Fahrrad;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -53,31 +54,52 @@ class LoginController extends Controller
     {
         $this->validate($request, [
             "name" => 'required',
+            "fahrrad" => 'required|numeric',
         ]);
 
         $name = $request->input("name");
         $email = $request->input("email");
+        $groesse = $request->input("groesse");
+        $gewicht = $request->input("gewicht");
 
         $fahrer = Fahrer::where("name", $name)->first();
-        if($fahrer){ // Fahrer existiert bereits
+        if($fahrer){ // Fahrer existiert bereits, einloggen und zuordnen
             if($request->has("email")){
                 if($fahrer->email == $email){
-                    Auth::login($fahrer, true);
+                    $this->tryLogin($request, $fahrer);
                 }
-                return redirect()->to($this->redirectTo);
             }else{ // Kein einzigartiger Name
                 return view("auth.login")
                     ->with("err_name", "Name schon vergeben")
                     ->with("err_msg", "Bist du ".$name."? Gib deine E-Mail an um dich erneut anzumelden");
             }
-        }else{
+        }else{ // Neuen Fahrer anlegen und zuordnen
             $fahrer = new Fahrer();
             $fahrer->name = $name;
             if($request->has("email")){
                 $fahrer->email = $email;
             }
+            if($request->has("groesse")){
+                $fahrer->groesse = $groesse;
+            }
+            if($request->has("gewicht")){
+                $fahrer->gewicht = $gewicht;
+            }
             $fahrer->save();
             $fahrer->touch();
+
+            return $this->tryLogin($request, $fahrer);
+        }
+    }
+
+    private function tryLogin(Request $request, Fahrer $fahrer)
+    {
+        $fahrrad = Fahrrad::where("id", $request->input("fahrrad"))->first();
+        if($fahrrad->aktiv() == false){
+
+            $fahrrad->fahrer_id = $fahrer->id;
+            $fahrrad->save();
+            $fahrrad->touch();
 
             Auth::login($fahrer, true);
 

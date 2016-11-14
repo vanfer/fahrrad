@@ -2,6 +2,7 @@
     @foreach($fahrraeder as $fahrrad)
         <div class="fahrrad-wrapper" id="{{ $fahrrad->id }}">
             <h1>Fahrrad #{{ $fahrrad->id }}</h1>
+            <h2>Fahrer: {{ $fahrrad->getFahrerName() }}</h2>
             <div class="row">
                 <div class="col-md-6">Geschwindigkeit</div>
                 <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->geschwindigkeit }} km/h</div>

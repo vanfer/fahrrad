@@ -28,24 +28,16 @@
                 <div class="navbar-header">
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        BP-WS1617 Fahrradergometer
+                        <small>BP-WS1617 Fahrradergometer</small>
                     </a>
-
-                    @if(Auth::check())
-                        <div style="height: 50px; line-height: 50px; float: right; padding-right: 10px;">
-                            Hallo {{ Auth::user()->name }}!
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-
-                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
-                    @endif
                 </div>
             </div>
         </nav>
 
-        @yield('content')
+        <div class="main-wrapper">
+            @yield('content')
+        </div>
+
     </div>
 
     <!-- Scripts -->
