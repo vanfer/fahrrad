@@ -15,10 +15,10 @@
 
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-9 pull-left">
+                                    <div class="col-xs-8 pull-left">
                                         <input id="name" type="name" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
                                     </div>
-                                    <div class="col-md-3 pull-left">
+                                    <div class="col-xs-4 pull-left">
                                         <input id="btnGenerateName" type="button" class="form-control btn-success" value="Zufall" autofocus>
                                     </div>
                                 </div>
@@ -36,7 +36,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('fahrrad') ? ' has-error' : '' }}">
                             <label for="fahrrad" class="col-md-4 control-label">Fahrrad w&auml;hlen</label>
 
@@ -76,7 +76,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('gewicht') ? ' has-error' : '' }}">
                             <label for="gewicht" class="col-md-4 control-label">Gewicht <small>(optional)</small></label>
 
