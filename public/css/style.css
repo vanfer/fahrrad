@@ -1,0 +1,45 @@
+#track-wrapper {
+    height: 25%;
+    width: 33%;
+
+    float: left;
+}
+
+#energy-current-wrapper {
+    height: 25%;
+    width: 33%;
+
+    float: left;
+}
+
+#energy-wrapper {
+    height: 25%;
+    width: 33%;
+
+    float: left;
+}
+
+#fahrrad-information-wrapper{
+    height: 25%;
+}
+
+.fahrrad-wrapper{
+    height: 25%;
+    width: 30%;
+
+    border: 5px solid lightblue;
+    border-radius: 5px;
+    background-color: ghostwhite;
+    color: #000;
+    text-align: center;
+    padding: 10px;
+
+    margin-top: 50px;
+    margin-left: 2%;
+
+    float:left;
+}
+
+.clear {
+    clear: both;
+}
