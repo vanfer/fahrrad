@@ -18,8 +18,6 @@ class TestDataTableSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        /* Test */
-
         DB::table('fahrer')->truncate();
         Fahrer::create(['name' => 'test', 'email' => 'test@test.local']);
         Fahrer::create(['name' => 'test2']);

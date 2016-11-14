@@ -68,13 +68,16 @@ class MainController extends Controller
     public function leistung()
     {
         $fahrraeder = Fahrrad::all();
+        $result = null;
 
         foreach ($fahrraeder as $fahrrad){
-            $result[] = [
-                "id" => $fahrrad->fahrer()->id,
-                "name" => $fahrrad->fahrer()->name,
-                "istLeistung" => $fahrrad->istLeistung,
-            ];
+            if($fahrrad->fahrer()){
+                $result[] = [
+                    "id" => $fahrrad->fahrer()->id,
+                    "name" => $fahrrad->fahrer()->name,
+                    "istLeistung" => $fahrrad->istLeistung,
+                ];
+            }
         }
 
         return response()->json(["fahrerleistung" => $result], 200);

@@ -16,7 +16,6 @@
 | Zentrale Ansicht
 |--------------------------------------------------------------------------
 */
-
 Route::get("central", "MainController@index"); /* Zeigt die Startseite mit Informationen an */
 
 
@@ -26,7 +25,10 @@ Route::get("central", "MainController@index"); /* Zeigt die Startseite mit Infor
 |--------------------------------------------------------------------------
 */
 
-Auth::routes();
+Route::get("login", "LoginController@index");
+Route::post("login", "LoginController@login");
+Route::post("logout", "LoginController@logout");
+
 
 Route::get("/", function (){ return redirect("mobile"); });
 Route::get("mobile", "MobileController@index");
@@ -42,4 +44,5 @@ Route::get("data", "MainController@getData");
 
 Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");
+
 Route::get("leistung", "MainController@leistung");

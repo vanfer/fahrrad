@@ -1,10 +1,19 @@
-var BASE_PATH = "http://localhost/SPIN/web/public/";
+var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     window.setInterval(function () {
-        refreshView();
-        updateCharts();
+        if(window.location.href.includes("central")){
+            refreshView();
+            updateCharts();
+        }
     }, 1500);
+
+    $("#btnGenerateName").click(function(){
+        var namen = ["test1", "test2", "test3", "test4", "test5", "test6"];
+        var name = namen.sort(function() {return 0.5 - Math.random()})[0];
+
+        $("#name").attr("value", name);
+    });
 });
 
 function updateCharts() {
