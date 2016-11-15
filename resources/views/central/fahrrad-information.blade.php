@@ -2,7 +2,8 @@
     @foreach($fahrraeder as $fahrrad)
         <div class="fahrrad-wrapper" id="{{ $fahrrad->id }}">
             <h1>Fahrrad #{{ $fahrrad->id }}</h1>
-            <h2>Fahrer: {{ $fahrrad->getFahrerName() }}</h2>
+            <div id="fahrername-{{ $fahrrad->id }}">Fahrer: {{ $fahrrad->getFahrerName() }}</div>
+            <hr>
             <div class="row">
                 <div class="col-md-6">Geschwindigkeit</div>
                 <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->geschwindigkeit }} km/h</div>
@@ -14,23 +15,6 @@
             <div class="row">
                 <div class="col-md-6">Zurückgelegte Strecke</div>
                 <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->strecke }} m</div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-6">sollLeistung</div>
-                <div id="sollLeistung-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->sollLeistung }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">sollDrehmoment</div>
-                <div id="sollDrehmoment-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->sollDrehmoment }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">strecke_id</div>
-                <div id="strecke_id-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->strecke_id }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">abschnitt_id</div>
-                <div id="abschnitt_id-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->abschnitt_id }}</div>
             </div>
         </div>
     @endforeach

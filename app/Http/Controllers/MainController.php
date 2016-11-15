@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Abschnitt;
+use App\Fahrer;
 use App\Fahrrad;
 use App\Strecke;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class MainController extends Controller
 
     public function getData()
     {
-        return ["fahrrad" => Fahrrad::all()];
+        return ["fahrrad" => Fahrrad::all(), "fahrer" => Fahrer::all()];
     }
 
     public function strecke(\App\Strecke $strecke)

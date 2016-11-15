@@ -20,13 +20,6 @@ $(document).ready(function () {
     $('#selFahrrad').on('change', function() {
 
     });
-
-    window.addEventListener("keydown", function(e) {
-        // space, page up, page down and arrow keys:
-        if([32, 33, 34, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-            e.preventDefault();
-        }
-    }, false);
 });
 
 function updateCharts() {
@@ -124,10 +117,17 @@ function refreshView(){
         success: function(response) {
             if(response && response.fahrrad ) {
                 $.each( response.fahrrad,
-                    function(index, value) {
-                        $("#geschwindigkeit-anzeige-"+value.id).html(value.geschwindigkeit + " km/h");
-                        $("#istLeistung-anzeige-"+value.id).html(value.istLeistung + " Watt");
-                        $("#strecke-anzeige-"+value.id).html(value.strecke + " Meter");
+                    function(index, fahrrad) {
+                        var strname = "";
+                        $.each( response.fahrer,
+                            function(index, fahrer) {
+                                strname = (fahrer.id == fahrrad.fahrer_id) ? fahrer.name : "";
+                            }
+                        );
+                        $("#fahrername-"+fahrrad.id).html("Fahrer: " + strname);
+                        $("#geschwindigkeit-anzeige-"+fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
+                        $("#istLeistung-anzeige-"+fahrrad.id).html(fahrrad.istLeistung + " Watt");
+                        $("#strecke-anzeige-"+fahrrad.id).html(fahrrad.strecke + " Meter");
                     }
                 );
             }
