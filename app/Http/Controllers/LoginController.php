@@ -47,7 +47,7 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         Auth::logout();
-        return redirect()->to($this->redirectTo);
+        return redirect()->intended($this->redirectTo);
     }
 
     public function login(Request $request)
@@ -70,8 +70,7 @@ class LoginController extends Controller
                 }
             }else{ // Kein einzigartiger Name
                 return view("auth.login")
-                    ->with("err_name", "Name schon vergeben")
-                    ->with("err_msg", "Bist du ".$name."? Gib deine E-Mail an um dich erneut anzumelden");
+                    ->with("err_name", "Name schon vergeben! Bist du ".$name."? Gib deine E-Mail an um dich erneut anzumelden");
             }
         }else{ // Neuen Fahrer anlegen und zuordnen
             $fahrer = new Fahrer();
@@ -103,7 +102,11 @@ class LoginController extends Controller
 
             Auth::login($fahrer, true);
 
-            return redirect()->to($this->redirectTo);
+            return redirect()->intended($this->redirectTo);
         }
+
+        return view("auth.login")
+            ->withInput($request->input()->all())
+            ->with("err_fahhrad", "Fahrrad schon besetzt");
     }
 }

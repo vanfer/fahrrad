@@ -1,3 +1,4 @@
+// WICHTIG: IP ändern, oder einfach localhost nehmen!
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
@@ -17,7 +18,7 @@ $(document).ready(function () {
 
 
     $('#selFahrrad').on('change', function() {
-        alert( this.value ); // or $(this).val()
+
     });
 
     window.addEventListener("keydown", function(e) {
@@ -126,12 +127,7 @@ function refreshView(){
                     function(index, value) {
                         $("#geschwindigkeit-anzeige-"+value.id).html(value.geschwindigkeit + " km/h");
                         $("#istLeistung-anzeige-"+value.id).html(value.istLeistung + " Watt");
-                        $("#sollLeistung-anzeige-"+value.id).html(value.sollLeistung);
-                        $("#sollDrehmoment-anzeige-"+value.id).html(value.sollDrehmoment);
                         $("#strecke-anzeige-"+value.id).html(value.strecke + " Meter");
-                        $("#strecke_id-anzeige-"+value.id).html(value.strecke_id);
-                        $("#abschnitt_id-anzeige-"+value.id).html(value.abschnitt_id);
-                        $("#updated_at-anzeige-"+value.id).html(value.updated_at);
                     }
                 );
             }

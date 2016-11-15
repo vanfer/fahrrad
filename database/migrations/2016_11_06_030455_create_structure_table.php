@@ -47,7 +47,7 @@ class CreateStructureTable extends Migration
             $table->increments('id');
 
             $table->integer("fahrer_id")->unsigned()->nullable();
-            $table->foreign("fahrer_id")->references("id")->on("fahrer")->onDelete('cascade');;
+            $table->foreign("fahrer_id")->references("id")->on("fahrer")->onDelete('set null');
 
             $table->string("ip")->default("127.0.0.1");
             $table->string("mac")->default("00:00:00:00:00:00");

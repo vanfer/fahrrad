@@ -32,14 +32,6 @@
                 <div class="col-md-6">abschnitt_id</div>
                 <div id="abschnitt_id-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->abschnitt_id }}</div>
             </div>
-            <div class="row">
-                <div class="col-md-6">Erstellt</div>
-                <div id="created_at-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->created_at }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">Aktualisiert</div>
-                <div id="updated_at-anzeige-{{ $fahrrad->id }}" class="col-md-6">{{ $fahrrad->updated_at }}</div>
-            </div>
         </div>
     @endforeach
     <div class="clear"></div>

@@ -22,18 +22,14 @@
                                         <input id="btnGenerateName" type="button" class="form-control btn-success" value="Zufall" autofocus>
                                     </div>
                                 </div>
-                                <div class="clear"></div>
-
                                 @if (isset($err_name))
                                     <div class="panel panel-danger">
                                         <div class="panel-heading">
-                                            <strong>{{ $err_name }}</strong><br>
-                                        </div>
-                                        <div class="panel-body">
-                                            <small>{{ $err_msg }}</small>
+                                            <small>{{ $err_name }}</small>
                                         </div>
                                     </div>
                                 @endif
+                                <div class="clear"></div>
                             </div>
                         </div>
 
@@ -47,6 +43,14 @@
                                     <option value="3">Fahrrad 3</option>
                                 </select>
                             </div>
+
+                            @if (isset($err_fahhrad))
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        <strong>{{ $err_fahhrad }}</strong><br>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

@@ -73,8 +73,8 @@ class MainController extends Controller
         foreach ($fahrraeder as $fahrrad){
             if($fahrrad->fahrer()){
                 $result[] = [
-                    "id" => $fahrrad->fahrer()->id,
-                    "name" => $fahrrad->fahrer()->name,
+                    "id" => $fahrrad->getFahrerID(),
+                    "name" => $fahrrad->getFahrerName(),
                     "istLeistung" => $fahrrad->istLeistung,
                 ];
             }

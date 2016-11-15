@@ -28,6 +28,16 @@ class Fahrrad extends Model
         return "-";
     }
 
+    public function getFahrerID()
+    {
+        $fahrer = Fahrer::where("id", $this->fahrer_id)->first();
+        if($fahrer){
+            return $fahrer->id;
+        }
+
+        return 0;
+    }
+
     public function abschnitt()
     {
         return $this->belongsTo("App\Abschnitt")->get();
