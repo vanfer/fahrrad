@@ -17,6 +17,7 @@
 |--------------------------------------------------------------------------
 */
 Route::get("central", "MainController@index"); /* Zeigt die Startseite mit Informationen an */
+Route::get("neueTestRoute", "MainController@index"); /* Zeigt die Startseite mit Informationen an */
 
 /*
 |--------------------------------------------------------------------------
