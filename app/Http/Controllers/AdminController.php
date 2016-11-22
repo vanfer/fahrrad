@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Fahrer;
+use App\Fahrrad;
 use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -11,9 +13,14 @@ class AdminController extends Controller
 {
     protected $admin_password = "test";
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view("admin.index");
+        return view('admin.index')->with("fahrer", Fahrer::all())->with("fahrraeder", Fahrrad::all());
     }
 
     public function getLogin()
@@ -34,4 +41,16 @@ class AdminController extends Controller
     {
         return redirect("admin")->cookie('admin', '1', -1);
     }
+
+    public function setData(Request $request)
+    {
+
+    }
+
+    public function getData()
+    {
+
+    }
+
+
 }
