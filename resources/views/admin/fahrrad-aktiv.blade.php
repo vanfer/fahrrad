@@ -2,17 +2,17 @@
     <div class="col-md-12 text-nowrap">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title pull-left">Fahrrad {{$fahrrad->id}}</h3>
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                <h3 class="panel-title pull-left" style="">Fahrrad {{$fahrrad->id}}</h3>
+                <div class="btn-group pull-right" role="group">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        Löschen
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a>Löschen</a></li>
-                        <li><a>Editieren</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a>Hilfe</a></li>
-                    </ul>
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Bearbeiten
+                    </button>
+                    <button type="button" class="btn btn-default">Hilfe</button>
                 </div>
                 <span class="clearfix"></span>
             </div>
