@@ -1,7 +1,11 @@
 <div class="col-md-6">
-    <div class="panel panel-default pull-left fahrer-panel">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Fahrer</h3>
+            <h3 class="panel-title pull-left">Fahrer</h3>
+            <button type="button" class="btn btn-default pull-right ">
+                <span class="glyphicon glyphicon-question-sign"></span>
+            </button>
+            <span class="clearfix"></span>
         </div>
         <div class="panel-body ">
             @foreach($fahrer as $f)
