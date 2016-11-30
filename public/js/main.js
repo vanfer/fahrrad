@@ -2,72 +2,97 @@
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
+    window.streckeData = { data: [], labels: [] };
+    window.leistungData = { data: [], labels: [] };
+
+    /*
+    * Aktualisierung der Daten: Charts und Fahredetails
+    * */
     window.setInterval(function () {
-        if(!window.location.href.includes("login")){
-            refreshView();
+        // Updates der Charts nur auf den Seiten Central und Mobile
+        if(window.location.href.includes("central") ||
+           window.location.href.includes("mobile"))
+        {
+            updateDetails();
             updateCharts();
         }
-    }, 1500);
+    }, 1000);
+
+
+    /*
+    * Button bindings
+    * */
 
     $("#btnGenerateName").click(function(){
         var namen = ["test1", "test2", "test3", "test4", "test5", "test6"];
+
+        // Gibt einen zufälligen Eintrag aus dem namen Array zurück
         var name = namen.sort(function() {return 0.5 - Math.random()})[0];
 
         $("#name").attr("value", name);
     });
-
-
-    $('#selFahrrad').on('change', function() {
-
-    });
 });
 
+function updateChartData() {
+    // Todo: Strecke id irgendwo her holen (hidden input zb)
+    var strecke_id = 2;
+
+    getDataFromAPI("strecke/" + strecke_id, true, function(response) {
+        if(response && response.strecke ) {
+            window.streckeData = { data: [], labels: [] };
+            $.each(response.strecke.abschnitte,
+                function(index, value) {
+                    window.streckeData.labels.push(value.laenge); // X
+                    window.streckeData.data.push(value.hoehe);  // Y
+                }
+            );
+        }
+    });
+
+    getDataFromAPI("leistung", true, function(response) {
+        if(response && response.fahrerleistung ) {
+            window.leistungData = { data: [], labels: [] };
+            $.each(response.fahrerleistung,
+                function(index, value) {
+                    window.leistungData.labels.push(value.name);
+                    window.leistungData.data.push(value.istLeistung);
+                }
+            );
+        }
+    });
+}
+
 function updateCharts() {
-    var trackData = getTrack(3);
-    var track = new Chart(document.getElementById("track"), {
+    this.updateChartData();
+
+    var track_chart = new Chart(document.getElementById("track"), {
         type: 'line',
         data: {
-            labels: trackData[1],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "rgba(75,192,192,1)",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: trackData[0],
-                    spanGaps: false,
-                }
-            ]
+            labels: window.streckeData.labels, // X AXIS
+            datasets: [{
+                label: "My First dataset",
+                fill: true,
+                data: window.streckeData.data // Y AXIS
+            }]
         },
         options: {
             animation: false,
             scales: {
                 xAxes: [{
                     display: true
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
             }
         }
     });
-
-    var energy_currentData = getEnergyCurrent();
-    var energy_current = new Chart(document.getElementById("energy-current"), {
+    var energy_chart = new Chart(document.getElementById("energy-current"), {
         type: 'bar',
         data: {
-            labels: energy_currentData[1],
+            labels: window.leistungData.labels,
             datasets: [
                 {
                     label: "My First dataset",
@@ -88,7 +113,7 @@ function updateCharts() {
                         'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1,
-                    data: energy_currentData[0],
+                    data: window.leistungData.data
                 }
             ]
         },
@@ -108,13 +133,9 @@ function updateCharts() {
     });
 }
 
-function refreshView(){
-    $.ajax({
-        url: BASE_PATH + "data",
-        type: 'get',
-        dataType: 'json',
-        async: true,
-        success: function(response) {
+function updateDetails(){
+    getDataFromAPI("data", false, function(response) {
+        if(response && response.fahrerleistung ) {
             if(response && response.fahrrad ) {
                 $.each( response.fahrrad,
                     function(index, fahrrad) {
@@ -133,51 +154,22 @@ function refreshView(){
             }
         }
     });
-}
-
-function getTrack(id){
-    var yAxis = [];
-    var xAxis = [];
-
-    $.ajax({
-        url: BASE_PATH + "strecke/"+id,
+    /*$.ajax({
+        url: BASE_PATH + "data",
         type: 'get',
         dataType: 'json',
-        async: false,
+        async: true,
         success: function(response) {
-            if(response && response.strecke ) {
-                $.each(response.strecke.abschnitte,
-                    function(index, value) {
-                        yAxis.push(value.hoehe);
-                        xAxis.push(value.laenge);
-                    }
-                );
-            }
-        }
-    });
 
-    return [yAxis, xAxis];
+        }
+    });*/
 }
-function getEnergyCurrent(){
-    var yAxis = [];
-    var xAxis = [];
 
+function getDataFromAPI(url, async, successHandler){
     $.ajax({
-        url: BASE_PATH + "leistung",
+        url: BASE_PATH + url,
         type: 'get',
-        dataType: 'json',
-        async: false,
-        success: function(response) {
-            if(response && response.fahrerleistung ) {
-                $.each(response.fahrerleistung,
-                    function(index, value) {
-                        yAxis.push(value.istLeistung);
-                        xAxis.push(value.name);
-                    }
-                );
-            }
-        }
+        async: async,
+        success: successHandler
     });
-
-    return [yAxis, xAxis];
 }

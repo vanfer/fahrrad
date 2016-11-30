@@ -13,6 +13,7 @@
                 <span class="clearfix"></span>
             </div>
             <div class="panel-body">
+                Fahrrad ist inaktiv
             </div>
         </div>
     </div>

@@ -53,7 +53,18 @@ class MainController extends Controller
 
     public function getData()
     {
-        return ["fahrrad" => Fahrrad::all(), "fahrer" => Fahrer::all()];
+        $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
+        $result = [];
+
+        foreach ($fahrraeder as $fahrrad){
+            $result[] = [
+                "id" => $fahrrad->id, // Fahrrad ID
+                "name" => $fahrrad->getFahrerName(), // Fahrer name
+                "istLeistung" => $fahrrad->istLeistung,
+            ];
+        }
+
+        return response()->json(["fahrrad" => $result], 200);
     }
 
     public function strecke(\App\Strecke $strecke)
@@ -68,17 +79,15 @@ class MainController extends Controller
 
     public function leistung()
     {
-        $fahrraeder = Fahrrad::all();
-        $result = null;
+        $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
+        $result = [];
 
         foreach ($fahrraeder as $fahrrad){
-            if($fahrrad->fahrer()){
-                $result[] = [
-                    "id" => $fahrrad->getFahrerID(),
-                    "name" => $fahrrad->getFahrerName(),
-                    "istLeistung" => $fahrrad->istLeistung,
-                ];
-            }
+            $result[] = [
+                "id" => $fahrrad->getFahrerID(),
+                "name" => $fahrrad->getFahrerName(),
+                "istLeistung" => $fahrrad->istLeistung,
+            ];
         }
 
         return response()->json(["fahrerleistung" => $result], 200);

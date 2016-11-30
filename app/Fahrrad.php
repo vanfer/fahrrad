@@ -20,6 +20,7 @@ class Fahrrad extends Model
 
     public function getFahrerName()
     {
+        // Todo: Beziehung this->fahrer() nutzen
         $fahrer = Fahrer::where("id", $this->fahrer_id)->first();
         if($fahrer){
             return $fahrer->name;

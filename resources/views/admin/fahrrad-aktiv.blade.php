@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title pull-left" style="">Fahrrad {{$fahrrad->id}}</h3>
                 <div class="btn-group pull-right" role="group">
-                    <button type="button" class="btn btn-default">
+                    <button type="button" class="btn btn-default" id="btnAbmelden">
                         <span class="glyphicon glyphicon-trash"></span>
                         Löschen
                     </button>
