@@ -2,19 +2,52 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title pull-left">Fahrer</h3>
-            <button type="button" class="btn btn-default pull-right ">
-                <span class="glyphicon glyphicon-question-sign"></span>
-            </button>
+            <div class="row col-md-12 ">
+                <div class="btn-group pull-right" role="group">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Fahrer hinzufügen
+                    </button>
+                    <button type="button" class="btn btn-default">Hilfe</button>
+                </div>
+                <div class="input-group col-md-4 pull-right">
+                    <input type="text" class="form-control" placeholder="Suche nach...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Los!</button>
+                    </span>
+                </div>
+            </div>
             <span class="clearfix"></span>
         </div>
         <div class="panel-body ">
-            @foreach($fahrer as $f)
-                <div class="col-md-4">
-                    <div class="well well-lg clearfix text-center">
-                        {{$f->name}}
-                    </div>
-                </div>
-            @endforeach
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gewicht</th>
+                    <th>Größe</th>
+                    <th>Bearbeiten</th>
+                    <th>Löschen</th>
+                </tr>
+                @foreach($fahrer as $f)
+                    <tr>
+                        <td>{{$f->name}}</td>
+                        <td>{{$f->email}}</td>
+                        <td>{{$f->gewicht}}</td>
+                        <td>{{$f->groesse}}</td>
+                        <td>
+                            <button class="btn btn-default">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-default">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
         </div>
     </div>
     <div class="clear"></div>

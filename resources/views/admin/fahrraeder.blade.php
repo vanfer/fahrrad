@@ -6,5 +6,4 @@
             @include("admin.fahrrad-aktiv")
         @endif
     @endforeach
-    @include("admin.fahrer-anmelden")
 </div>

@@ -6,11 +6,7 @@
                 <div class="btn-group pull-right" role="group">
                     <button type="button" class="btn btn-default" id="btnAbmelden">
                         <span class="glyphicon glyphicon-trash"></span>
-                        Löschen
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        Bearbeiten
+                        Zuordnung löschen
                     </button>
                     <button type="button" class="btn btn-default">Hilfe</button>
                 </div>
@@ -32,6 +28,16 @@
                 <div class="row">
                     <div class="col-md-8">Zurückgelegte Strecke</div>
                     <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-3">{{ $fahrrad->strecke }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">Betriebsmodus</div>
+                    <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-3">
+                        <select class="form-control">
+                            <option>Strecke</option>
+                            <option>Konstante Leistung</option>
+                            <option>Konstanter Drehmoment</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
