@@ -1,40 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img width="150"src="https://laravel.com/laravel.png"></a></p>
+# Fahrradergometer
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Dieses Repository stellt die Webanwendung zum Fahrradergometer bereit.
+Die Messdatenverarbeitung ist hier zu finden: https://github.com/xenco/fahrrad-messdaten
 
-## About Laravel
+// TODO: Weitere Beschreibung + Skizze
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Technologie
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Die Anwendung nutzt verschiedene Bibliotheken und Frameworks.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+* [PHP 5.6]
+* [Laravel 5]
+* [Mysql 5]
+* [Twitter Bootstrap]
+* [jQuery]
+* [Chart.js]
 
-## Learning Laravel
+### Installation
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+##### 0. Vorbedignungen
+* Webserver (z.B. Apache)
+* MySQL DB Server
+* Git
+* Composer
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+##### 1. Herunterladen des aktuellen Codes
+Der Code kann mittels Git aus diesem Repository geladen werden.
+``` 
+$ git clone https://github.com/xenco/fahrrad.git [Lokaler Speicherort]
+``` 
+z.B.
+``` 
+$ git clone https://github.com/xenco/fahrrad.git C:\xampp\htdocs\fahrrad
+```
+Das entstehende Verzeichnis sollte im Document Root des Webservers abgelegt, oder auf andere Weise dort verfügbar gemacht werden.
 
-## Contributing
+##### 2. Erstellen fehlender Ordner
+Einige Ordner müssen erst erstellt werden bevor die Anwendung funktioniert.
+Dazu in der Konsole in den gerade angelegten Ordner wechseln.
+``` 
+$ cd C:\xampp\htdocs\fahrrad
+```
+Und dort die fehlenden Ordner erstellen
+``` 
+$ mkdir storage\framework\cache storage\framework\views storage\framework\sessions
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+##### 3. Nachladen der Vendor Daten
+Die Anwendung nutzt Composer, somit können die fehlenden Daten einfach installiert werden per:
+``` 
+$ composer update
+```
 
-## Security Vulnerabilities
+##### 4. Konfiguration anpassen
+Die Werte für die Datenbank, sowie die Url zur Anwendung sind in der Datei ./.env anzupassen:
+```
+APP_URL=http://localhost/fahrrad/
+```
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=fahrradergometer
+DB_USERNAME=root
+DB_PASSWORD=root
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+##### 5. Datenbankschema migrieren
+Sofern die Datenbank läuft und in der .env Datei die richtigen Zugangsdaten eingetragen wurden lässt sich die Datenbank wie folgt erstellen:
+``` 
+$ php artisan migrate:refresh --seed
+```
 
-## License
+##### 5. Abschluss
+Die Anwendung wurde nun vollständig installiert und kann über http://localhost/fahrrad/public/ aufgerufen werden.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Vorhandene Routen sind u.a.:
+* Zentraler Display: /central
+* Admin Ansicht (Passwort="test"): /admin
+* Mobile Ansicht: /, bzw. /login
+
+Diese befinden sich noch in der Entwicklung, mit Änderungen muss also gerechnet werden.
