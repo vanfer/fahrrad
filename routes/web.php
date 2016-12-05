@@ -58,6 +58,8 @@ Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
 | Datenaustausch
 |--------------------------------------------------------------------------
 */
+Route::get('search/autocomplete', 'SearchController@autocompleteName');
+
 Route::post("data", "MainController@setData");
 Route::get("data", "MainController@getData");
 

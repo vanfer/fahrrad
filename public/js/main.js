@@ -10,6 +10,18 @@ $(document).ready(function () {
 
     $(".formAddFahrer").hide();
 
+    $("#q").autocomplete({
+        source: "search/autocomplete",
+        minLength: 1,
+        select: function(event, ui) {
+            alert("select");
+            $('#q').val(ui.item.value);
+        },
+        change: function( event, ui ) {
+            alert("change");
+        }
+    });
+
     /*
     * Aktualisierung der Daten: Charts und Fahredetails
     * */
@@ -128,23 +140,21 @@ $(document).ready(function () {
         });
     });
 
-    $(".btnDelete").each(function(){
-        $(this).click(function(e){
-            var form = e.currentTarget.closest("form");
+    $("#userTable").on("click", ".btnDelete", function () {
+        var form = $(this).closest("form");
 
-            var fahrer_tr = $(this).parents("tr");
-            var fahrer_id = $(fahrer_tr).attr("id");
+        var fahrer_tr = $(this).parents("tr");
+        var fahrer_id = $(fahrer_tr).attr("id");
 
-            $.ajax({
-                url: $(form).attr("action") + "/" + fahrer_id,
-                method: "delete"
-            }).done(function (data, statusText, xhr){
-                var status = xhr.status;
+        $.ajax({
+            url: $(form).attr("action") + "/" + fahrer_id,
+            method: "delete"
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
 
-                if(status == 200){
-                    $(fahrer_tr).remove();
-                }
-            });
+            if(status == 200){
+                $(fahrer_tr).remove();
+            }
         });
     });
 
@@ -248,7 +258,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".radio-fahrer-id").click(function () {
+    $("#userTable").on("click", ".radio-fahrer-id", function () {
         window.selectedUserRow = $(this).val();
     });
 
