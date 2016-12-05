@@ -2,6 +2,9 @@
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
+    /*
+     * Setup
+     * */
     window.streckeData = { data: [], labels: [] };
     window.leistungData = { data: [], labels: [] };
 
@@ -9,18 +12,6 @@ $(document).ready(function () {
     window.newUserTemp = {};
 
     $(".formAddFahrer").hide();
-
-    $("#q").autocomplete({
-        source: "search/autocomplete",
-        minLength: 1,
-        select: function(event, ui) {
-            alert("select");
-            $('#q').val(ui.item.value);
-        },
-        change: function( event, ui ) {
-            alert("change");
-        }
-    });
 
     /*
     * Aktualisierung der Daten: Charts und Fahredetails
@@ -35,6 +26,18 @@ $(document).ready(function () {
         }
     }, 1000);
 
+    /*
+     * autocomplete fahrer suche
+     * */
+    $("#q").autocomplete({
+        source: "search/autocomplete",
+        minLength: 1,
+        select: function(event, ui) {
+            $('#q').val(ui.item.label );
+        },
+        change: function(event, ui) {
+        }
+    });
 
     /*
     * Button bindings
@@ -73,7 +76,6 @@ $(document).ready(function () {
             });
         });
     });
-
     $(".btnAnmelden").each(function(){
         $(this).click(function(e){
             var form = e.currentTarget.closest("form");
@@ -140,66 +142,16 @@ $(document).ready(function () {
         });
     });
 
-    $("#userTable").on("click", ".btnDelete", function () {
-        var form = $(this).closest("form");
-
-        var fahrer_tr = $(this).parents("tr");
-        var fahrer_id = $(fahrer_tr).attr("id");
-
-        $.ajax({
-            url: $(form).attr("action") + "/" + fahrer_id,
-            method: "delete"
-        }).done(function (data, statusText, xhr){
-            var status = xhr.status;
-
-            if(status == 200){
-                $(fahrer_tr).remove();
-            }
-        });
-    });
 
     $("#btnAddFahrer").click(function (e) {
         $(".formAddFahrer").show();
         $("#newUserTable").editableTableWidget();
     });
 
-    $('#userTable td').on('change', function(e, newValue) {
-        var form = e.currentTarget.closest("form");
-
-        var changedElement = $(this).attr("id");
-        var fahrer_id = $(this).parents("tr").attr("id");
-
-        var data = null;
-        if(changedElement == "name"){
-            data = { name : newValue };
-        }else if(changedElement == "email"){
-            data = { email : newValue || "_"};
-        }else if(changedElement == "groesse"){
-            data = { groesse : newValue };
-        }else if(changedElement == "gewicht"){
-            data = { gewicht : newValue };
-        }
-
-
-        $.ajax({
-            url: $(form).attr("action") + "/" + fahrer_id,
-            method: $(form).attr("method"),
-            data: data
-        }).done(function (data, statusText, xhr){
-            var status = xhr.status;
-
-            if(status == 200){
-                console.log("success");
-            }
-        });
-
-    });
-
     $(".btnCancel").click(function (e) {
         $(".formAddFahrer").hide();
         //window.newUserTemp = {};
     });
-
     $(".btnSave").click(function (e) {
         var form = e.currentTarget.closest("form");
 
@@ -240,30 +192,24 @@ $(document).ready(function () {
         $(".formAddFahrer").hide();
     });
 
-    $('#newUserTable td').on('change', function(e, newValue) {
-        var form = e.currentTarget.closest("form");
-
-        var changedElement = $(this).attr("id");
-        var fahrer_id = $(this).parents("tr").attr("id");
-
-        var data = null;
-        if(changedElement == "name"){
-            window.newUserTemp.name = newValue;
-        }else if(changedElement == "email"){
-            window.newUserTemp.email = newValue ;
-        }else if(changedElement == "groesse"){
-            window.newUserTemp.groesse = newValue;
-        }else if(changedElement == "gewicht"){
-            window.newUserTemp.gewicht = newValue ;
-        }
-    });
-
-    $("#userTable").on("click", ".radio-fahrer-id", function () {
-        window.selectedUserRow = $(this).val();
-    });
-
-
     $("#userTable").editableTableWidget();
+    $("#userTable").on("click", ".btnDelete", function () {
+        var form = $(this).closest("form");
+
+        var fahrer_tr = $(this).parents("tr");
+        var fahrer_id = $(fahrer_tr).attr("id");
+
+        $.ajax({
+            url: $(form).attr("action") + "/" + fahrer_id,
+            method: "delete"
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            if(status == 200){
+                $(fahrer_tr).remove();
+            }
+        });
+    });
     $('#userTable td').on('change', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
@@ -294,12 +240,32 @@ $(document).ready(function () {
             }
         });
     });
+    $('#newUserTable td').on('change', function(e, newValue) {
+        var form = e.currentTarget.closest("form");
+
+        var changedElement = $(this).attr("id");
+        var fahrer_id = $(this).parents("tr").attr("id");
+
+        var data = null;
+        if(changedElement == "name"){
+            window.newUserTemp.name = newValue;
+        }else if(changedElement == "email"){
+            window.newUserTemp.email = newValue ;
+        }else if(changedElement == "groesse"){
+            window.newUserTemp.groesse = newValue;
+        }else if(changedElement == "gewicht"){
+            window.newUserTemp.gewicht = newValue ;
+        }
+    });
+
+    $("#userTable").on("click", ".radio-fahrer-id", function () {
+        window.selectedUserRow = $(this).val();
+    });
 });
 
 /*
- * Functions
+ * Chart Functions
  * */
-
 
 function updateChartData() {
     // Todo: Strecke id irgendwo her holen (hidden input zb)
