@@ -92,4 +92,34 @@ class MainController extends Controller
 
         return response()->json(["fahrerleistung" => $result], 200);
     }
+
+    public function zuordnungHerstellen(\App\Fahrrad $fahrrad, \App\Fahrer $fahrer)
+    {
+        if($fahrrad->fahrer_id == null){
+            $fahrrad->fahrer_id = $fahrer->id;
+            $fahrrad->save();
+            $fahrrad->touch();
+
+            return response()->json([
+                "fahrrad" => $fahrrad,
+                "fahrer" => $fahrer
+            ], 200);
+        }else{
+            return response()->json(["msg" => "wird schon benutzt"], 400);
+        }
+    }
+
+    public function zuordnungLoeschen(\App\Fahrrad $fahrrad)
+    {
+        $fahrrad->fahrer_id = null;
+
+        $fahrrad->save();
+        $fahrrad->touch();
+
+        if($fahrrad->fahrer_id == null){
+            return response()->json(["msg" => "ok"], 200);
+        }
+
+        return response()->json(["msg" => "Error"], 400);
+    }
 }

@@ -11,6 +11,9 @@
 |
 */
 
+/* Resourcen*/
+Route::resource("fahrer", "FahrerController");
+
 /*
 |--------------------------------------------------------------------------
 | Zentrale Ansicht
@@ -62,3 +65,8 @@ Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");
 
 Route::get("leistung", "MainController@leistung");
+
+
+Route::delete("fahrrad/{fahrrad}", "MainController@zuordnungLoeschen");
+
+Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "MainController@zuordnungHerstellen");

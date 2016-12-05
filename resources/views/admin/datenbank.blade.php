@@ -20,34 +20,36 @@
             <span class="clearfix"></span>
         </div>
         <div class="panel-body ">
-            <table class="table table-striped table-bordered table-hover">
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Gewicht</th>
-                    <th>Größe</th>
-                    <th>Bearbeiten</th>
-                    <th>Löschen</th>
-                </tr>
-                @foreach($fahrer as $f)
+            <form action="{{ url("fahrer") }}" method="PUT">
+                <table class="table table-striped table-bordered table-hover" id="userTable">
                     <tr>
-                        <td>{{$f->name}}</td>
-                        <td>{{$f->email}}</td>
-                        <td>{{$f->gewicht}}</td>
-                        <td>{{$f->groesse}}</td>
-                        <td>
-                            <button class="btn btn-default">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-default">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </td>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Gewicht</th>
+                        <th>Größe</th>
+                        <th></th>
                     </tr>
-                @endforeach
-            </table>
+                    @foreach($fahrer as $f)
+                        <tr draggable="true" id="{{$f->id}}">
+                            <th id="th_fahrer_id">
+                                <fieldset>
+                                    <input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="{{$f->id}}">
+                                </fieldset>
+                            </th>
+                            <td id="name">{{$f->name}}</td>
+                            <td id="email">{{$f->email}}</td>
+                            <td id="gewicht">{{$f->gewicht}}</td>
+                            <td id="groesse">{{$f->groesse}}</td>
+                            <th>
+                                <div class="btn btn-default btnDelete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    @endforeach
+                </table>
+            </form>
         </div>
     </div>
     <div class="clear"></div>

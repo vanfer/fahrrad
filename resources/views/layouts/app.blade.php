@@ -42,6 +42,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset("js/jquery.js") }}"></script>
+    <script src="{{ asset("js/mindmup-editabletable.js") }}"></script>
     <script src="{{ asset("js/bootstrap.js") }}"></script>
     <script src="{{ asset("js/Chart.bundle.js") }}"></script>
     <script src="{{ asset("js/main.js") }}"></script>

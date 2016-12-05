@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Fahrer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
+class FahrerController extends Controller
+{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            "name" => "required"
+        ]);
+
+        $fahrer = new Fahrer();
+        $fahrer->name = Input::get("name");
+
+        if($request->has("email")){
+            $fahrer->email = Input::get("email");
+        }
+
+        if($request->has("gewicht")){
+            $fahrer->gewicht = Input::get("gewicht");
+        }
+
+        if($request->has("groesse")){
+            $fahrer->groesse = Input::get("groesse");
+        }
+
+        $fahrer->save();
+        $fahrer->touch();
+
+        return $fahrer;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  \App\Fahrer $fahrer
+     * @return \Illuminate\Http\Response
+     */
+    public function show(\App\Fahrer $fahrer)
+    {
+        return $fahrer;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  \App\Fahrer $fahrer
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, \App\Fahrer $fahrer)
+    {
+
+
+        if($request->has("name")){
+            $fahrer->name = Input::get("name");
+        }
+
+        if($request->has("email")){
+            if(Input::get("email") == "_"){
+                $fahrer->email = null;
+            }else{
+                $fahrer->email = Input::get("email");
+            }
+        }
+
+        if($request->has("gewicht")){
+            $fahrer->gewicht = Input::get("gewicht");
+        }
+
+        if($request->has("groesse")){
+            $fahrer->groesse = Input::get("groesse");
+        }
+
+        $fahrer->save();
+        $fahrer->touch();
+
+        return $fahrer;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  \App\Fahrer $fahrer
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(\App\Fahrer $fahrer)
+    {
+        $id = $fahrer->id;
+
+        $fahrer->delete();
+
+        $fahrerTest = Fahrer::find($id);
+
+        if(!$fahrerTest){
+            return response()->json(["msg" => "ok"], 200);
+        }
+
+        return response()->json(["msg" => "error"], 400);
+    }
+}

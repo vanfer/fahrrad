@@ -5,6 +5,8 @@ $(document).ready(function () {
     window.streckeData = { data: [], labels: [] };
     window.leistungData = { data: [], labels: [] };
 
+    window.selectedUserRow = 0;
+
     /*
     * Aktualisierung der Daten: Charts und Fahredetails
     * */
@@ -31,7 +33,165 @@ $(document).ready(function () {
 
         $("#name").attr("value", name);
     });
+
+
+    $(".btnAbmelden").each(function(){
+        $(this).click(function(e){
+            var form = e.currentTarget.closest("form");
+
+            $.ajax({
+                url: $(form).attr("action"),
+                method: $(form).attr("method")
+            }).done(function (data, statusText, xhr){
+                var status = xhr.status;
+
+                if(status == 200){
+                    var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+                    var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+
+                    var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
+
+                    $(fahrerdetailElement).html("Fahrrad ist inaktiv");
+
+                    $(btnAbmelden).css("display", "none");
+                    $(btnAnmelden).css("display", "block");
+                }
+            });
+        });
+    });
+
+    $(".btnAnmelden").each(function(){
+        $(this).click(function(e){
+            var form = e.currentTarget.closest("form");
+
+            var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+            var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+
+            var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
+
+            if(window.selectedUserRow == 0){
+                alert("Bitte zuerst rechts einen Fahrer wählen!");
+            }else{
+
+                // Zuordnen Request
+                console.log();
+                $.ajax({
+                    url: $(form).attr("action") + "/fahrer/" + window.selectedUserRow,
+                    method: "GET"
+                }).done(function (data, statusText, xhr){
+                    var status = xhr.status;
+
+                    if(status == 200){
+                        var fahrrad = data.fahrrad;
+                        var fahrer = data.fahrer;
+
+                        var template = '<div class="row">' +
+                            '<div class="col-md-8">Fahrer:</div>' +
+                            '<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrer.name + '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-8 ">Geschwindigkeit</div>' +
+                            '<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.geschwindigkeit + ' km/h</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">istLeistung</div>' +
+                            '<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.istLeistung + '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">Zurückgelegte Strecke</div>' +
+                            '<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.strecke + '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">Betriebsmodus</div>' +
+                            '<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-3">' +
+                            '<select class="form-control">' +
+                            '<option>Strecke</option>' +
+                            '<option>Konstante Leistung</option>' +
+                            '<option>Konstanter Drehmoment</option>' +
+                            '</select>' +
+                            '</div>' +
+                            '</div>';
+
+                        $(fahrerdetailElement).html(template);
+                    }
+                });
+
+                $(btnAbmelden).css("display", "block");
+                $(btnAnmelden).css("display", "none");
+
+                $(".radio-fahrer-id").each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        });
+    });
+
+    $(".btnDelete").each(function(){
+        $(this).click(function(e){
+            var form = e.currentTarget.closest("form");
+
+            var fahrer_tr = $(this).parents("tr");
+            var fahrer_id = $(fahrer_tr).attr("id");
+
+            $.ajax({
+                url: $(form).attr("action") + "/" + fahrer_id,
+                method: "delete"
+            }).done(function (data, statusText, xhr){
+                var status = xhr.status;
+
+                if(status == 200){
+                    $(fahrer_tr).remove();
+                }
+            });
+        });
+    });
+
+    $(".radio-fahrer-id").click(function () {
+        window.selectedUserRow = $(this).val();
+    });
+
+
+    $("#userTable").editableTableWidget({ editor: $('<input>'), preventColumns: [ 2, 3 ] });
+
+    $('#userTable td').on('change', function(e, newValue) {
+        var form = e.currentTarget.closest("form");
+
+        var changedElement = $(this).attr("id");
+        var fahrer_id = $(this).parents("tr").attr("id");
+
+        var data = null;
+        if(changedElement == "name"){
+            data = { name : newValue };
+        }else if(changedElement == "email"){
+            data = { email : newValue || "_"};
+        }else if(changedElement == "groesse"){
+            data = { groesse : newValue };
+        }else if(changedElement == "gewicht"){
+            data = { gewicht : newValue };
+        }
+
+
+        $.ajax({
+            url: $(form).attr("action") + "/" + fahrer_id,
+            method: $(form).attr("method"),
+            data: data
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            if(status == 200){
+                console.log("success");
+            }
+        });
+
+    });
+
+
 });
+
+/*
+ * Functions
+ * */
+
 
 function updateChartData() {
     // Todo: Strecke id irgendwo her holen (hidden input zb)
