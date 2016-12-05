@@ -20,8 +20,11 @@ class FahrerController extends Controller
             "name" => "required"
         ]);
 
-        $fahrer = new Fahrer();
-        $fahrer->name = Input::get("name");
+        $fahrer = Fahrer::create([
+            "name" => Input::get("name")
+        ]);
+
+        $id = $fahrer->id;
 
         if($request->has("email")){
             $fahrer->email = Input::get("email");
@@ -38,7 +41,7 @@ class FahrerController extends Controller
         $fahrer->save();
         $fahrer->touch();
 
-        return $fahrer;
+        return Fahrer::find($id);
     }
 
     /**

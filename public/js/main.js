@@ -6,6 +6,9 @@ $(document).ready(function () {
     window.leistungData = { data: [], labels: [] };
 
     window.selectedUserRow = 0;
+    window.newUserTemp = {};
+
+    $(".formAddFahrer").hide();
 
     /*
     * Aktualisierung der Daten: Charts und Fahredetails
@@ -33,7 +36,6 @@ $(document).ready(function () {
 
         $("#name").attr("value", name);
     });
-
 
     $(".btnAbmelden").each(function(){
         $(this).click(function(e){
@@ -146,12 +148,10 @@ $(document).ready(function () {
         });
     });
 
-    $(".radio-fahrer-id").click(function () {
-        window.selectedUserRow = $(this).val();
+    $("#btnAddFahrer").click(function (e) {
+        $(".formAddFahrer").show();
+        $("#newUserTable").editableTableWidget();
     });
-
-
-    $("#userTable").editableTableWidget({ editor: $('<input>'), preventColumns: [ 2, 3 ] });
 
     $('#userTable td').on('change', function(e, newValue) {
         var form = e.currentTarget.closest("form");
@@ -185,7 +185,105 @@ $(document).ready(function () {
 
     });
 
+    $(".btnCancel").click(function (e) {
+        $(".formAddFahrer").hide();
+        //window.newUserTemp = {};
+    });
 
+    $(".btnSave").click(function (e) {
+        var form = e.currentTarget.closest("form");
+
+        $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: window.newUserTemp
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            console.log(data);
+
+            var template = '<tr draggable="true" id="' + data.id + '">' +
+                '<th id="th_fahrer_id">' +
+                    '<fieldset>' +
+                        '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.id + '">' +
+                    '</fieldset>' +
+                '</th>' +
+                '<td id="name">' + data.name + '</td>' +
+                '<td id="email">' + data.email + '</td>' +
+                '<td id="gewicht">' + data.gewicht + '</td>' +
+                '<td id="groesse">' + data.groesse + '</td>' +
+                '<th>' +
+                    '<div class="btn btn-default btnDelete">' +
+                        '<span class="glyphicon glyphicon-trash"></span>' +
+                    '</div>' +
+                '</th>' +
+                '</tr>';
+
+            $('#userTable tr:last').after(template);
+            window.newUserTemp = {};
+
+            if(status == 200){
+                console.log("success");
+            }
+        });
+
+        $(".formAddFahrer").hide();
+    });
+
+    $('#newUserTable td').on('change', function(e, newValue) {
+        var form = e.currentTarget.closest("form");
+
+        var changedElement = $(this).attr("id");
+        var fahrer_id = $(this).parents("tr").attr("id");
+
+        var data = null;
+        if(changedElement == "name"){
+            window.newUserTemp.name = newValue;
+        }else if(changedElement == "email"){
+            window.newUserTemp.email = newValue ;
+        }else if(changedElement == "groesse"){
+            window.newUserTemp.groesse = newValue;
+        }else if(changedElement == "gewicht"){
+            window.newUserTemp.gewicht = newValue ;
+        }
+    });
+
+    $(".radio-fahrer-id").click(function () {
+        window.selectedUserRow = $(this).val();
+    });
+
+
+    $("#userTable").editableTableWidget();
+    $('#userTable td').on('change', function(e, newValue) {
+        var form = e.currentTarget.closest("form");
+
+        var changedElement = $(this).attr("id");
+        var fahrer_id = $(this).parents("tr").attr("id");
+
+        var data = null;
+        if(changedElement == "name"){
+            data = { name : newValue };
+        }else if(changedElement == "email"){
+            data = { email : newValue || "_"};
+        }else if(changedElement == "groesse"){
+            data = { groesse : newValue };
+        }else if(changedElement == "gewicht"){
+            data = { gewicht : newValue };
+        }
+
+
+        $.ajax({
+            url: $(form).attr("action") + "/" + fahrer_id,
+            method: $(form).attr("method"),
+            data: data
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            if(status == 200){
+                console.log("success");
+            }
+        });
+    });
 });
 
 /*

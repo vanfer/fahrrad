@@ -17,7 +17,7 @@ class Fahrer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email'
+        'name', 'email', 'groesse', 'gewicht'
     ];
 
     /**
