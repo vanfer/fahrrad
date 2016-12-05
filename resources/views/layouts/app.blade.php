@@ -26,9 +26,9 @@
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <!-- Branding Image -->
+                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" height=50px class="pull-left">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <small>BP-WS1617 Fahrradergometer</small>
+                        <small>Fahrradergometer</small>
                     </a>
                 </div>
             </div>

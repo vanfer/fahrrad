@@ -12,9 +12,7 @@
                 </div>
                 <div class="input-group col-md-4 pull-right">
                     <input type="text" class="form-control" placeholder="Suche nach...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Los!</button>
-                    </span>
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                 </div>
             </div>
             <span class="clearfix"></span>
