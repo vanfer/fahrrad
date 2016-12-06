@@ -25,7 +25,7 @@
     </script>
 </head>
 <body>
-    <div id="app">
+    <div id="app"  >
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -37,7 +37,7 @@
             </div>
         </nav>
 
-        <div class="main-wrapper">
+        <div class="main-wrapper ">
             @yield('content')
         </div>
 

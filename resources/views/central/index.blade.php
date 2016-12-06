@@ -5,10 +5,10 @@
     <div class ="container-fluid">
         {{-- Anzeige Streckenmodus  --}}
         <div class="panel panel-default pull-left strecken-panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Streckenmodus</h3>
+            <div class="panel-heading panel-heading-zd">
+                <h3 class="panel-title panel-title-zd">Strecke</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-body-zd">
                 <div id="track-wrapper col-lg-12">
                     <canvas id="track"></canvas>
                 </div>
@@ -17,10 +17,10 @@
 
         {{-- Anzeige der Leistung im Modus konstante Leistung und konstanter Drehmoment --}}
         <div class="panel panel-default pull-left leistung-panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Leistung</h3>
+            <div class="panel-heading panel-heading-zd">
+                <h3 class="panel-title panel-title-zd">Leistung</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-body-zd">
                 <div id="energy-current-wrapper col-lg-12">
                     <canvas id="energy-current"></canvas>
                 </div>
@@ -29,17 +29,17 @@
 
         {{-- Anzeige Gesamtenergie  --}}
         <div class="panel panel-default pull-left gesamtleistung-panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Gesamtleistung</h3>
+            <div class="panel-heading panel-heading-zd">
+                <h3 class="panel-title panel-title-zd">Gesamtleistung</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-body-zd">
                 <div id="energy-wrapper col-lg-12">
                     <canvas id="energy"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="clear"></div>
+        <div class="clearfix"></div>
     </div>
 
 
@@ -54,8 +54,9 @@
         @include("central.highscore")
         {{-- Anzeige der Batterieladung  --}}
         @include("central.batterieladung")
-        <div class="clear"></div>
+        <div class="clearfix"></div>
     </div>
+
 
 @endsection
 
