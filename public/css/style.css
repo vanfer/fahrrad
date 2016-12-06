@@ -1,8 +1,30 @@
 /* ##### General ##### */
 * {}
 
+body{
+    background-color:#F5F7FA;
+}
+
+/* ############################## Zentrales Display ##################################### */
+
+.panel-heading-zd{
+    background: #AAB2BD !important;
+    border-bottom-color: #E6E9ED !important;
+}
+
+.panel-title-zd{
+    font-size: 24pt;
+}
+
+.panel-body-zd{
+    font-size: 16pt;
+}
+
 /* ##### Streckenmodus #####*/
 .strecken-panel{
+    background: #E6E9ED!important;
+    border: 0px;
+    height:350px;
     margin-left:1.5%;
     margin-right:1.5%;
     min-width: 250px;
@@ -11,6 +33,9 @@
 
 /* ##### Leistung im Leistungs- oder Drehmoment-Modi #####*/
 .leistung-panel{
+    background: #E6E9ED!important;
+    border: 0px;
+    height:350px;
     margin-left:1.5%;
     margin-right:1.5%;
     min-width: 250px;
@@ -19,6 +44,9 @@
 
 /* ##### Gesamtleistung #####*/
 .gesamtleistung-panel{
+    background: #E6E9ED!important;
+    border: 0px;
+    height:350px;
     margin-left:1.5%;
     margin-right:1.5%;
     min-width: 250px;
@@ -33,22 +61,152 @@
     width: 30%;
 }
 
+.fahrerinformation{
+    padding: 2px 2px 2px 20px;
+}
+
+.header-f1{
+    background-color:#EC87C0 !important;
+    border-bottom-color: #EC87C0 !important;
+}
+
+.body-f1{
+    background-color:#FFADDC !important;
+}
+
+.header-f2{
+    background-color:#5D9CEC !important;
+    border-bottom-color: #5D9CEC !important;
+}
+
+.body-f2{
+    background-color:#95C3FF !important;
+}
+
+.header-f3{
+    background-color:#FFCE54 !important;
+    border-bottom-color: #FFCE54 !important;
+}
+
+.body-f3{
+    background-color:#FFDD83 !important;
+}
+
+.inaktives_fahrrad{
+
+}
+
 /* ##### Tagesstatistik #####*/
 .tagesstatistik-panel{
+    background: #E6E9ED!important;
+    border: 0px;
+    height:240px;
     margin-left:1.5%;
     margin-right:1.5%;
-    min-width: 250px;
     width: 50%;
+}
+
+.circle{
+    border-radius: 50%;
+    border: solid #AAB2BD;
+    border-width: 6px;
+    height: 150px;
+    width: 150px;
+    margin:0 auto;
+}
+
+.circle_headline{
+    background-color: #E6E9ED;
+    min-height:20px;
+    margin: -25px auto;
+    text-align: center;
+    padding:4px;
+    font-size: 18pt;
+}
+
+.circle_value{
+    font-size:26pt;
+    margin: 10% 0;
+    text-align: center;
+}
+
+/* ##### Highscore #####*/
+.highscore-panel{
+    background: #E6E9ED!important;
+    border: 0px;
+    height:240px;
+    margin-left:1.5%;
+    margin-right:1.5%;
+    min-width:250px;
+    width:20%;
 }
 
 /* ##### Batterie #####*/
 .batterie-panel{
+    background: #E6E9ED!important;
+    border: 0px;
+    height:240px;
     margin-left:1.5%;
     margin-right:1.5%;
     min-width: 250px;
     width: 20%;
 }
 
+#batterie_wrapper {
+    width:224px;
+    margin: 10% auto;
+}
+
+.batterie{
+    background: #ffffff;
+    display: block;
+    float: left;
+    height: 94px;
+    position: relative;
+}
+
+.batterie:before {
+    background: transparent;
+    border: 6px solid #AAB2BD;
+    border-radius: 2px;
+    content: "";
+    display: block;
+    height: 100px;
+    margin: -6px;
+    position: absolute;
+    width: 200px;
+    z-index:2000;
+}
+
+.batterie:after{
+    background: #AAB2BD;
+    border-radius: 2px;
+    content: "";
+    display: block;
+    height: 60px;
+    margin: 14px 192px ;
+    position: absolute;
+    width:30px;
+    z-index:0;
+}
+
+@-webkit-keyframes charge {
+    from { width: 0px; background: #8CC152; }
+    to { width: 192px; background: #8CC152; }
+}
+
+.charge {
+    -webkit-animation: charge 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes discharge {
+    from { width: 192px; background: #BF263C; }
+    to { width: 0px; background: #BF263C; }
+}
+
+.discharge {
+    -webkit-animation: discharge 20s ease-in-out infinite;
+}
 
 /* ##### Logout ##### */
 #btnLogout{
@@ -65,9 +223,7 @@
 }
 
 /* ##### Misc ##### */
-.clear{
-    clear: both;
-}
+
 
 /* ##### Mobile ##### */
 #fahrrad-information-wrapper-mobile{
