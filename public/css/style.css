@@ -16,6 +16,12 @@ body{
     font-size: 24pt;
 }
 
+
+.navbar {
+    background-color: white;
+    border-color: black;
+}
+
 .panel-body-zd{
     font-size: 16pt;
 }
@@ -103,6 +109,7 @@ body{
     height:240px;
     margin-left:1.5%;
     margin-right:1.5%;
+    min-width: 250px;
     width: 50%;
 }
 
@@ -222,6 +229,52 @@ body{
     width: 100%;
 }
 
+/* ##### Admin ##### */
+#panelAdmin {
+    border: solid 1px;
+    border-radius: 2px;
+    border-color: black;
+}
+
+#panelHeadingAdmin {
+    background-color: #72b128;
+    border-bottom-color: black;
+}
+
+#panelTitelAdmin {
+    padding-top: 10px;
+    color: white;
+}
+
+#panelBodyAdmin {
+    background-color: #ade073;
+}
+
+#betriebsmodusAuswahl {
+    width: 220px;
+}
+
+#betriebsmodusText {
+    padding-top: 9px;
+}
+
+.table {
+    border-color: black;
+}
+
+.table>thead {
+    background-color: #caeca7;
+}
+
+.table-bordered td,.table-bordered th{
+    border-color: black !important;
+}
+
+.table-striped>tbody>tr {
+    background-color: #caeca7;
+}
+
+
 /* ##### Misc ##### */
 
 
@@ -245,5 +298,3 @@ body{
     height: 25%;
     width: 100%;
 }
-
-
