@@ -1,6 +1,15 @@
 /* ##### General ##### */
 * {}
 
+body {
+    background:#e6e9ed;
+}
+
+.navbar {
+    background-color: white;
+    border-color: black;
+}
+
 /* ##### Streckenmodus #####*/
 .strecken-panel{
     margin-left:1.5%;
@@ -63,6 +72,52 @@
     position: absolute;
     width: 100%;
 }
+
+/* ##### Admin ##### */
+#panelAdmin {
+    border: solid 1px;
+    border-radius: 2px;
+    border-color: black;
+}
+
+#panelHeadingAdmin {
+    background-color: #72b128;
+    border-bottom-color: black;
+}
+
+#panelTitelAdmin {
+    padding-top: 10px;
+    color: white;
+}
+
+#panelBodyAdmin {
+    background-color: #ade073;
+}
+
+#betriebsmodusAuswahl {
+    width: 220px;
+}
+
+#betriebsmodusText {
+    padding-top: 9px;
+}
+
+.table {
+    border-color: black;
+}
+
+.table>thead {
+    background-color: #caeca7;
+}
+
+.table-bordered td,.table-bordered th{
+    border-color: black !important;
+}
+
+.table-striped>tbody>tr {
+    background-color: #caeca7;
+}
+
 
 /* ##### Misc ##### */
 .clear{
