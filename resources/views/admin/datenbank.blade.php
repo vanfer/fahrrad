@@ -1,7 +1,7 @@
 <div class="col-md-6">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title pull-left">Fahrer</h3>
+    <div class="panel panel-default" id="panelAdmin">
+        <div class="panel-heading" id="panelHeadingAdmin">
+            <h3 class="panel-title pull-left" id="panelTitelAdmin">Fahrer</h3>
             <div class="row col-md-12 ">
                 <div class="btn-group pull-right" role="group">
                     <div type="button" class="btn btn-default" id="btnAddFahrer">
@@ -11,13 +11,13 @@
                     <button type="button" class="btn btn-default">Hilfe</button>
                 </div>
                 <div class="input-group col-md-4 pull-right">
-                    <input type="text" class="form-control" placeholder="Suche nach..." id="q" name="q">
+                    <input type="text" class="form-control" placeholder="Suche" id="q" name="q">
                     <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                 </div>
             </div>
             <span class="clearfix"></span>
         </div>
-        <div class="panel-body ">
+        <div class="panel-body" id="panelBodyAdmin">
 
 
 

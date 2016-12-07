@@ -5,6 +5,11 @@ body{
     background-color:#F5F7FA;
 }
 
+.navbar {
+    background-color: white;
+    border-color: black;
+}
+
 /* ############################## Zentrales Display ##################################### */
 
 .panel-heading-zd{
@@ -14,12 +19,6 @@ body{
 
 .panel-title-zd{
     font-size: 24pt;
-}
-
-
-.navbar {
-    background-color: white;
-    border-color: black;
 }
 
 .panel-body-zd{
@@ -229,7 +228,8 @@ body{
     width: 100%;
 }
 
-/* ##### Admin ##### */
+/* ############################## Zentrales Display ##################################### */
+
 #panelAdmin {
     border: solid 1px;
     border-radius: 2px;
@@ -237,7 +237,7 @@ body{
 }
 
 #panelHeadingAdmin {
-    background-color: #72b128;
+    background-color: #72B128;
     border-bottom-color: black;
 }
 
@@ -247,9 +247,10 @@ body{
 }
 
 #panelBodyAdmin {
-    background-color: #ade073;
+    background-color: #ADE073;
 }
 
+/* ##### Fahrradinformationen #####*/
 #betriebsmodusAuswahl {
     width: 220px;
 }
@@ -258,12 +259,13 @@ body{
     padding-top: 9px;
 }
 
+/* ##### Datenbanktabelle #####*/
 .table {
     border-color: black;
 }
 
 .table>thead {
-    background-color: #caeca7;
+    background-color: #CAECA7;
 }
 
 .table-bordered td,.table-bordered th{
@@ -271,7 +273,7 @@ body{
 }
 
 .table-striped>tbody>tr {
-    background-color: #caeca7;
+    background-color: #CAECA7;
 }
 
 
