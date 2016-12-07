@@ -26,15 +26,11 @@
 </head>
 <body>
     <div id="app"  >
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" height=50px class="pull-left">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <small>Fahrradergometer</small>
+        <nav class="navbar">
+                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" height=100px class="pull-right">
+                    <a class="softwaretitel" href="{{ url('/') }}">
+                        <span>SPIN WiSe 16/17 Fahrradergometer</span>
                     </a>
-                </div>
-            </div>
         </nav>
 
         <div class="main-wrapper ">
