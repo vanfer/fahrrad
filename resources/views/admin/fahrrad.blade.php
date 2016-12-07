@@ -33,28 +33,28 @@
             <div class="panel-body" id="panelBodyAdmin">
                 @if($fahrrad->fahrer_id)
                     <div class="row">
-                        <div class="col-md-6">Fahrer:</div>
-                        <div id="fahrername-anzeige-{{ $fahrrad->id }}" class="col-md-3">{{ $fahrrad->getFahrerName() }}</div>
+                        <div class="col-md-4">Fahrer:</div>
+                        <div id="fahrername-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->getFahrerName() }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 ">Geschwindigkeit</div>
-                        <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-md-3">{{ $fahrrad->geschwindigkeit }} km/h</div>
+                        <div class="col-md-4 ">Geschwindigkeit</div>
+                        <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->geschwindigkeit }} km/h</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">Gesamtleistung</div>
-                        <div id="istLeistung-anzeige-{{ $fahrrad->id }}" class="col-md-3">{{ $fahrrad->istLeistung }}</div>
+                        <div class="col-md-4">Gesamtleistung</div>
+                        <div id="istLeistung-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->istLeistung }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">Zurückgelegte Strecke</div>
-                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-3">{{ $fahrrad->strecke }}</div>
+                        <div class="col-md-4">Zurückgelegte Strecke</div>
+                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->strecke }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">Fahrdauer</div>
-                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-3"></div>
+                        <div class="col-md-4">Fahrdauer</div>
+                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>
-                        <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-3">
+                        <div class="col-md-4" id="betriebsmodusText">Betriebsmodus</div>
+                        <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-4">
                             <select class="form-control" id="betriebsmodusAuswahl">
                                 <option>Strecke</option>
                                 <option>Konstante Leistung</option>

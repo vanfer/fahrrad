@@ -11,7 +11,7 @@
                     <button type="button" class="btn btn-default">Hilfe</button>
                 </div>
                 <div class="input-group col-md-4 pull-right">
-                    <input type="text" class="form-control" placeholder="Suche nach..." id="q" name="q">
+                    <input type="text" class="form-control" placeholder="Suche" id="q" name="q">
                     <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                 </div>
             </div>
