@@ -31,6 +31,9 @@ body{
     color:#323133;
 }
 
+.panel {
+    box-shadow: 5px 5px 5px #999;
+}
 
 /* ############################## Zentrales Display ##################################### */
 
@@ -269,6 +272,18 @@ body{
 
 /* ############################## Zentrales Display ##################################### */
 
+.btn {
+    border: solid 1px;
+}
+
+.form-control {
+    border: solid 1px;
+}
+
+.input-group-addon{
+    border: solid 1px;
+}
+
 #panelAdmin {
     border: solid 1px;
     border-radius: 2px;
@@ -298,6 +313,11 @@ body{
     padding-top: 9px;
 }
 
+/* ##### Fahrer #####*/
+#fahrerNav {
+
+}
+
 /* ##### Datenbanktabelle #####*/
 .table {
     border-color: black;
@@ -313,6 +333,10 @@ body{
 
 .table-striped>tbody>tr {
     background-color: #CAECA7;
+}
+
+.table-hover tbody tr:hover  {
+    background-color: #C9DCB5;
 }
 
 
