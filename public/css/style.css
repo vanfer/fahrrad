@@ -6,29 +6,38 @@ body{
     font-family: "Arial";
 }
 
-.navbar {
+.main-wrapper{
+    width:100%;
+    margin:auto;
+    height:100%;
+}
+
+.header{
     background-color: #F5F7FA;
     border-color: #F5F7FA;
-    height:100px;
-    margin-left: auto;
-    margin-right:auto;
-    padding-left: 15px;
-    padding-right: 15px;
-    width:1872px;
+    width:100%;
+    margin:auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.softwaretitel-wrapper{
+    margin-left:2.5%;
 }
 
 .softwaretitel{
     color: black;
-    display: table-cell;
     font-size: xx-large;
-    vertical-align: middle;
-    height:80px;
-    padding-top:18px;
+    text-decoration: none;
 }
 
 .softwaretitel:hover{
     text-decoration: none;
     color:#323133;
+}
+
+.logo{
+    margin-right:2.5%;
 }
 
 .panel {
@@ -56,11 +65,11 @@ body{
     border: solid 1px black;
     border-radius: 2px;
     height:350px;
-    margin-left: 15px;
-    margin-right:15px;
-    margin-top:5px;
+    margin-left:2.5%;
+    margin-bottom: 2% !important;
     min-width: 300px;
-    width: 594px;
+    width:30%;
+    z-index:0;
 }
 
 /* ##### Leistung im Leistungs- oder Drehmoment-Modi #####*/
@@ -69,41 +78,40 @@ body{
     border: solid 1px black;
     border-radius: 2px;
     height:350px;
-    margin-left: 15px;
-    margin-right:15px;
-    margin-top:5px;
+    margin-left:2.5%;
+    margin-bottom: 2% !important;
     min-width: 300px;
-    width: 594px;
+    width:30%;
 }
 
 /* ##### Gesamtleistung #####*/
 .gesamtleistung-panel{
     background: #E6E9ED!important;
     border: solid 1px black;
-    border-radius: 2px;
+    border-radius: 2px;;
     height:350px;
-    margin-left: 15px;
-    margin-right:15px;
-    margin-top:5px;
+    margin-left:2.5%;
+    margin-bottom: 2% !important;
     min-width: 300px;
-    width: 594px;
+    width:30%;
 }
 
 /* ##### Fahrradinformationen #####*/
 .fahrrad-information-panel{
     border: solid 1px black;
     border-radius: 2px;
-    margin-left: 15px;
-    margin-right:15px;
-    margin-top:15px;
+    margin-bottom: 2% !important;
+    width:30%;
+    margin-left:2.5%;
+    min-height:258px;
     min-width: 300px;
-    width: 594px;
 }
 
 .fahrerinformation{
     padding: 2px 2px 2px 20px;
 }
 
+/* ### Fahrrad 1 ### */
 .header-f1{
     background-color:#EC87C0 !important;
     border-bottom-color: black !important;
@@ -111,9 +119,10 @@ body{
 
 .body-f1{
     background-color:#FFADDC !important;
-    height:203px;
+    min-height:200px;
 }
 
+/* ### Fahrrad 2 ### */
 .header-f2{
     background-color:#5D9CEC !important;
     border-bottom-color: black !important;
@@ -121,9 +130,10 @@ body{
 
 .body-f2{
     background-color:#95C3FF !important;
-    height:203px;
+    min-height:200px;
 }
 
+/* ### Fahrrad 3 ### */
 .header-f3{
     background-color:#FFCE54 !important;
     border-bottom-color: black !important;
@@ -131,7 +141,7 @@ body{
 
 .body-f3{
     background-color:#FFDD83 !important;
-    height:203px;
+    min-height:200px;
 }
 
 .inaktives_fahrrad{
@@ -142,12 +152,11 @@ body{
     background: #E6E9ED!important;
     border: solid 1px black;
     border-radius: 2px;
-    height:245px;
-    margin-left:15px;
-    margin-right:15px;
-    margin-top:15px;
-    min-width: 250px;
-    width: 896px;
+    height:250px;
+    margin-left:2.5%;
+    margin-bottom: 1% !important;
+    min-width: 300px;
+    width:50%;
 }
 
 .circle{
@@ -179,12 +188,15 @@ body{
     background: #E6E9ED!important;
     border: solid 1px black;
     border-radius: 2px;
-    height:245px;
-    margin-left:15px;
-    margin-right:15px;
-    margin-top:15px;
-    min-width:250px;
-    width:442px;
+    height:250px;
+    margin-left:2.5%;
+    margin-bottom: 1% !important;
+    min-width: 300px;
+    width:20%;
+}
+
+.platzierung{
+    margin:1.5%;
 }
 
 /* ##### Batterie #####*/
@@ -192,12 +204,11 @@ body{
     background: #E6E9ED!important;
     border: solid 1px black;
     border-radius: 2px;
-    height:245px;
-    margin-left:15px;
-    margin-right:15px;
-    margin-top:15px;
-    min-width: 250px;
-    width: 442px;
+    height:250px;
+    margin-left:2.5%;
+    margin-bottom: 1% !important;
+    min-width: 300px;
+    width:20%;
 }
 
 #batterie_wrapper {
@@ -274,6 +285,7 @@ body{
 
 .btn {
     border: solid 1px;
+    margin-left:5px; /* oder 2px oder -1 px damit die doppelkante weg geht*/
 }
 
 .form-control {
@@ -333,15 +345,46 @@ body{
 
 .table-striped>tbody>tr {
     background-color: #CAECA7;
+
 }
 
 .table-hover tbody tr:hover  {
     background-color: #C9DCB5;
 }
 
+.smartphone-overlay{
+    display: none;
+}
 
 /* ##### Misc ##### */
 
+/* Breite beträgt höchstens 1024px */
+@media (max-device-width: 768px) {
+    #app{
+       display: none;
+    }
+
+    .smartphone-overlay{
+        display: block;
+        width:100%;
+        height:100%;
+        background-color: #F5F7FA;
+        position: absolute;
+        padding:5%;
+    }
+
+    .smartphone-overlay-text{
+        margin:auto;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .logo-smartphone{
+        display: block;
+        margin:auto;
+    }
+
+}
 
 /* ##### Mobile ##### */
 #fahrrad-information-wrapper-mobile{

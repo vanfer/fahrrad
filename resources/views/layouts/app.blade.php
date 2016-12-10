@@ -25,15 +25,29 @@
     </script>
 </head>
 <body>
-    <div id="app"  >
-        <nav class="navbar">
-                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" height=100px class="pull-right">
+
+    <div class="smartphone-overlay">
+            <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="logo-smartphone">
+        <div class="smartphone-overlay-text">
+            <span>Die von Ihnen gewünschte Seite oder Funktion steht leider nicht zur Verfügung.</span>
+        </div>
+    </div>
+
+    <div id="app">
+        <div class="header">
+            <nav class="container-fluid">
+                <div class="logo">
+                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="pull-right">
+                </div>
+                <div class="softwaretitel-wrapper">
                     <a class="softwaretitel" href="{{ url('/') }}">
                         <span>SPIN WiSe 16/17 Fahrradergometer</span>
                     </a>
-        </nav>
+                </div>
+            </nav>
+        </div>
 
-        <div class="main-wrapper ">
+        <div class="main-wrapper">
             @yield('content')
         </div>
 
