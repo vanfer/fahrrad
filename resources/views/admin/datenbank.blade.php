@@ -2,12 +2,12 @@
     <div class="panel panel-default" id="panelAdmin">
         <div class="panel-heading" id="panelHeadingAdmin">
             <h3 class="panel-title pull-left" id="panelTitelAdmin">Fahrer</h3>
-            <div class="row col-md-12 ">
-                <div class="btn-group pull-right" role="group">
-                    <div type="button" class="btn btn-default" id="btnAddFahrer">
+            <div class="row col-md-12" id="fahrerNav">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default" id="btnAddFahrer">
                         <span class="glyphicon glyphicon-plus"></span>
                         Fahrer hinzufügen
-                    </div>
+                    </button>
                     <button type="button" class="btn btn-default">Hilfe</button>
                 </div>
                 <div class="input-group col-md-4 pull-right">
@@ -72,6 +72,7 @@
                             <th>Email</th>
                             <th>Gewicht</th>
                             <th>Größe</th>
+                            <th>Betriebsmodus</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -87,6 +88,7 @@
                             <td id="email">{{$f->email}}</td>
                             <td id="gewicht">{{$f->gewicht}}</td>
                             <td id="groesse">{{$f->groesse}}</td>
+                            <td id="betriebsmodus"></td>
                             <th>
                                 <div class="btn btn-default btnDelete">
                                     <span class="glyphicon glyphicon-trash"></span>
