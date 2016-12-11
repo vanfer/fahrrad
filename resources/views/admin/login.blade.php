@@ -13,14 +13,11 @@
                 </h3>
                 <span class="clearfix"></span>
             </div>
-            <form class="panel-body form-inline" id="panelBodyAdmin">
+            <form class="panel-body form-inline" id="panelBodyAdmin" action="{{ url("admin/login") }}" method="post">
                 <div class="form-group">
-                    <form action="{{ url("admin/login") }}" method="post">
-                        <input class="form-control" type="password" name="password" placeholder="Admin-Passwort">
-                        <input class="btn btn-default" type="submit" value="Login">
-                        {{ csrf_field() }}
-                    </form>
-                </div>
+                    <input class="form-control" type="password" name="password" placeholder="Admin-Passwort">
+                    <input class="btn btn-default" type="submit" value="Login">
+                    {{ csrf_field() }}
             </form>
         </div>
     </div>

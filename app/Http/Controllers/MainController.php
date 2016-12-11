@@ -95,7 +95,8 @@ class MainController extends Controller
 
     public function zuordnungHerstellen(\App\Fahrrad $fahrrad, \App\Fahrer $fahrer)
     {
-        if($fahrrad->fahrer_id == null){
+        $fahrer_fahrrad = Fahrrad::whereFahrerId($fahrer->id)->first();
+        if($fahrrad->fahrer_id == null && !$fahrer_fahrrad){
             $fahrrad->fahrer_id = $fahrer->id;
             $fahrrad->save();
             $fahrrad->touch();

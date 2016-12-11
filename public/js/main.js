@@ -129,19 +129,19 @@ $(document).ready(function () {
                             '</div>';
 
                         $(fahrerdetailElement).html(template);
+
+                        $(btnAbmelden).css("display", "block");
+                        $(btnAnmelden).css("display", "none");
+
+                        $(".radio-fahrer-id").each(function () {
+                            $(this).prop('checked', false);
+                        });
+                        window.selectedUserRow = 0;
                     }
-                });
-
-                $(btnAbmelden).css("display", "block");
-                $(btnAnmelden).css("display", "none");
-
-                $(".radio-fahrer-id").each(function () {
-                    $(this).prop('checked', false);
                 });
             }
         });
     });
-
 
     $("#btnAddFahrer").click(function (e) {
         $(".formAddFahrer").show();
@@ -210,6 +210,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $('#userTable td').on('change', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
@@ -226,7 +227,6 @@ $(document).ready(function () {
         }else if(changedElement == "gewicht"){
             data = { gewicht : newValue };
         }
-
 
         $.ajax({
             url: $(form).attr("action") + "/" + fahrer_id,
