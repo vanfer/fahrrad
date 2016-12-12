@@ -1,3 +1,4 @@
+<div class="row">
 <div class="col-md-6">
     <div class="panel panel-default" id="panelAdmin">
         <div class="panel-heading" id="panelHeadingAdmin">
@@ -88,7 +89,17 @@
                             <td id="email">{{$f->email}}</td>
                             <td id="gewicht">{{$f->gewicht}}</td>
                             <td id="groesse">{{$f->groesse}}</td>
-                            <td id="betriebsmodus"></td>
+                            <td id="betriebsmodus">
+                                <select class="form-control" id="betriebsmodusAuswahlFahrer">
+                                    @foreach($modi as $modus)
+                                        @if($f->modus_id == $modus->id)
+                                            <option value="{{ $modus->id }}" selected>{{ $modus->name }}</option>
+                                        @else
+                                            <option value="{{ $modus->id }}">{{ $modus->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
                             <th>
                                 <div class="btn btn-default btnDelete">
                                     <span class="glyphicon glyphicon-trash"></span>
@@ -102,4 +113,5 @@
         </div>
     </div>
     <div class="clear"></div>
+</div>
 </div>

@@ -13,13 +13,16 @@
 
 /* Resourcen*/
 Route::resource("fahrer", "FahrerController");
+Route::resource("fahrrad", "FahrradController");
 
 /*
 |--------------------------------------------------------------------------
 | Zentrale Ansicht
+|
+| Zeigt die Startseite mit Informationen an
 |--------------------------------------------------------------------------
 */
-Route::get("central", "MainController@index"); /* Zeigt die Startseite mit Informationen an */
+Route::get("central", "MainController@showCentral"); /*  */
 
 /*
 |--------------------------------------------------------------------------
@@ -50,9 +53,6 @@ Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
     Route::get("admin/logout", "AdminController@logout");
 });
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Datenaustausch
@@ -68,7 +68,5 @@ Route::get("strecke/{strecke}", "MainController@strecke");
 
 Route::get("leistung", "MainController@leistung");
 
-
-Route::delete("fahrrad/{fahrrad}", "MainController@zuordnungLoeschen");
-
-Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "MainController@zuordnungHerstellen");
+Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "FahrradController@zuordnungHerstellen");
+Route::delete("fahrrad/{fahrrad}", "FahrradController@zuordnungLoeschen");

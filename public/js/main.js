@@ -3,12 +3,13 @@ var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     /*
-     * Setup
+     * Setup & Globale Variablen
      * */
     window.streckeData = { data: [], labels: [] };
     window.leistungData = { data: [], labels: [] };
 
     window.selectedUserRow = 0;
+    window.selectedUserMode = 0;
     window.newUserTemp = {};
 
     $(".formAddFahrer").hide();
@@ -27,7 +28,7 @@ $(document).ready(function () {
     }, 1000);
 
     /*
-     * autocomplete fahrer suche
+     * autocomplete admin fahrer suche
      * */
     $("#q").autocomplete({
         source: "search/autocomplete",
@@ -90,10 +91,13 @@ $(document).ready(function () {
             }else{
 
                 // Zuordnen Request
-                console.log();
+                var url = $(form).attr("action") + "/fahrer/" + window.selectedUserRow;
                 $.ajax({
-                    url: $(form).attr("action") + "/fahrer/" + window.selectedUserRow,
-                    method: "GET"
+                    url: url,
+                    method: "GET",
+                    data: {
+                        modus_id: window.selectedUserMode
+                    }
                 }).done(function (data, statusText, xhr){
                     var status = xhr.status;
 
@@ -136,7 +140,9 @@ $(document).ready(function () {
                         $(".radio-fahrer-id").each(function () {
                             $(this).prop('checked', false);
                         });
+
                         window.selectedUserRow = 0;
+                        window.selectedUserMode = 0;
                     }
                 });
             }
@@ -174,6 +180,13 @@ $(document).ready(function () {
                 '<td id="email">' + data.email + '</td>' +
                 '<td id="gewicht">' + data.gewicht + '</td>' +
                 '<td id="groesse">' + data.groesse + '</td>' +
+                '<td id="betriebsmodus">' +
+                    '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
+                        '<option value="1">Strecke</option>' +
+                        '<option value="2">Konstantes Drehmoment</option>' +
+                        '<option value="3">Konstante Leistung</option>' +
+                    '</select>' +
+                '</td>' +
                 '<th>' +
                     '<div class="btn btn-default btnDelete">' +
                         '<span class="glyphicon glyphicon-trash"></span>' +
@@ -182,6 +195,8 @@ $(document).ready(function () {
                 '</tr>';
 
             $('#userTable tr:last').after(template);
+            $("#userTable").editableTableWidget();
+
             window.newUserTemp = {};
 
             if(status == 200){
@@ -211,7 +226,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#userTable td').on('change', function(e, newValue) {
+    $('#userTable').on('change', 'td', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
         var changedElement = $(this).attr("id");
@@ -226,6 +241,9 @@ $(document).ready(function () {
             data = { groesse : newValue };
         }else if(changedElement == "gewicht"){
             data = { gewicht : newValue };
+        }else if(changedElement == "betriebsmodus"){
+            var selectVal = $(e.currentTarget).find("select").val();
+            data = { modus_id : selectVal };
         }
 
         $.ajax({
@@ -240,7 +258,7 @@ $(document).ready(function () {
             }
         });
     });
-    $('#newUserTable td').on('change', function(e, newValue) {
+    $('#newUserTable').on('change', 'td', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
         var changedElement = $(this).attr("id");
@@ -260,6 +278,7 @@ $(document).ready(function () {
 
     $("#userTable").on("click", ".radio-fahrer-id", function () {
         window.selectedUserRow = $(this).val();
+        window.selectedUserMode = $(this).parents("tr").find("select").val();
     });
 });
 
@@ -367,25 +386,43 @@ function updateCharts() {
     });
 }
 
+function updateFahrradKasten(fahrrad, fahrer){
+    if(fahrrad.fahrer_id == null){
+        // Reset view for ID
+        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "none");
+        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "block");
+
+        $("#fahrername-anzeige-"+fahrrad.id).html("-");
+        $("#geschwindigkeit-anzeige-"+fahrrad.id).html("- km/h");
+        $("#gesamtleistung-anzeige-"+fahrrad.id).html("- Watt");
+        $("#strecke-anzeige-"+fahrrad.id).html("- km");
+    }else{
+        var strname = "";
+        for(var i = 0; i < fahrer.length; i++){
+            if(fahrrad.fahrer_id == fahrer[i].id){
+                strname = fahrer[i].name;
+                break;
+            }
+        }
+
+        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "block");
+        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "none");
+
+        $("#fahrername-anzeige-"+fahrrad.id).html(strname);
+        $("#geschwindigkeit-anzeige-"+fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
+        $("#gesamtleistung-anzeige-"+fahrrad.id).html(fahrrad.istLeistung + " Watt");
+        $("#strecke-anzeige-"+fahrrad.id).html((fahrrad.strecke / 1000) + " km");
+    }
+}
+
 function updateDetails(){
     getDataFromAPI("data", false, function(response) {
-        if(response && response.fahrerleistung ) {
-            if(response && response.fahrrad ) {
-                $.each( response.fahrrad,
-                    function(index, fahrrad) {
-                        var strname = "";
-                        $.each( response.fahrer,
-                            function(index, fahrer) {
-                                strname = (fahrer.id == fahrrad.fahrer_id) ? fahrer.name : "";
-                            }
-                        );
-                        $("#fahrername-"+fahrrad.id).html("Fahrer: " + strname);
-                        $("#geschwindigkeit-anzeige-"+fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
-                        $("#istLeistung-anzeige-"+fahrrad.id).html(fahrrad.istLeistung + " Watt");
-                        $("#strecke-anzeige-"+fahrrad.id).html(fahrrad.strecke + " Meter");
-                    }
-                );
-            }
+        if(response && response.data ) {
+            $.each( response.data.fahrrad,
+                function(index, fahrrad) {
+                    updateFahrradKasten(fahrrad, response.data.fahrer);
+                }
+            );
         }
     });
     /*$.ajax({

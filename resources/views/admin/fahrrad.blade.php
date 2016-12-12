@@ -55,10 +55,14 @@
                     <div class="row">
                         <div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>
                         <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-4">
-                            <select class="form-control" id="betriebsmodusAuswahl">
-                                <option>Strecke</option>
-                                <option>Konstante Leistung</option>
-                                <option>Konstantes Drehmoment</option>
+                            <select class="form-control" id="betriebsmodusAuswahlFahrrad">
+                                @foreach($modi as $modus)
+                                    @if($fahrrad->modus_id == $modus->id)
+                                        <option value="{{ $modus->id }}" selected>{{ $modus->name }}</option>
+                                    @else
+                                        <option value="{{ $modus->id }}">{{ $modus->name }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>

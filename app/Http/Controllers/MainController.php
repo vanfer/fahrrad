@@ -17,7 +17,7 @@ class MainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showCentral()
     {
         return view('central.index')->with("fahrraeder", Fahrrad::all());
     }
@@ -53,18 +53,12 @@ class MainController extends Controller
 
     public function getData()
     {
-        $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
-        $result = [];
-
-        foreach ($fahrraeder as $fahrrad){
-            $result[] = [
-                "id" => $fahrrad->id, // Fahrrad ID
-                "name" => $fahrrad->getFahrerName(), // Fahrer name
-                "istLeistung" => $fahrrad->istLeistung,
-            ];
-        }
-
-        return response()->json(["fahrrad" => $result], 200);
+        return response()->json([
+            "data" => [
+                "fahrrad" => Fahrrad::all(),
+                "fahrer" => Fahrer::whereHas("fahrrad")->get()
+            ]
+        ], 200);
     }
 
     public function strecke(\App\Strecke $strecke)
@@ -93,34 +87,5 @@ class MainController extends Controller
         return response()->json(["fahrerleistung" => $result], 200);
     }
 
-    public function zuordnungHerstellen(\App\Fahrrad $fahrrad, \App\Fahrer $fahrer)
-    {
-        $fahrer_fahrrad = Fahrrad::whereFahrerId($fahrer->id)->first();
-        if($fahrrad->fahrer_id == null && !$fahrer_fahrrad){
-            $fahrrad->fahrer_id = $fahrer->id;
-            $fahrrad->save();
-            $fahrrad->touch();
 
-            return response()->json([
-                "fahrrad" => $fahrrad,
-                "fahrer" => $fahrer
-            ], 200);
-        }else{
-            return response()->json(["msg" => "wird schon benutzt"], 400);
-        }
-    }
-
-    public function zuordnungLoeschen(\App\Fahrrad $fahrrad)
-    {
-        $fahrrad->fahrer_id = null;
-
-        $fahrrad->save();
-        $fahrrad->touch();
-
-        if($fahrrad->fahrer_id == null){
-            return response()->json(["msg" => "ok"], 200);
-        }
-
-        return response()->json(["msg" => "Error"], 400);
-    }
 }
