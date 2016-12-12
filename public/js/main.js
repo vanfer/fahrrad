@@ -25,7 +25,7 @@ $(document).ready(function () {
             updateDetails();
             updateCharts();
         }
-    }, 1000);
+    }, 500);
 
     /*
      * autocomplete admin fahrer suche
@@ -43,6 +43,20 @@ $(document).ready(function () {
     /*
     * Button bindings
     * */
+
+    $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
+        $.ajax({
+            url: $(this).closest("form").attr("action"),
+            method: "PUT",
+            data: { modus_id: $(this).val() }
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            if(status == 200){
+                console.log("success");
+            }
+        });
+    });
 
     $("#btnGenerateName").click(function(){
         var namen = ["test1", "test2", "test3", "test4", "test5", "test6"];

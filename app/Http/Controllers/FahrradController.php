@@ -43,10 +43,10 @@ class FahrradController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  \App\Fahrrad $fahrrad
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(\App\Fahrrad $fahrrad)
     {
         //
     }
@@ -54,10 +54,10 @@ class FahrradController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  \App\Fahrrad $fahrrad
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(\App\Fahrrad $fahrrad)
     {
         //
     }
@@ -66,21 +66,28 @@ class FahrradController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  \App\Fahrrad $fahrrad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, \App\Fahrrad $fahrrad)
     {
-        //
+        if($request->has("modus_id")){
+            $fahrrad->modus_id = Input::get("modus_id");
+        }
+
+        $fahrrad->touch();
+        $fahrrad->save();
+
+        return $fahrrad;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  \App\Fahrrad $fahrrad
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(\App\Fahrrad $fahrrad)
     {
         //
     }

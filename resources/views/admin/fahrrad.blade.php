@@ -30,7 +30,7 @@
                 </div>
                 <span class="clearfix"></span>
             </div>
-            <div class="panel-body" id="panelBodyAdmin">
+            <div class="panel-body panelBodyAdmin" id="panelBodyAdmin">
                 @if($fahrrad->fahrer_id)
                     <div class="row">
                         <div class="col-md-6">Fahrer:</div>
@@ -53,18 +53,20 @@
                         <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>
-                        <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-4">
-                            <select class="form-control" id="betriebsmodusAuswahlFahrrad">
-                                @foreach($modi as $modus)
-                                    @if($fahrrad->modus_id == $modus->id)
-                                        <option value="{{ $modus->id }}" selected>{{ $modus->name }}</option>
-                                    @else
-                                        <option value="{{ $modus->id }}">{{ $modus->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
+                        <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="PUT">
+                            <div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>
+                            <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-4">
+                                <select class="form-control" id="betriebsmodusAuswahlFahrrad">
+                                    @foreach($modi as $modus)
+                                        @if($fahrrad->modus_id == $modus->id)
+                                            <option value="{{ $modus->id }}" selected>{{ $modus->name }}</option>
+                                        @else
+                                            <option value="{{ $modus->id }}">{{ $modus->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </form>
                     </div>
                 @else
                     Fahrrad ist inaktiv
