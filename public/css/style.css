@@ -71,6 +71,9 @@ body{
     font-size: 16pt;
 }
 
+#track{
+}
+
 /* ##### Streckenmodus #####*/
 .strecken-panel{
     background: #E6E9ED!important;
@@ -320,6 +323,56 @@ body{
     -webkit-animation: charge 20s ease-in-out infinite;
 }
 
+@-webkit-keyframes charge1 {
+    from { width: 0; background: #8CC152; z-index: 0;}
+    to { width: 34px; background: #8CC152; z-index: 0;}
+}
+
+.charge1 {
+    -webkit-animation: charge1 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes charge2 {
+    from { width: 40px; background: #8CC152; z-index: 0;}
+    to { width: 74px; background: #8CC152; z-index: 0;}
+}
+
+.charge2 {
+    -webkit-animation: charge2 20s ease-in-out infinite;
+}
+@-webkit-keyframes charge3 {
+    from { width: 80px; background: #8CC152; z-index: 0;}
+    to { width: 114px; background: #8CC152; z-index: 0;}
+}
+
+.charge3 {
+    -webkit-animation: charge3 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes charge4 {
+    from { width: 120px; background: #8CC152; z-index: 0;}
+    to { width: 154px; background: #8CC152; z-index: 0;}
+}
+
+.charge4 {
+    -webkit-animation: charge4 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes charge5 {
+    from { width: 160px ; background: #8CC152; z-index: 0;}
+    to { width: 194px; background: #8CC152; z-index: 0;}
+}
+
+.charge5 {
+    -webkit-animation: charge5 20s ease-in-out infinite;
+}
+
+.charge6{
+    width:194px;
+    background:#8CC152;
+    z-index: 0;
+}
+
 @-webkit-keyframes discharge1 {
     from { width: 34px; background: #BF263C; z-index: 0;}
     to { width: 0; background: #BF263C; z-index: 0;}
@@ -362,6 +415,10 @@ body{
 
 .discharge5 {
     -webkit-animation: discharge5 20s ease-in-out infinite;
+}
+
+.discharge6{
+
 }
 
 /* ##### Logout ##### */
