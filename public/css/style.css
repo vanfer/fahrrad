@@ -6,6 +6,18 @@ body{
     font-family: "Arial";
 }
 
+.smartphone-overlay{
+    display: none;
+}
+
+.smartphone-overlay-text{
+    display: none;
+}
+
+.logo-smartphone{
+    display: none;
+}
+
 .main-wrapper{
     width:100%;
     margin:auto;
@@ -216,12 +228,64 @@ body{
     width:224px;
 }
 
+.balken1{
+    border-right:6px solid #AAB2BD;
+    content:"";
+    display:block;
+    height:88px;
+    width:40px;
+    float:left;
+    z-index: 20000;
+    position: absolute;
+}
+
+.balken2{
+    border-right:6px solid #AAB2BD;
+    content:"";
+    display:block;
+    height:88px;
+    width:40px;
+    margin-left:40px;
+    float:left;
+    z-index: 20000;
+    position: absolute;
+}
+
+.balken3{
+    border-right:6px solid #AAB2BD;
+    content:"";
+    display:block;
+    height:88px;
+    width:40px;
+    margin-left:80px;
+    float:left;
+    z-index: 20000;
+    position: absolute;
+}
+
+.balken4{
+    border-right:6px solid #AAB2BD;
+    content:"";
+    display:block;
+    height:88px;
+    width:40px;
+    margin-left:120px;
+    float:left;
+    z-index: 20000;
+    position: absolute;
+}
+
+.balken5{
+    margin-left:160px;
+    border-right:none;
+}
+
 .batterie{
-    background: #ffffff;
     display: block;
     float: left;
     height: 94px;
-    position: relative;
+    position: absolute;
+    z-index:0;
 }
 
 .batterie:before {
@@ -234,9 +298,7 @@ body{
     margin: -6px;
     position: absolute;
     width: 200px;
-    z-index:2000;
 }
-
 .batterie:after{
     background: #AAB2BD;
     border-radius: 2px;
@@ -258,13 +320,48 @@ body{
     -webkit-animation: charge 20s ease-in-out infinite;
 }
 
-@-webkit-keyframes discharge {
-    from { width: 192px; background: #BF263C; }
-    to { width: 0; background: #BF263C; }
+@-webkit-keyframes discharge1 {
+    from { width: 34px; background: #BF263C; z-index: 0;}
+    to { width: 0; background: #BF263C; z-index: 0;}
 }
 
-.discharge {
-    -webkit-animation: discharge 20s ease-in-out infinite;
+.discharge1 {
+    -webkit-animation: discharge1 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes discharge2 {
+    from { width: 74px; background: #BF263C; z-index: 0;}
+    to { width: 40px; background: #BF263C; z-index: 0;}
+}
+
+.discharge2 {
+    -webkit-animation: discharge2 20s ease-in-out infinite;
+}
+@-webkit-keyframes discharge3 {
+    from { width: 114px; background: #BF263C; z-index: 0;}
+    to { width: 80px; background: #BF263C; z-index: 0;}
+}
+
+.discharge3 {
+    -webkit-animation: discharge3 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes discharge4 {
+    from { width: 154px; background: #BF263C; z-index: 0;}
+    to { width: 120px; background: #BF263C; z-index: 0;}
+}
+
+.discharge4 {
+    -webkit-animation: discharge4 20s ease-in-out infinite;
+}
+
+@-webkit-keyframes discharge5 {
+    from { width: 194px; background: #BF263C; z-index: 0;}
+    to { width: 160px; background: #BF263C; z-index: 0;}
+}
+
+.discharge5 {
+    -webkit-animation: discharge5 20s ease-in-out infinite;
 }
 
 /* ##### Logout ##### */
@@ -352,9 +449,6 @@ body{
     background-color: #C9DCB5;
 }
 
-.smartphone-overlay{
-    display: none;
-}
 
 /* ##### Misc ##### */
 
