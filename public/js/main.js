@@ -3,12 +3,14 @@ var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     /*
-     * Setup
+     * Setup & Globale Variablen
      * */
     window.streckeData = { data: [], labels: [] };
     window.leistungData = { data: [], labels: [] };
+    window.leistungAllAbsolute = 0;
 
     window.selectedUserRow = 0;
+    window.selectedUserMode = 0;
     window.newUserTemp = {};
 
     $(".formAddFahrer").hide();
@@ -27,7 +29,7 @@ $(document).ready(function () {
     }, 1000);
 
     /*
-     * autocomplete fahrer suche
+     * autocomplete admin fahrer suche
      * */
     $("#q").autocomplete({
         source: "search/autocomplete",
@@ -42,6 +44,20 @@ $(document).ready(function () {
     /*
     * Button bindings
     * */
+
+    $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
+        $.ajax({
+            url: $(this).closest("form").attr("action"),
+            method: "PUT",
+            data: { modus_id: $(this).val() }
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            if(status == 200){
+                console.log("success");
+            }
+        });
+    });
 
     $("#btnGenerateName").click(function(){
         var namen = ["test1", "test2", "test3", "test4", "test5", "test6"];
@@ -90,10 +106,13 @@ $(document).ready(function () {
             }else{
 
                 // Zuordnen Request
-                console.log();
+                var url = $(form).attr("action") + "/fahrer/" + window.selectedUserRow;
                 $.ajax({
-                    url: $(form).attr("action") + "/fahrer/" + window.selectedUserRow,
-                    method: "GET"
+                    url: url,
+                    method: "GET",
+                    data: {
+                        modus_id: window.selectedUserMode
+                    }
                 }).done(function (data, statusText, xhr){
                     var status = xhr.status;
 
@@ -102,30 +121,32 @@ $(document).ready(function () {
                         var fahrer = data.fahrer;
 
                         var template = '<div class="row">' +
-                            '<div class="col-md-8">Fahrer:</div>' +
-                            '<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrer.name + '</div>' +
+                            '	<div class="col-md-6">Fahrer:</div>' +
+                            '	<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrer.name + '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8 ">Geschwindigkeit</div>' +
-                            '<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.geschwindigkeit + ' km/h</div>' +
+                            '	<div class="col-md-6 ">Geschwindigkeit</div>' +
+                            '	<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.geschwindigkeit + ' km/h</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8">istLeistung</div>' +
-                            '<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.istLeistung + '</div>' +
+                            '	<div class="col-md-6">Gesamtleistung</div>' +
+                            '	<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.istLeistung + '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8">Zurückgelegte Strecke</div>' +
-                            '<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.strecke + '</div>' +
+                            '	<div class="col-md-6">Zurückgelegte Strecke</div>' +
+                            '	<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.strecke + '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8">Betriebsmodus</div>' +
-                            '<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-3">' +
-                            '<select class="form-control">' +
-                            '<option>Strecke</option>' +
-                            '<option>Konstante Leistung</option>' +
-                            '<option>Konstanter Drehmoment</option>' +
-                            '</select>' +
-                            '</div>' +
+                            '	<form action="./fahrrad/'+fahrrad.id+'" method="PUT">' +
+                            '		<div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>' +
+                            '		<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-4">' +
+                            '			<select class="form-control" id="betriebsmodusAuswahlFahrrad">' +
+                            '				<option value="1">Strecke</option>' +
+                            '				<option value="2">Konstantes Drehmoment</option>' +
+                            '				<option value="3">Konstante Leistung</option>' +
+                            '			</select>' +
+                            '		</div>' +
+                            '	</form>' +
                             '</div>';
 
                         $(fahrerdetailElement).html(template);
@@ -136,7 +157,9 @@ $(document).ready(function () {
                         $(".radio-fahrer-id").each(function () {
                             $(this).prop('checked', false);
                         });
+
                         window.selectedUserRow = 0;
+                        window.selectedUserMode = 0;
                     }
                 });
             }
@@ -174,6 +197,13 @@ $(document).ready(function () {
                 '<td id="email">' + data.email + '</td>' +
                 '<td id="gewicht">' + data.gewicht + '</td>' +
                 '<td id="groesse">' + data.groesse + '</td>' +
+                '<td id="betriebsmodus">' +
+                    '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
+                        '<option value="1">Strecke</option>' +
+                        '<option value="2">Konstantes Drehmoment</option>' +
+                        '<option value="3">Konstante Leistung</option>' +
+                    '</select>' +
+                '</td>' +
                 '<th>' +
                     '<div class="btn btn-default btnDelete">' +
                         '<span class="glyphicon glyphicon-trash"></span>' +
@@ -182,6 +212,8 @@ $(document).ready(function () {
                 '</tr>';
 
             $('#userTable tr:last').after(template);
+            $("#userTable").editableTableWidget();
+
             window.newUserTemp = {};
 
             if(status == 200){
@@ -211,7 +243,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#userTable td').on('change', function(e, newValue) {
+    $('#userTable').on('change', 'td', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
         var changedElement = $(this).attr("id");
@@ -226,6 +258,9 @@ $(document).ready(function () {
             data = { groesse : newValue };
         }else if(changedElement == "gewicht"){
             data = { gewicht : newValue };
+        }else if(changedElement == "betriebsmodus"){
+            var selectVal = $(e.currentTarget).find("select").val();
+            data = { modus_id : selectVal };
         }
 
         $.ajax({
@@ -240,7 +275,7 @@ $(document).ready(function () {
             }
         });
     });
-    $('#newUserTable td').on('change', function(e, newValue) {
+    $('#newUserTable').on('change', 'td', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
         var changedElement = $(this).attr("id");
@@ -260,6 +295,7 @@ $(document).ready(function () {
 
     $("#userTable").on("click", ".radio-fahrer-id", function () {
         window.selectedUserRow = $(this).val();
+        window.selectedUserMode = $(this).parents("tr").find("select").val();
     });
 });
 
@@ -286,12 +322,18 @@ function updateChartData() {
     getDataFromAPI("leistung", true, function(response) {
         if(response && response.fahrerleistung ) {
             window.leistungData = { data: [], labels: [] };
+            window.leistungAllAbsolute = 0;
+
             $.each(response.fahrerleistung,
                 function(index, value) {
                     window.leistungData.labels.push(value.name);
                     window.leistungData.data.push(value.istLeistung);
+
+                    window.leistungAllAbsolute += value.istLeistung;
                 }
             );
+
+            console.log(window.leistungAllAbsolute);
         }
     });
 }
@@ -365,27 +407,82 @@ function updateCharts() {
             }
         }
     });
+    var energy_all_chart = new Chart(document.getElementById("energy"), {
+        type: 'bar',
+        data: {
+            labels: ["Leistung aller Fahrer"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    data: [window.leistungAllAbsolute]
+                }
+            ]
+        },
+        options: {
+            animation: false,
+            scales: {
+                xAxes: [{
+                    display: true
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+function updateFahrradKasten(fahrrad){
+    var cond = fahrrad.fahrer_id == null;
+
+    if(cond){
+        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "none");
+        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "block");
+    }else{
+        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "block");
+        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "none");
+    }
+
+    var name             = cond ? "" : fahrrad.fahrer.name;
+    var modus            = cond ? "" : fahrrad.modus.name;
+    var geschwindigkeit  = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
+    var istLeistung      = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
+    var strecke          = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
+
+    $("#fahrername-anzeige-"+fahrrad.id).html(name);
+    $("#fahrermodus-anzeige-"+fahrrad.id).html(modus);
+    $("#geschwindigkeit-anzeige-"+fahrrad.id).html(geschwindigkeit);
+    $("#gesamtleistung-anzeige-"+fahrrad.id).html(istLeistung);
+    $("#strecke-anzeige-"+fahrrad.id).html(strecke);
 }
 
 function updateDetails(){
-    getDataFromAPI("data", false, function(response) {
-        if(response && response.fahrerleistung ) {
-            if(response && response.fahrrad ) {
-                $.each( response.fahrrad,
-                    function(index, fahrrad) {
-                        var strname = "";
-                        $.each( response.fahrer,
-                            function(index, fahrer) {
-                                strname = (fahrer.id == fahrrad.fahrer_id) ? fahrer.name : "";
-                            }
-                        );
-                        $("#fahrername-"+fahrrad.id).html("Fahrer: " + strname);
-                        $("#geschwindigkeit-anzeige-"+fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
-                        $("#istLeistung-anzeige-"+fahrrad.id).html(fahrrad.istLeistung + " Watt");
-                        $("#strecke-anzeige-"+fahrrad.id).html(fahrrad.strecke + " Meter");
-                    }
-                );
-            }
+    getDataFromAPI("data", true, function(response) {
+        if(response && response.data ) {
+            $.each( response.data.fahrrad,
+                function(index, fahrrad) {
+                    updateFahrradKasten(fahrrad);
+                }
+            );
         }
     });
     /*$.ajax({

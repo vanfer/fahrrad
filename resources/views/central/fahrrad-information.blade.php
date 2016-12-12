@@ -5,36 +5,40 @@
                 <h3 class="panel-title panel-title-zd">Fahrrad #{{ $fahrrad->id }}</h3>
             </div>
             <div class="panel-body panel-body-zd body-f{{ $fahrrad->id}}">
-                @if($fahrrad->fahrer_id)
-                    <div class="row ">
+                <div id="fahrrad-inaktiv-wrapper-{{ $fahrrad->id}}" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-12 fahrerinformation">Fahrrad ist inaktiv</div>
+                    </div>
+                </div>
+
+                <div id="fahrrad-aktiv-wrapper-{{ $fahrrad->id}}" style="display: none;">
+                    <div class="row">
                         <div class="col-lg-6 fahrerinformation">Fahrer:</div>
-                        <div id="fahrername-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation">{{ $fahrrad->getFahrerName() }}</div>
+                        <div id="fahrername-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
                     </div>
 
-                    <div class="row ">
+                    <div class="row">
+                        <div class="col-lg-6 fahrerinformation">Modus:</div>
+                        <div id="fahrermodus-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-6 fahrerinformation ">Geschwindigkeit:</div>
-                        <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation">{{ $fahrrad->geschwindigkeit }} km/h</div>
+                        <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
                     </div>
-                    <div class="row ">
+                    <div class="row">
                         <div class="col-lg-6 fahrerinformation">Gesamtleistung:</div>
-                        <div class="col-lg-6 fahrerinformation"></div>
+                        <div id="gesamtleistung-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
                     </div>
-                    <div class="row ">
+                    <div class="row">
                         <div class="col-lg-6 fahrerinformation">Zurückgelegte Kilometer:</div>
-                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation">{{ $fahrrad->strecke }} m</div>
+                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
                     </div>
-                    <div class="row ">
+                    <div class="row">
                         <div class="col-lg-6 fahrerinformation">Fahrdauer:</div>
-                        <div class="col-lg-6 fahrerinformation"></div>
+                        <div id="fahrdauer-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
                     </div>
-                @else
-                    <div class="inaktives_fahrrad">Fahrrad ist inaktiv</div>
-                @endif
-
-
-
-
-
+                </div>
 
             </div>
         </div>

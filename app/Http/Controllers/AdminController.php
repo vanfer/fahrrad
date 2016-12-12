@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Fahrer;
 use App\Fahrrad;
 use App\Http\Middleware\Admin;
+use App\Modus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use League\Flysystem\Exception;
@@ -20,7 +21,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.index')->with("fahrer", Fahrer::all())->with("fahrraeder", Fahrrad::all());
+        return view('admin.index')
+            ->with("fahrer", Fahrer::all())
+            ->with("modi", Modus::all())
+            ->with("fahrraeder", Fahrrad::all());
     }
 
     public function getLogin()

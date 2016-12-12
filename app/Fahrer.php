@@ -31,6 +31,16 @@ class Fahrer extends Authenticatable
 
     public function fahrrad()
     {
-        return $this->hasOne("App\Fahrrad")->get();
+        return $this->hasOne("App\Fahrrad");
+    }
+
+    public function modus()
+    {
+        return $this->belongsTo("App\Modus");
+    }
+
+    public function modusName()
+    {
+        return Modus::whereId($this->modus_id)->pluck("name")->first();
     }
 }

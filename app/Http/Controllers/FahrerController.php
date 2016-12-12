@@ -64,8 +64,6 @@ class FahrerController extends Controller
      */
     public function update(Request $request, \App\Fahrer $fahrer)
     {
-
-
         if($request->has("name")){
             $fahrer->name = Input::get("name");
         }
@@ -84,6 +82,10 @@ class FahrerController extends Controller
 
         if($request->has("groesse")){
             $fahrer->groesse = Input::get("groesse");
+        }
+
+        if($request->has("modus_id")){
+            $fahrer->modus_id = Input::get("modus_id");
         }
 
         $fahrer->save();

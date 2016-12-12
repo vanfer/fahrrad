@@ -24,6 +24,9 @@ class CreateStructureTable extends Migration
             $table->integer('gewicht')->default(80);
             $table->float('groesse')->default(1.8);
 
+            $table->integer("modus_id")->unsigned()->default(1);
+            $table->foreign("modus_id")->references("id")->on("modus");
+
             $table->rememberToken();
             $table->timestamps();
         });
@@ -31,6 +34,12 @@ class CreateStructureTable extends Migration
         Schema::create('strecke', function (Blueprint $table) {
             $table->increments('id');
             $table->string("name");
+        });
+
+        Schema::create('modus', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string("name");
+            $table->timestamps();
         });
 
         Schema::create('abschnitt', function (Blueprint $table) {
@@ -66,6 +75,9 @@ class CreateStructureTable extends Migration
             $table->integer("abschnitt_id")->unsigned()->nullable();
             $table->foreign("abschnitt_id")->references("id")->on("abschnitt");
 
+            $table->integer("modus_id")->unsigned()->default(1);
+            $table->foreign("modus_id")->references("id")->on("modus");
+
             $table->timestamps();
         });
 
@@ -83,6 +95,7 @@ class CreateStructureTable extends Migration
 
         Schema::dropIfExists('abschnitt');
         Schema::dropIfExists('strecke');
+        Schema::dropIfExists('modus');
         Schema::dropIfExists('fahrrad');
         Schema::dropIfExists('fahrer');
 
