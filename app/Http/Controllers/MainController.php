@@ -55,8 +55,7 @@ class MainController extends Controller
     {
         return response()->json([
             "data" => [
-                "fahrrad" => Fahrrad::all(),
-                "fahrer" => Fahrer::whereHas("fahrrad")->get()
+                "fahrrad" => Fahrrad::with("modus")->with("fahrer")->get()
             ]
         ], 200);
     }

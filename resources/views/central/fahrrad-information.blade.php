@@ -18,6 +18,11 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-lg-6 fahrerinformation">Modus:</div>
+                        <div id="fahrermodus-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-lg-6 fahrerinformation ">Geschwindigkeit:</div>
                         <div id="geschwindigkeit-anzeige-{{ $fahrrad->id }}" class="col-lg-6 fahrerinformation"></div>
                     </div>

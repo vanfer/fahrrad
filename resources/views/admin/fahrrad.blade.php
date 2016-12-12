@@ -49,10 +49,6 @@
                         <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->strecke }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">Fahrdauer</div>
-                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4"></div>
-                    </div>
-                    <div class="row">
                         <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="PUT">
                             <div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>
                             <div id="betriebsmodus-anzeige-{{ $fahrrad->id }}" class="col-md-4">

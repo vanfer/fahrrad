@@ -25,7 +25,7 @@ $(document).ready(function () {
             updateDetails();
             updateCharts();
         }
-    }, 500);
+    }, 1000);
 
     /*
      * autocomplete admin fahrer suche
@@ -120,30 +120,32 @@ $(document).ready(function () {
                         var fahrer = data.fahrer;
 
                         var template = '<div class="row">' +
-                            '<div class="col-md-8">Fahrer:</div>' +
-                            '<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrer.name + '</div>' +
+                            '	<div class="col-md-6">Fahrer:</div>' +
+                            '	<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrer.name + '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8 ">Geschwindigkeit</div>' +
-                            '<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.geschwindigkeit + ' km/h</div>' +
+                            '	<div class="col-md-6 ">Geschwindigkeit</div>' +
+                            '	<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.geschwindigkeit + ' km/h</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8">istLeistung</div>' +
-                            '<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.istLeistung + '</div>' +
+                            '	<div class="col-md-6">Gesamtleistung</div>' +
+                            '	<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.istLeistung + '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8">Zurückgelegte Strecke</div>' +
-                            '<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-3">' + fahrrad.strecke + '</div>' +
+                            '	<div class="col-md-6">Zurückgelegte Strecke</div>' +
+                            '	<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.strecke + '</div>' +
                             '</div>' +
                             '<div class="row">' +
-                            '<div class="col-md-8">Betriebsmodus</div>' +
-                            '<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-3">' +
-                            '<select class="form-control">' +
-                            '<option>Strecke</option>' +
-                            '<option>Konstante Leistung</option>' +
-                            '<option>Konstanter Drehmoment</option>' +
-                            '</select>' +
-                            '</div>' +
+                            '	<form action="./fahrrad/'+fahrrad.id+'" method="PUT">' +
+                            '		<div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>' +
+                            '		<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-4">' +
+                            '			<select class="form-control" id="betriebsmodusAuswahlFahrrad">' +
+                            '				<option value="1">Strecke</option>' +
+                            '				<option value="2">Konstantes Drehmoment</option>' +
+                            '				<option value="3">Konstante Leistung</option>' +
+                            '			</select>' +
+                            '		</div>' +
+                            '	</form>' +
                             '</div>';
 
                         $(fahrerdetailElement).html(template);
@@ -400,41 +402,36 @@ function updateCharts() {
     });
 }
 
-function updateFahrradKasten(fahrrad, fahrer){
-    if(fahrrad.fahrer_id == null){
-        // Reset view for ID
+function updateFahrradKasten(fahrrad){
+    var cond = fahrrad.fahrer_id == null;
+
+    if(cond){
         $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "none");
         $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "block");
-
-        $("#fahrername-anzeige-"+fahrrad.id).html("-");
-        $("#geschwindigkeit-anzeige-"+fahrrad.id).html("- km/h");
-        $("#gesamtleistung-anzeige-"+fahrrad.id).html("- Watt");
-        $("#strecke-anzeige-"+fahrrad.id).html("- km");
     }else{
-        var strname = "";
-        for(var i = 0; i < fahrer.length; i++){
-            if(fahrrad.fahrer_id == fahrer[i].id){
-                strname = fahrer[i].name;
-                break;
-            }
-        }
-
         $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "block");
         $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "none");
-
-        $("#fahrername-anzeige-"+fahrrad.id).html(strname);
-        $("#geschwindigkeit-anzeige-"+fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
-        $("#gesamtleistung-anzeige-"+fahrrad.id).html(fahrrad.istLeistung + " Watt");
-        $("#strecke-anzeige-"+fahrrad.id).html((fahrrad.strecke / 1000) + " km");
     }
+
+    var name             = cond ? "" : fahrrad.fahrer.name;
+    var modus            = cond ? "" : fahrrad.modus.name;
+    var geschwindigkeit  = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
+    var istLeistung      = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
+    var strecke          = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
+
+    $("#fahrername-anzeige-"+fahrrad.id).html(name);
+    $("#fahrermodus-anzeige-"+fahrrad.id).html(modus);
+    $("#geschwindigkeit-anzeige-"+fahrrad.id).html(geschwindigkeit);
+    $("#gesamtleistung-anzeige-"+fahrrad.id).html(istLeistung);
+    $("#strecke-anzeige-"+fahrrad.id).html(strecke);
 }
 
 function updateDetails(){
-    getDataFromAPI("data", false, function(response) {
+    getDataFromAPI("data", true, function(response) {
         if(response && response.data ) {
             $.each( response.data.fahrrad,
                 function(index, fahrrad) {
-                    updateFahrradKasten(fahrrad, response.data.fahrer);
+                    updateFahrradKasten(fahrrad);
                 }
             );
         }
