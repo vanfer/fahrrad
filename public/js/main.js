@@ -242,7 +242,10 @@ $(document).ready(function () {
             var status = xhr.status;
 
             if(status == 200){
+
+
                 $("#panelBodyAdmin-"+data.id).html("Fahrrad ist inaktiv");
+
                 $(fahrer_tr).remove();
             }
         });
