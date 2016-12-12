@@ -4,7 +4,12 @@
     </div>
     <div class="panel-body panel-body-zd">
         <div id="batterie_wrapper">
-            <div class="batterie discharge"></div>
+            <div class="balken1"></div>
+            <div class="balken2"></div>
+            <div class="balken3"></div>
+            <div class="balken4"></div>
+            <div class="balken5"></div>
+            <div class="batterie discharge6"></div> {{-- hier discharge[ANZAHL]  oder charge[ANZAHL] anpassen --}}
         </div>
     </div>
 </div>
