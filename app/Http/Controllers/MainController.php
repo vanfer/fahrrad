@@ -38,7 +38,7 @@ class MainController extends Controller
         $fahrrad = Fahrrad::where("ip", $request->input("ip"))->first();
 
         if($fahrrad){
-            $fahrrad->strecke = $request->input("strecke");
+            $fahrrad->strecke = $fahrrad->strecke + $request->input("strecke");
             $fahrrad->geschwindigkeit = $request->input("geschwindigkeit");
             $fahrrad->istLeistung = $request->input("istLeistung");
             $fahrrad->save();
