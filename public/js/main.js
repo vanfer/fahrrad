@@ -17,6 +17,7 @@ $(document).ready(function () {
 
     /*
     * Aktualisierung der Daten: Charts und Fahredetails
+    *
     * */
     window.setInterval(function () {
         // Updates der Charts nur auf den Seiten Central und Mobile
@@ -310,9 +311,11 @@ function updateChartData() {
     getDataFromAPI("strecke/" + strecke_id, true, function(response) {
         if(response && response.strecke ) {
             window.streckeData = { data: [], labels: [] };
+            var gesamtlaenge = 0;
             $.each(response.strecke.abschnitte,
                 function(index, value) {
-                    window.streckeData.labels.push(value.laenge); // X
+                    gesamtlaenge += value.laenge;
+                    window.streckeData.labels.push(gesamtlaenge); // X
                     window.streckeData.data.push(value.hoehe);  // Y
                 }
             );
@@ -332,8 +335,6 @@ function updateChartData() {
                     window.leistungAllAbsolute += value.istLeistung;
                 }
             );
-
-            console.log(window.leistungAllAbsolute);
         }
     });
 }
@@ -345,11 +346,26 @@ function updateCharts() {
         type: 'line',
         data: {
             labels: window.streckeData.labels, // X AXIS
-            datasets: [{
-                label: "My First dataset",
-                fill: true,
-                data: window.streckeData.data // Y AXIS
-            }]
+            datasets: [
+                {
+                    type: "line",
+                    label: "My First dataset",
+                    fill: true,
+                    data: window.streckeData.data // Y AXIS
+                },
+                {
+                    type: "bubble",
+                    label: "My First dataset",
+                    fill: true,
+                    data: [
+                        {
+                            x: 215,
+                            y: 0,
+                            r: 10
+                        }
+                    ] // Y AXIS
+                }
+            ]
         },
         options: {
             animation: false,
@@ -359,6 +375,7 @@ function updateCharts() {
                 }],
                 yAxes: [{
                     ticks: {
+                        suggestedMax: 300,
                         beginAtZero: true
                     }
                 }]
