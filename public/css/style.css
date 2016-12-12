@@ -286,7 +286,7 @@ body{
 .batterie{
     display: block;
     float: left;
-    height: 94px;
+    height: 88px;
     position: absolute;
     z-index:0;
 }
@@ -320,7 +320,7 @@ body{
 }
 
 .charge {
-    -webkit-animation: charge 20s ease-in-out infinite;
+    -webkit-animation: charge 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes charge1 {
@@ -329,7 +329,7 @@ body{
 }
 
 .charge1 {
-    -webkit-animation: charge1 20s ease-in-out infinite;
+    -webkit-animation: charge1 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes charge2 {
@@ -338,7 +338,7 @@ body{
 }
 
 .charge2 {
-    -webkit-animation: charge2 20s ease-in-out infinite;
+    -webkit-animation: charge2 10s ease-in-out infinite;
 }
 @-webkit-keyframes charge3 {
     from { width: 80px; background: #8CC152; z-index: 0;}
@@ -346,7 +346,7 @@ body{
 }
 
 .charge3 {
-    -webkit-animation: charge3 20s ease-in-out infinite;
+    -webkit-animation: charge3 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes charge4 {
@@ -355,7 +355,7 @@ body{
 }
 
 .charge4 {
-    -webkit-animation: charge4 20s ease-in-out infinite;
+    -webkit-animation: charge4 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes charge5 {
@@ -364,7 +364,7 @@ body{
 }
 
 .charge5 {
-    -webkit-animation: charge5 20s ease-in-out infinite;
+    -webkit-animation: charge5 10s ease-in-out infinite;
 }
 
 .charge6{
@@ -379,7 +379,7 @@ body{
 }
 
 .discharge1 {
-    -webkit-animation: discharge1 20s ease-in-out infinite;
+    -webkit-animation: discharge1 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes discharge2 {
@@ -388,7 +388,7 @@ body{
 }
 
 .discharge2 {
-    -webkit-animation: discharge2 20s ease-in-out infinite;
+    -webkit-animation: discharge2 10s ease-in-out infinite;
 }
 @-webkit-keyframes discharge3 {
     from { width: 114px; background: #BF263C; z-index: 0;}
@@ -396,7 +396,7 @@ body{
 }
 
 .discharge3 {
-    -webkit-animation: discharge3 20s ease-in-out infinite;
+    -webkit-animation: discharge3 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes discharge4 {
@@ -405,7 +405,7 @@ body{
 }
 
 .discharge4 {
-    -webkit-animation: discharge4 20s ease-in-out infinite;
+    -webkit-animation: discharge4 10s ease-in-out infinite;
 }
 
 @-webkit-keyframes discharge5 {
@@ -414,7 +414,7 @@ body{
 }
 
 .discharge5 {
-    -webkit-animation: discharge5 20s ease-in-out infinite;
+    -webkit-animation: discharge5 10s ease-in-out infinite;
 }
 
 .discharge6{
@@ -466,7 +466,7 @@ body{
     padding-top: 10px;
 }
 
-#panelBodyAdmin {
+.panelBodyAdmin {
     background-color: #ADE073;
 }
 

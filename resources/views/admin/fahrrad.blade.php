@@ -30,7 +30,7 @@
                 </div>
                 <span class="clearfix"></span>
             </div>
-            <div class="panel-body panelBodyAdmin" id="panelBodyAdmin">
+            <div class="panel-body panelBodyAdmin" id="panelBodyAdmin-{{ $fahrrad->id }}">
                 @if($fahrrad->fahrer_id)
                     <div class="row">
                         <div class="col-md-6">Fahrer:</div>

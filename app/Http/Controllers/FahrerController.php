@@ -102,13 +102,14 @@ class FahrerController extends Controller
      */
     public function destroy(\App\Fahrer $fahrer)
     {
-        $id = $fahrer->id;
+        $fahrradId = $fahrer->fahrrad()->pluck("id");
 
         $fahrer->delete();
 
-        $fahrerTest = Fahrer::find($id);
-
-        if(!$fahrerTest){
+        if(!Fahrer::find($fahrer->id)){
+            if($fahrradId){ // Beim löschen die Fahrrad ID mitgeben für Interface Update
+                return response()->json(["msg" => "ok", "id" => $fahrradId[0]], 200);
+            }
             return response()->json(["msg" => "ok"], 200);
         }
 

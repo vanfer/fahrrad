@@ -186,8 +186,6 @@ $(document).ready(function () {
         }).done(function (data, statusText, xhr){
             var status = xhr.status;
 
-            console.log(data);
-
             var template = '<tr draggable="true" id="' + data.id + '">' +
                 '<th id="th_fahrer_id">' +
                     '<fieldset>' +
@@ -217,8 +215,13 @@ $(document).ready(function () {
 
             window.newUserTemp = {};
 
+
+            $(form).find("tbody > tr > td").each(function (index, value) {
+                $(value).html("");
+            });
+
             if(status == 200){
-                console.log("success");
+                //console.log("success");
             }
         });
 
@@ -239,6 +242,7 @@ $(document).ready(function () {
             var status = xhr.status;
 
             if(status == 200){
+                $("#panelBodyAdmin-"+data.id).html("Fahrrad ist inaktiv");
                 $(fahrer_tr).remove();
             }
         });
@@ -268,6 +272,26 @@ $(document).ready(function () {
             url: $(form).attr("action") + "/" + fahrer_id,
             method: $(form).attr("method"),
             data: data
+        }).done(function (data, statusText, xhr){
+            var status = xhr.status;
+
+            if(status == 200){
+                console.log("success");
+            }
+        });
+    });
+    $('#userTable').on('change', 'th', function(e, newValue) {
+        var form = e.currentTarget.closest("form");
+
+        var changedElement = $(this).attr("id");
+        var fahrer_id = $(this).parents("tr").attr("id");
+
+        var selectVal = $(form).find("select").val();
+
+        $.ajax({
+            url: $(form).attr("action") + "/" + fahrer_id,
+            method: $(form).attr("method"),
+            data: { modus_id : selectVal }
         }).done(function (data, statusText, xhr){
             var status = xhr.status;
 
