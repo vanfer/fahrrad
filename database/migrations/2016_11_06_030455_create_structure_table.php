@@ -15,6 +15,7 @@ class CreateStructureTable extends Migration
     public function up()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        #DB::statement('PRAGMA foreign_keys = OFF');
 
         Schema::create('fahrer', function (Blueprint $table) {
             $table->increments('id');
@@ -82,6 +83,7 @@ class CreateStructureTable extends Migration
         });
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        #DB::statement('PRAGMA foreign_keys = ON');
     }
 
     /**
@@ -92,6 +94,7 @@ class CreateStructureTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        #DB::statement('PRAGMA foreign_keys = OFF');
 
         Schema::dropIfExists('abschnitt');
         Schema::dropIfExists('strecke');
@@ -100,5 +103,6 @@ class CreateStructureTable extends Migration
         Schema::dropIfExists('fahrer');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        #DB::statement('PRAGMA foreign_keys = ON');
     }
 }

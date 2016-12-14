@@ -22,6 +22,11 @@ class MainController extends Controller
         return view('central.index')->with("fahrraeder", Fahrrad::all());
     }
 
+    public function setBatteryData(Request $request)
+    {
+
+    }
+
     public function setData(Request $request)
     {
         $v = Validator::make($request->all(), [
