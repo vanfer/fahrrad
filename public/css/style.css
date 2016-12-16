@@ -286,7 +286,7 @@ body{
 .batterie{
     display: block;
     float: left;
-    height: 94px;
+    height: 88px;
     position: absolute;
     z-index:0;
 }
@@ -467,6 +467,10 @@ body{
 }
 
 #panelBodyAdmin {
+    background-color: #ADE073;
+}
+
+.panelBodyAdmin {
     background-color: #ADE073;
 }
 

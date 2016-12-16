@@ -18,6 +18,7 @@ class TestDataTableSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        #DB::statement('PRAGMA foreign_keys = OFF');
 
         DB::table('fahrer')->truncate();
         Fahrer::create(['name' => 'test', 'email' => 'test@test.local']);
@@ -49,5 +50,6 @@ class TestDataTableSeeder extends Seeder
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        #DB::statement('PRAGMA foreign_keys = ON');
     }
 }

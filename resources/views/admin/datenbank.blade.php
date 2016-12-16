@@ -86,7 +86,7 @@
                             <td id="email">{{$f->email}}</td>
                             <td id="gewicht">{{$f->gewicht}}</td>
                             <td id="groesse">{{$f->groesse}}</td>
-                            <td id="betriebsmodus">
+                            <th id="betriebsmodus">
                                 <select class="form-control" id="betriebsmodusAuswahlFahrer">
                                     @foreach($modi as $modus)
                                         @if($f->modus_id == $modus->id)
@@ -96,7 +96,7 @@
                                         @endif
                                     @endforeach
                                 </select>
-                            </td>
+                            </th>
                             <th>
                                 <div class="btn btn-default btnDelete">
                                     <span class="glyphicon glyphicon-trash"></span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Fahrer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use League\Flysystem\Exception;
 
 class FahrerController extends Controller
 {
@@ -102,13 +103,18 @@ class FahrerController extends Controller
      */
     public function destroy(\App\Fahrer $fahrer)
     {
-        $id = $fahrer->id;
-
+        $fahrradId = null;
+        if($fahrer->fahrrad()){
+            $fahrradId = $fahrer->fahrrad()->pluck("id");
+        }else{
+            $fahrradId = null;
+        }
         $fahrer->delete();
 
-        $fahrerTest = Fahrer::find($id);
-
-        if(!$fahrerTest){
+        if(!Fahrer::find($fahrer->id)){
+            if($fahrradId != null){ // Beim löschen die Fahrrad ID mitgeben für Interface Update
+                return response()->json(["msg" => "ok", "id" => $fahrradId], 200);
+            }
             return response()->json(["msg" => "ok"], 200);
         }
 
