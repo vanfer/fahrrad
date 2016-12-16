@@ -8,6 +8,8 @@
     @include("admin.datenbank")
 
     <div class="container pull-right text-right">
-        <a href="{{ url("admin/logout") }}">Logout</a>
+        <a class="btn btn-default" href="{{ url("admin/logout") }}">Logout</a>
     </div>
+
+    @include("admin.dialoge")
 @endsection
