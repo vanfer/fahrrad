@@ -3,33 +3,29 @@
         <div class="panel panel-default" id="panelAdmin">
             <div class="panel-heading" id="panelHeadingAdmin">
                 <h3 class="panel-title pull-left" id="panelTitelAdmin">Fahrrad #{{$fahrrad->id}}</h3>
-                <div class="btn-group pull-right clearfix" role="group">
-                    <div class="pull-left">
-                        <div class="fahrradBtnAbmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "none" : "block"  }}">
-                            <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="DELETE">
-                                <button type="button" class="btn btn-default btnAbmelden">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                    Zuordnung löschen
-                                </button>
-                            </form>
-                        </div>
-                        <div class="fahrradBtnAnmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "block" : "none"  }}">
-                            <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="POST">
-                                <button type="button" class="btn btn-default btnAnmelden">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    Zuordnung hinzufügen
-                                </button>
-                            </form>
-                        </div>
+                <div class="pull-right">
+                    <div class="fahrradBtnAbmelden pull-left" style="display: {{ ($fahrrad->fahrer_id == null) ? "none" : "block"  }}">
+                        <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="DELETE">
+                            <button type="button" class="btn btn-default btnAbmelden">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Zuordnung löschen
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-default btnHilfeAktiv">Hilfe</button>
                     </div>
-
-                    <div class="pull-left">
-                        <button type="button" class="btn btn-default">Hilfe</button>
+                    <div class="fahrradBtnAnmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "block" : "none"  }}">
+                        <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="POST">
+                            <button type="button" class="btn btn-default btnAnmelden">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Zuordnung hinzufügen
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-default btnHilfeInaktiv ">Hilfe</button>
                     </div>
-
                 </div>
                 <span class="clearfix"></span>
             </div>
+
             <div class="panel-body panelBodyAdmin" id="panelBodyAdmin">
                 @if($fahrrad->fahrer_id)
                     <div class="row">
@@ -45,8 +41,12 @@
                         <div id="istLeistung-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->istLeistung }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">Zurückgelegte Strecke</div>
+                        <div class="col-md-6">Zurückgelegte Kilometer</div>
                         <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->strecke }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">Fahrdauer</div>
+                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4"></div>
                     </div>
                     <div class="row">
                         <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="PUT">

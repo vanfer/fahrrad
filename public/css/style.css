@@ -452,7 +452,7 @@ body{
 
 #panelAdmin {
     border: solid 1px;
-    border-radius: 2px;
+    border-radius: 4px;
     border-color: black;
 }
 
@@ -481,7 +481,8 @@ body{
 
 /* ##### Fahrer #####*/
 #fahrerNav {
-
+    margin-top: -25px;
+    margin-left: 15px;
 }
 
 /* ##### Datenbanktabelle #####*/
@@ -504,6 +505,19 @@ body{
 
 .table-hover tbody tr:hover  {
     background-color: #C9DCB5;
+}
+
+/* ##### Dialoge #####*/
+.hilfe.ui-dialog {
+    width: 600px !important;
+    background-color: #F5F7FA;
+    border: 2px solid black !important;
+}
+
+.hilfe.ui-dialog > .ui-widget-header {
+    background-color: #72B128;
+    border-color: black;
+    color: white;
 }
 
 

@@ -1,5 +1,5 @@
 // WICHTIG: IP ändern, oder einfach localhost nehmen!
-var BASE_PATH = "http://localhost/fahrrad/public/";
+var BASE_PATH = "http://localhost/Ergometer/public/";
 
 $(document).ready(function () {
     /*
@@ -82,6 +82,8 @@ $(document).ready(function () {
                 if(status == 200){
                     var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
                     var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+                    var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+                    var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
 
                     var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
 
@@ -89,6 +91,8 @@ $(document).ready(function () {
 
                     $(btnAbmelden).css("display", "none");
                     $(btnAnmelden).css("display", "block");
+                    $(btnHilfeInaktiv).css("display", "block");
+                    $(btnHilfeAktiv).css("display", "none");
                 }
             });
         });
@@ -99,6 +103,8 @@ $(document).ready(function () {
 
             var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
             var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+            var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+            var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
 
             var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
 
@@ -154,6 +160,8 @@ $(document).ready(function () {
 
                         $(btnAbmelden).css("display", "block");
                         $(btnAnmelden).css("display", "none");
+                        $(btnHilfeInaktiv).css("display", "none");
+                        $(btnHilfeAktiv).css("display", "block");
 
                         $(".radio-fahrer-id").each(function () {
                             $(this).prop('checked', false);
@@ -298,6 +306,37 @@ $(document).ready(function () {
         window.selectedUserRow = $(this).val();
         window.selectedUserMode = $(this).parents("tr").find("select").val();
     });
+
+    $("#hilfeTabelle").dialog({
+        dialogClass:"hilfe",
+        resizable: false,
+        autoOpen: false,
+    });
+    $("#btnHilfeTabelle").on("click", function() {
+        $("#hilfeTabelle").dialog("open");
+    });
+
+    $("#hilfeInaktiv").dialog({
+        dialogClass:"hilfe",
+        resizable: false,
+        autoOpen: false,
+    });
+    $(".btnHilfeInaktiv").on("click", function() {
+        $("#hilfeInaktiv").dialog("open");
+    });
+
+    $("#hilfeAktiv").dialog({
+        dialogClass:"hilfe",
+        resizable: false,
+        autoOpen: false,
+    });
+    $(".btnHilfeAktiv").on("click", function() {
+        $("#hilfeAktiv").dialog("open");
+    });
+
+    var closeBtn = $('.ui-dialog-titlebar-close');
+    closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-close"></span>');
+
 });
 
 /*
