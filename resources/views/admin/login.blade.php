@@ -18,6 +18,7 @@
                     <input class="form-control" type="password" name="password" placeholder="Admin-Passwort">
                     <input class="btn btn-default" type="submit" value="Login">
                     {{ csrf_field() }}
+                </div>
             </form>
         </div>
     </div>
