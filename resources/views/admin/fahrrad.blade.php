@@ -4,23 +4,31 @@
             <div class="panel-heading" id="panelHeadingAdmin">
                 <h3 class="panel-title pull-left" id="panelTitelAdmin">Fahrrad #{{$fahrrad->id}}</h3>
                 <div class="pull-right">
-                    <div class="fahrradBtnAbmelden pull-left" style="display: {{ ($fahrrad->fahrer_id == null) ? "none" : "block"  }}">
-                        <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="DELETE">
-                            <button type="button" class="btn btn-default btnAbmelden">
-                                <span class="glyphicon glyphicon-trash"></span>
-                                Zuordnung löschen
-                            </button>
-                        </form>
+                    <div class="fahrradBtnAbmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "none" : "block"  }}">
+                        <div class="pull-left">
+                            <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="DELETE">
+                                <button type="button" class="btn btn-default btnAbmelden">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Zuordnung löschen
+                                </button>
+                            </form>
+                        </div>
+                        <div class="pull-right">
                         <button type="button" class="btn btn-default btnHilfeAktiv">Hilfe</button>
+                        </div>
                     </div>
                     <div class="fahrradBtnAnmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "block" : "none"  }}">
-                        <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="POST">
-                            <button type="button" class="btn btn-default btnAnmelden">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                Zuordnung hinzufügen
-                            </button>
-                        </form>
-                        <button type="button" class="btn btn-default btnHilfeInaktiv ">Hilfe</button>
+                        <div class="pull-left">
+                            <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="POST">
+                                <button type="button" class="btn btn-default btnAnmelden">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Zuordnung hinzufügen
+                                </button>
+                            </form>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default btnHilfeInaktiv ">Hilfe</button>
+                        </div>
                     </div>
                 </div>
                 <span class="clearfix"></span>

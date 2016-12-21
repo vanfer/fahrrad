@@ -423,10 +423,6 @@ $(document).ready(function () {
     $(".btnHilfeAktiv").on("click", function() {
         $("#hilfeAktiv").dialog("open");
     });
-
-    var closeBtn = $('.ui-dialog-titlebar-close');
-    closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-close"></span>');
-
 });
 
 /*

@@ -28,8 +28,8 @@
         verschiedene Möglichkeiten ihm einen Fahrer zuzuordnen:</p>
     <ol>
         <li><b><u>Wenn der Fahrer bereits in der Fahrertabelle (rechts) eingetragen ist:
-                </u></b><br>Zunächst muss der Fahrer in der Tabelle markiert werden über den
-                Button in der ersten Spalte. Daraufhin muss der Button "Zuordnung hinzufügen"
+                </u></b><br>Zunächst muss der Fahrer in der Tabelle über den
+                Button in der ersten Spalte markiert werden. Daraufhin muss der Button "Zuordnung hinzufügen"
                 geklickt werden.</li>
         <li><b><u>Wenn der Fahrer noch nicht in der Fahrertabelle (rechts) eingetragen ist:
                 </u></b><br>Mit dem Button "Fahrer hinzufügen" kann ein neuer Fahrer
@@ -50,7 +50,7 @@
         <li><b><u>Zurückgelegte Strecke:</u></b> Die gefahrene Strecke in Kilometern</li>
         <li><b><u>Fahrdauer:</u></b> Die Zeit, die der Fahrer bereits fährt, in Minuten</li>
         <li><b><u>Betriebsmodus:</u></b> Es stehen drei verschiedene Betriebsmodi zur Auswahl,
-            die über die Dropdown-Liste ausgewählt werden können:
+            die über die Dropdown-Liste eingestellt werden können:
             <ol>
                 <li><b>Streckenmodus:</b> In diesem Modus fährt der Fahrer eine virtuelle Strecke ab. Die Strecke ist
                 in Abschnitte gegliedert. Jeder Abschnitt hat eine andere Steigung. So hat der Fahrer das Gefühl, dass
@@ -66,7 +66,7 @@
             </ol>
         </li>
     </ul>
-    <p>Über den Button "Zuordnung löschen" wird der Fahrer vom Fahrrad gelöscht und dieses wird
+    <p>Über den Button "Zuordnung löschen" wird die Zuordnung vom Fahrer zum Fahrrad gelöscht und dieses wird
         als inaktiv gekennzeichnet.</p>
 </div>
 
