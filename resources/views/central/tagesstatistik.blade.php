@@ -13,21 +13,21 @@
             </div>
             <div class="col-lg-3">
                 <div class="circle">
-                    <div class="circle_value">300<br> km</div>
+                    <div class="circle_value">300</div>
                 </div>
-                <div class="circle_headline">Strecke</div>
+                <div class="circle_headline">Kilometer</div>
             </div>
             <div class="col-lg-3 "
             ><div class="circle">
-                    <div class="circle_value">300<br>m</div>
+                    <div class="circle_value">300</div>
                 </div>
-                <div class="circle_headline">Höhenprofil</div>
+                <div class="circle_headline">Höhenmeter</div>
             </div>
             <div class="col-lg-3 ">
                 <div class="circle">
-                    <div class="circle_value">300<br> kWh</div>
+                    <div class="circle_value">300</div>
                 </div>
-                <div class="circle_headline">Energie</div>
+                <div class="circle_headline">Energie (kWh)</div>
             </div>
         </div>
     </div>

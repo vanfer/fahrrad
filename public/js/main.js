@@ -1,5 +1,5 @@
 // WICHTIG: IP ändern, oder einfach localhost nehmen!
-var BASE_PATH = "http://localhost/Ergometer/public/";
+var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     /*
@@ -69,35 +69,67 @@ $(document).ready(function () {
         $("#name").attr("value", name);
     });
 
+
+
     $(".btnAbmelden").each(function(){
+
+       $( "#zuordnungLoeschen" ).dialog({
+            autoOpen: false,
+            dialogClass:"warnung",
+            resizable: false,
+        });
+
         $(this).click(function(e){
+
             var form = e.currentTarget.closest("form");
 
-            $.ajax({
-                url: $(form).attr("action"),
-                method: $(form).attr("method")
-            }).done(function (data, statusText, xhr){
-                var status = xhr.status;
+            $( "#zuordnungLoeschen" ).dialog( "open" );
 
-                if(status == 200){
-                    var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-                    var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-                    var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-                    var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+            $( "#btnZuordnungLoeschenNein" ).on( "click", function() {
+                $( "#zuordnungLoeschen" ).dialog( "close" );
+            });
 
-                    var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
+            //Erzeugt Bug
+            $( "#btnZuordnungLoeschenJa" ).on( "click", function() {
+                $( "#zuordnungLoeschen" ).dialog( "close" );
 
-                    $(fahrerdetailElement).html("Fahrrad ist inaktiv");
+                $.ajax({
+                    url: $(form).attr("action"),
+                    method: $(form).attr("method")
+                }).done(function (data, statusText, xhr){
 
-                    $(btnAbmelden).css("display", "none");
-                    $(btnAnmelden).css("display", "block");
-                    $(btnHilfeInaktiv).css("display", "block");
-                    $(btnHilfeAktiv).css("display", "none");
-                }
+                    var status = xhr.status;
+
+                        if(status == 200){
+
+                            var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+                            var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+                            var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+                            var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+
+                            var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
+
+                            $(fahrerdetailElement).html("Fahrrad ist inaktiv");
+
+                            $(btnAbmelden).css("display", "none");
+                            $(btnAnmelden).css("display", "block");
+                            $(btnHilfeInaktiv).css("display", "block");
+                            $(btnHilfeAktiv).css("display", "none");
+
+                        }
+                    });
             });
         });
     });
+
     $(".btnAnmelden").each(function(){
+
+        $( "#keinFahrerAusgewaehlt" ).dialog({
+            dialogClass:"fehler",
+            resizable: false,
+            autoOpen: false,
+        });
+
         $(this).click(function(e){
             var form = e.currentTarget.closest("form");
 
@@ -109,8 +141,20 @@ $(document).ready(function () {
             var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
 
             if(window.selectedUserRow == 0){
-                alert("Bitte zuerst rechts einen Fahrer wählen!");
+
+                $( "#keinFahrerAusgewaehlt" ).dialog( "open" );
+
+                $( "#btnCloseKeinFahrerAusgewaehlt" ).on( "click", function() {
+                        $( "#keinFahrerAusgewaehlt" ).dialog( "close" );
+                    });
+
             }else{
+
+                $( "#keinFahrerAusgewaehlt" ).dialog({
+                    dialogClass:"fehler",
+                    resizable: false,
+                    autoOpen: false,
+                });
 
                 // Zuordnen Request
                 var url = $(form).attr("action") + "/fahrer/" + window.selectedUserRow;
@@ -236,12 +280,22 @@ $(document).ready(function () {
         $(".formAddFahrer").hide();
     });
 
+
     $("#userTable").editableTableWidget();
+
+    $( "#fahrerLoeschen" ).dialog({
+        autoOpen: false,
+        dialogClass:"warnung",
+        resizable: false,
+    });
+
     $("#userTable").on("click", ".btnDelete", function () {
         var form = $(this).closest("form");
 
         var fahrer_tr = $(this).parents("tr");
         var fahrer_id = $(fahrer_tr).attr("id");
+
+        $( "#fahrerLoeschen" ).dialog( "open" );
 
         $.ajax({
             url: $(form).attr("action") + "/" + fahrer_id,
@@ -249,13 +303,22 @@ $(document).ready(function () {
         }).done(function (data, statusText, xhr){
             var status = xhr.status;
 
-            if(status == 200){
+            $( "#btnFahrerLoeschenNein" ).on( "click", function() {
+                $( "#fahrerLoeschen" ).dialog( "close" );
+            });
 
+            $( "#btnFahrerLoeschenJa" ).on( "click", function() {
+                $( "#fahrerLoeschen" ).dialog( "close" );
 
-                $("#panelBodyAdmin-"+data.id).html("Fahrrad ist inaktiv");
+                if(status == 200){
 
-                $(fahrer_tr).remove();
-            }
+                    $("#panelBodyAdmin-"+data.id).html("Fahrrad ist inaktiv");
+                    //Anpassung der Hilfe- und Zuordnung-Buttons fehlt
+                    $(fahrer_tr).remove();
+                }
+
+            });
+
         });
     });
 

@@ -27,7 +27,7 @@
 <body>
 
     <div class="smartphone-overlay">
-            <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="logo-smartphone">
+        <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="logo-smartphone">
         <div class="smartphone-overlay-text">
             <span>Die von Ihnen gewünschte Seite oder Funktion steht leider nicht zur Verfügung.</span>
         </div>

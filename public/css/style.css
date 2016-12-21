@@ -194,7 +194,7 @@ body{
 
 .circle_value{
     font-size:26pt;
-    margin: 10% 0;
+    margin: 30% 0;
     text-align: center;
 }
 
@@ -524,14 +524,40 @@ body{
     color: white;
 }
 
+.warnung.ui-dialog{
+    width:400px !important;
+    background-color: #F5F7FA;
+    border:2px solid black !important;
+}
+
+.warnung.ui-dialog > .ui-widget-header{
+    background-color: #BF263C;
+    border-color: black;
+    color: white;
+}
+
+.fehler.ui-dialog{
+    width:400px !important;
+    background-color: #F5F7FA;
+    border:2px solid black !important;
+}
+
+.fehler.ui-dialog > .ui-widget-header{
+    background-color: #AAB2BD;
+    border-color: black;
+    color: white;
+}
+
 
 /* ##### Misc ##### */
 
-/* Breite beträgt höchstens 1024px */
-@media (max-device-width: 768px) {
+/* Breite beträgt höchstens 1366px */
+@media (max-device-width: 1366px)  {
     #app{
        display: none;
     }
+
+
 
     .smartphone-overlay{
         display: block;
@@ -542,17 +568,18 @@ body{
         padding:5%;
     }
 
-    .smartphone-overlay-text{
-        margin:auto;
-        padding: 25px;
-        text-align: center;
-    }
 
     .logo-smartphone{
         display: block;
         margin:auto;
     }
 
+    .smartphone-overlay-text{
+        display: block;
+        margin:auto;
+        padding:25px;
+        text-align: center;
+    }
 }
 
 /* ##### Mobile ##### */
