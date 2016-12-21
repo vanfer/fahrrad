@@ -1,5 +1,5 @@
 // WICHTIG: IP ändern, oder einfach localhost nehmen!
-var BASE_PATH = "http://localhost/Ergometer/public/";
+var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     /*
@@ -360,10 +360,6 @@ $(document).ready(function () {
     $(".btnHilfeAktiv").on("click", function() {
         $("#hilfeAktiv").dialog("open");
     });
-
-    var closeBtn = $('.ui-dialog-titlebar-close');
-    closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-close"></span>');
-
 });
 
 /*
