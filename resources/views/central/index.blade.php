@@ -3,7 +3,7 @@
 @section("content")
 
     <div class ="container-fluid">
-        {{-- Anzeige Streckenmodus  --}}
+        {{-- Anzeige sStreckenmodus  --}}
         <div class="panel panel-default pull-left strecken-panel">
             <div class="panel-heading panel-heading-zd">
                 <h3 class="panel-title panel-title-zd">Strecke</h3>
