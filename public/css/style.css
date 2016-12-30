@@ -569,7 +569,7 @@ body{
 /* ##### Misc ##### */
 
 /* Breite beträgt höchstens 1366px */
-@media (max-device-width: 366px)  {
+@media (max-device-width: 1366px)  {
     #app{
        display: none;
     }
