@@ -1,9 +1,6 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title pull-left ">Fahrer zuordnen</h3>
-        <span class="clearfix"></span>
-    </div>
-    <div class="panel-body">
+<div id="addFahrer" title="Fahrer hinzufügen">
+    <div>
+        <br>
         <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
             {{ csrf_field() }}
 

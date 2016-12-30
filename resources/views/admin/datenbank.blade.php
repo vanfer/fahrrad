@@ -15,10 +15,8 @@
             </div>
             <span class="clearfix"></span>
         </div>
+
         <div class="panel-body" id="panelBodyAdmin">
-
-
-
             <div class="formAddFahrer">
                 <strong>Neuen Fahrer anlegen:</strong>
                 <form action="{{ url("fahrer") }}" method="POST">

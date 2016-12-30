@@ -423,6 +423,21 @@ $(document).ready(function () {
     $(".btnHilfeAktiv").on("click", function() {
         $("#hilfeAktiv").dialog("open");
     });
+
+    $("#addFahrer").dialog({
+        dialogClass:"addFahrer",
+        resizable: false,
+        autoOpen: false,
+        modal: true,
+
+    });
+    $("#btnAddFahrer").on("click", function(){
+       $("#addFahrer").dialog("open");
+        $('.ui-widget-overlay').addClass('custom-overlay');
+
+    });
+
+
 });
 
 /*
