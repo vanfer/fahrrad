@@ -504,7 +504,6 @@ body{
 
 .table-striped>tbody>tr {
     background-color: #CAECA7;
-
 }
 
 .table-hover tbody tr:hover  {
@@ -548,7 +547,24 @@ body{
     color: white;
 }
 
+.addFahrer.ui-dialog{
+    width: 650px !important;
+    background-color: #F5F7FA;
+    border: 2px solid black !important;
+    overflow-y: hidden;
+}
 
+.addFahrer.ui-dialog > .ui-widget-header{
+    background-color: #72B128;
+    border-color: black;
+    color: white;
+}
+
+.ui-widget-overlay.custom-overlay {
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1040;
+}
 
 /* ##### Misc ##### */
 
