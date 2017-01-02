@@ -139,6 +139,8 @@ $(document).ready(function () {
                 }).done(function (data, statusText, xhr){
                     var status = xhr.status;
 
+
+
                     if(status == 200){
                         var fahrrad = data.fahrrad;
                         var fahrer = data.fahrer;
@@ -164,9 +166,9 @@ $(document).ready(function () {
                             '		<div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>' +
                             '		<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-4">' +
                             '			<select class="form-control" id="betriebsmodusAuswahlFahrrad">' +
-                            '				<option value="1">Strecke</option>' +
-                            '				<option value="2">Konstantes Drehmoment</option>' +
-                            '				<option value="3">Konstante Leistung</option>' +
+                            '				<option value="1"' + ((data.fahrer.modus_id == 1) ? ' selected' : '') + '>Strecke</option>' +
+                            '				<option value="2"' + ((data.fahrer.modus_id == 2) ? ' selected' : '') + '>Konstantes Drehmoment</option>' +
+                            '				<option value="3"' + ((data.fahrer.modus_id == 3) ? ' selected' : '') + '>Konstante Leistung</option>' +
                             '			</select>' +
                             '		</div>' +
                             '	</form>' +
@@ -305,9 +307,6 @@ $(document).ready(function () {
             data = { groesse : newValue };
         }else if(changedElement == "gewicht"){
             data = { gewicht : newValue };
-        }else if(changedElement == "betriebsmodus"){
-            var selectVal = $(e.currentTarget).find("select").val();
-            data = { modus_id : selectVal };
         }
 
         $.ajax({
@@ -328,7 +327,7 @@ $(document).ready(function () {
         var changedElement = $(this).attr("id");
         var fahrer_id = $(this).parents("tr").attr("id");
 
-        var selectVal = $(form).find("select").val();
+        var selectVal = $(e.currentTarget).find("select").val();
 
         $.ajax({
             url: $(form).attr("action") + "/" + fahrer_id,

@@ -72,6 +72,8 @@ class FahrradController extends Controller
     public function update(Request $request, \App\Fahrrad $fahrrad)
     {
         if($request->has("modus_id")){
+            $fahrrad->resetData();
+
             $fahrrad->modus_id = Input::get("modus_id");
         }
 
@@ -101,6 +103,7 @@ class FahrradController extends Controller
                 $fahrrad->modus_id = Input::get("modus_id");
             }
 
+            $fahrrad->strecke = 0;
             $fahrrad->fahrer_id = $fahrer->id;
             $fahrrad->touch();
 

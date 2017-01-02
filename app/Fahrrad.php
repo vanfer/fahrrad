@@ -56,4 +56,16 @@ class Fahrrad extends Model
     {
         return $this->belongsTo("App\Abschnitt")->get();
     }
+
+
+    public function resetData()
+    {
+        $this->istLeistung = 0;
+        $this->strecke = 0;
+        $this->geschwindigkeit = 0;
+        $this->sollLeistung = null;
+        $this->sollDrehmoment = null;
+        $this->strecke_id = null;
+        $this->abschnitt_id = null;
+    }
 }
