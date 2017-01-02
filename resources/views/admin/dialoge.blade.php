@@ -71,18 +71,18 @@
 </div>
 
 
+
 <div id="keinFahrerAusgewaehlt" title="Fehler">
     <h3><b>Kein Fahrer ausgewählt</b></h3><hr/>
     <p>Sie müssen erst einen Fahrer auswählen, der einem Fahrrad zugeordnet werden soll.</p>
     <button id="btnCloseKeinFahrerAusgewaehlt">OK</button>
 </div>
 
-{{--<div id="fahrerSchonZugeordnet" title="Fehler">
+<div id="fahrerSchonZugeordnet" title="Fehler">
     <h3><b>Fahrer schon zugeordnet</b></h3><hr/>
-    <p>Der ausgewählte Fahrer ist schon einem Fahrrad zugeordnet.<br />
-        Bitte wählen Sie einen anderen Fahrer aus, der diesem Fahrrad zugeordnet werden soll.</p>
+    <p>Der ausgewählte Fahrer ist schon einem Fahrrad zugeordnet. Bitte wählen Sie einen anderen Fahrer aus, der diesem Fahrrad zugeordnet werden soll.</p>
     <button id="btnCloseFahrerSchonZugeordnet">OK</button>
-</div>--}}
+</div>
 
 <div id="zuordnungLoeschen" title="Warnung">
     <h3><b>Zuordnung löschen</b></h3><hr/>
@@ -108,11 +108,3 @@
 </div>
 --}}
 
-{{--
-<div id="falschesPasswort" title="Fehler">
-    <h3><b>Falsches Passwort</b></h3><hr/>
-    <p>Das eingegebene Passwort ist falsch. <br />
-        Bitte versuchen Sie es erneut.</p>
-    <button id="btnFalschesPasswort">OK</button>
-</div>
---}}

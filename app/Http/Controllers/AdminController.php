@@ -38,7 +38,7 @@ class AdminController extends Controller
             return redirect("admin")->cookie('admin', '1', 3600);
         }
         return redirect("admin/login")
-            ->withErrors(["password" => "Falsches Passwort!"]);
+            ->withErrors(["password" => ('Falsches Passwort')]);
     }
 
     public function logout()
