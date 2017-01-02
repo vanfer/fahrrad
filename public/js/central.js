@@ -154,7 +154,9 @@ function updateDetails(){
             window.fahrrad_strecke = { data: []};
 
             for(var j = 0; j < window.fahrrad.length; j++){
-                window.fahrrad[j].element.element.remove();
+                if(window.fahrrad[j].element != null){
+                    window.fahrrad[j].element.element.remove();
+                }
             }
             window.fahrrad = [];
 
@@ -163,7 +165,7 @@ function updateDetails(){
                     updateFahrradKasten(fahrrad);
 
                     if(fahrrad.fahrer_id != null){
-                        addFahrrad(fahrrad.id, fahrrad.color);
+                        addFahrrad(fahrrad.id, fahrrad.color, fahrrad.modus_id);
 
                         window.leistungData.labels.push(fahrrad.fahrer_id);
                         window.leistungData.data.push(fahrrad.istLeistung);
@@ -200,19 +202,22 @@ function updateChartStreckeData() {
 
 function renderFahrerPositionen(chart){
     for(var i = 0; i < window.fahrrad.length; i++){
-        var fahrer = window.fahrrad[i];
+        var fahrrad = window.fahrrad[i];
 
-        var pixelX = chart.xAxis[0].toPixels(fahrer.x || 0);
-        var pixelY = chart.yAxis[0].toPixels(fahrer.y || 0);
+        var pixelX = chart.xAxis[0].toPixels(fahrrad.x || 0);
+        var pixelY = chart.yAxis[0].toPixels(fahrrad.y || 0);
 
-        if(fahrer.element != null){
-            fahrer.element.element.remove();
+        if(fahrrad.element != null){
+            fahrrad.element.element.remove();
+            fahrrad.element = null;
         }
 
-        fahrer.element = chart.renderer.circle(pixelX, pixelY, 10).attr({
-            fill: fahrer.color,
-            zIndex: 10
-        }).add();
+        if(fahrrad.modus == 1){
+            fahrrad.element = chart.renderer.circle(pixelX, pixelY, 10).attr({
+                fill: fahrrad.color,
+                zIndex: 10
+            }).add();
+        }
     }
 }
 
@@ -269,7 +274,7 @@ function getDataFromAPI(url, async, successHandler){
     });
 }
 
-function addFahrrad(id, color){
+function addFahrrad(id, color, modus){
     window.fahrrad.push(
         {
             id: id,
@@ -277,7 +282,8 @@ function addFahrrad(id, color){
             gefahrene_strecke: 0.0,
             element: null,
             x: 0,
-            y: 0
+            y: 0,
+            modus: modus
         }
     );
 
