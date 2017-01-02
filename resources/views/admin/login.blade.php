@@ -3,6 +3,12 @@
 @section('content')
     @if ($errors->has('password'))
         <span class="help-block">
+           <div id="falschesPasswort" class="warnung" title="Fehler" style="display:none" >
+                <h3><b>Falsches Passwort</b></h3><hr/>
+                <p>Das eingegebene Passwort ist falsch. <br />
+                    Bitte versuchen Sie es erneut.</p>
+            <button id="btnFalschesPasswort">OK</button>
+            </div>
             <strong>{{ $errors->first('password') }}</strong>
         </span>
     @endif
@@ -16,7 +22,7 @@
             <form class="panel-body form-inline" id="panelBodyAdmin" action="{{ url("admin/login") }}" method="post">
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" autocomplete="new-password" placeholder="Admin-Passwort">
-                    <input class="btn btn-default" type="submit" value="Login">
+                    <input class="btn btn-default" id="btnLogin" type="submit" value="Login">
                     {{ csrf_field() }}
                 </div>
             </form>

@@ -11,16 +11,31 @@ $(document).ready(function () {
     $("#q").autocomplete({
         source: "search/autocomplete",
         minLength: 1,
-        select: function(event, ui) {
-            $('#q').val(ui.item.label );
+        select: function (event, ui) {
+            $('#q').val(ui.item.label);
         },
-        change: function(event, ui) {
+        change: function (event, ui) {
         }
     });
 
     /*
      * Button bindings
      * */
+
+    $("#falschesPasswort").dialog({
+        autoOpen: false,
+        dialogClass: "warnung",
+        resizable: false,
+        modal: true,
+    });
+
+    /*
+    $("#falschesPasswort").dialog("open");
+    $('.ui-widget-overlay').addClass('custom-overlay');
+    $("#btnfalschespasswort").on("click", function () {
+        $("#falschesPasswort").dialog("close");
+    });
+    */
 
     $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
         $.ajax({
@@ -44,12 +59,15 @@ $(document).ready(function () {
 
         $("#name").attr("value", name);
     });
+
+    //Zuordnung löschen
     $(".btnAbmelden").each(function(){
 
         $( "#zuordnungLoeschen" ).dialog({
             autoOpen: false,
             dialogClass:"warnung",
             resizable: false,
+            modal: true,
         });
 
         $(this).click(function(e){
@@ -57,6 +75,7 @@ $(document).ready(function () {
             var form = e.currentTarget.closest("form");
 
             $( "#zuordnungLoeschen" ).dialog( "open" );
+            $('.ui-widget-overlay').addClass('custom-overlay');
 
             $( "#btnZuordnungLoeschenNein" ).on( "click", function() {
                 $( "#zuordnungLoeschen" ).dialog( "close" );
@@ -94,13 +113,25 @@ $(document).ready(function () {
             });
         });
     });
-    $(".btnAnmelden").each(function(){
 
-        $( "#keinFahrerAusgewaehlt" ).dialog({
-            dialogClass:"fehler",
-            resizable: false,
-            autoOpen: false,
-        });
+    //Dialog "Kein Fahrer ausgewählt"
+    $( "#keinFahrerAusgewaehlt" ).dialog({
+        dialogClass:"fehler",
+        resizable: false,
+        autoOpen: false,
+        modal: true,
+    });
+
+    //Dialog "Fahrer schon zugeordnet
+    $( "#fahrerSchonZugeordnet" ).dialog({
+        dialogClass:"fehler",
+        resizable: false,
+        autoOpen: false,
+        modal: true,
+    });
+
+    //Zuordnung hinzufügen
+    $(".btnAnmelden").each(function(){
 
         $(this).click(function(e){
             var form = e.currentTarget.closest("form");
@@ -115,18 +146,13 @@ $(document).ready(function () {
             if(window.selectedUserRow == 0){
 
                 $( "#keinFahrerAusgewaehlt" ).dialog( "open" );
+                $(".ui-widget-overlay").addClass('custom-overlay');
 
                 $( "#btnCloseKeinFahrerAusgewaehlt" ).on( "click", function() {
                     $( "#keinFahrerAusgewaehlt" ).dialog( "close" );
                 });
 
             }else{
-
-                $( "#keinFahrerAusgewaehlt" ).dialog({
-                    dialogClass:"fehler",
-                    resizable: false,
-                    autoOpen: false,
-                });
 
                 // Zuordnen Request
                 var url = $(form).attr("action") + "/fahrer/" + window.selectedUserRow;
@@ -139,9 +165,7 @@ $(document).ready(function () {
                 }).done(function (data, statusText, xhr){
                     var status = xhr.status;
 
-
-
-                    if(status == 200){
+                        if(status == 200){
                         var fahrrad = data.fahrrad;
                         var fahrer = data.fahrer;
 
@@ -187,16 +211,28 @@ $(document).ready(function () {
 
                         window.selectedUserRow = 0;
                         window.selectedUserMode = 0;
+
                     }
+
+                }).fail(function(data, statusText, xhr) {
+
+                        $("#fahrerSchonZugeordnet").dialog("open");
+                        $(".ui-widget-overlay").addClass('custom-overlay');
+
+                        $("#btnCloseFahrerSchonZugeordnet").on("click", function () {
+                            $("#fahrerSchonZugeordnet").dialog("close");
+                        });
+
                 });
             }
         });
     });
+
+    //Fahrer hinzufügen
     $("#btnAddFahrer").click(function (e) {
         $(".formAddFahrer").show();
         $("#newUserTable").editableTableWidget();
     });
-
     $(".btnCancel").click(function (e) {
         $(".formAddFahrer").hide();
         //window.newUserTemp = {};
@@ -250,22 +286,38 @@ $(document).ready(function () {
             }
         });
 
+
         $(".formAddFahrer").hide();
     });
 
+
     $("#userTable").editableTableWidget();
+
+    //Dialog "Fahrer wirklich löschen"
     $( "#fahrerLoeschen" ).dialog({
-        autoOpen: false,
-        dialogClass:"warnung",
+        dialogClass:"fehler",
         resizable: false,
+        autoOpen: false,
+        modal: true,
     });
+
+    //Fahrer löschen
     $("#userTable").on("click", ".btnDelete", function () {
+
         var form = $(this).closest("form");
 
         var fahrer_tr = $(this).parents("tr");
         var fahrer_id = $(fahrer_tr).attr("id");
 
         $( "#fahrerLoeschen" ).dialog( "open" );
+        $('.ui-widget-overlay').addClass('custom-overlay');
+
+        $( "#btnFahrerLoeschenNein" ).on( "click", function() {
+            $( "#fahrerLoeschen" ).dialog( "close" );
+        });
+
+        $( "#btnFahrerLoeschenJa" ).on( "click", function() {
+            $( "#fahrerLoeschen" ).dialog( "close" );
 
         $.ajax({
             url: $(form).attr("action") + "/" + fahrer_id,
@@ -273,22 +325,16 @@ $(document).ready(function () {
         }).done(function (data, statusText, xhr){
             var status = xhr.status;
 
-            $( "#btnFahrerLoeschenNein" ).on( "click", function() {
-                $( "#fahrerLoeschen" ).dialog( "close" );
-            });
-
-            $( "#btnFahrerLoeschenJa" ).on( "click", function() {
-                $( "#fahrerLoeschen" ).dialog( "close" );
-
                 if(status == 200){
-
                     $("#panelBodyAdmin-"+data.id).html("Fahrrad ist inaktiv");
+
                     //Anpassung der Hilfe- und Zuordnung-Buttons fehlt
+
                     $(fahrer_tr).remove();
+
                 }
 
             });
-
         });
     });
 
@@ -369,6 +415,7 @@ $(document).ready(function () {
         resizable: false,
         autoOpen: false,
     });
+
     $("#btnHilfeTabelle").on("click", function() {
         $("#hilfeTabelle").dialog("open");
     });
@@ -396,11 +443,9 @@ $(document).ready(function () {
         resizable: false,
         autoOpen: false,
         modal: true,
-
     });
     $("#btnAddFahrer").on("click", function(){
         $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
-
     });
 });
