@@ -1,33 +1,9 @@
-// WICHTIG: IP ändern, oder einfach localhost nehmen!
-var BASE_PATH = "http://localhost/fahrrad/public/";
-
 $(document).ready(function () {
-    /*
-     * Setup & Globale Variablen
-     * */
-    window.streckeData = { data: [], labels: [] };
-    window.leistungData = { data: [], labels: [] };
-    window.leistungAllAbsolute = 0;
-
     window.selectedUserRow = 0;
     window.selectedUserMode = 0;
     window.newUserTemp = {};
 
     $(".formAddFahrer").hide();
-
-    /*
-    * Aktualisierung der Daten: Charts und Fahredetails
-    *
-    * */
-    window.setInterval(function () {
-        // Updates der Charts nur auf den Seiten Central und Mobile
-        if(window.location.href.includes("central") ||
-           window.location.href.includes("mobile"))
-        {
-            updateDetails();
-            updateCharts();
-        }
-    }, 1000);
 
     /*
      * autocomplete admin fahrer suche
@@ -43,8 +19,8 @@ $(document).ready(function () {
     });
 
     /*
-    * Button bindings
-    * */
+     * Button bindings
+     * */
 
     $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
         $.ajax({
@@ -68,12 +44,9 @@ $(document).ready(function () {
 
         $("#name").attr("value", name);
     });
-
-
-
     $(".btnAbmelden").each(function(){
 
-       $( "#zuordnungLoeschen" ).dialog({
+        $( "#zuordnungLoeschen" ).dialog({
             autoOpen: false,
             dialogClass:"warnung",
             resizable: false,
@@ -100,28 +73,27 @@ $(document).ready(function () {
 
                     var status = xhr.status;
 
-                        if(status == 200){
+                    if(status == 200){
 
-                            var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-                            var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-                            var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-                            var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+                        var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+                        var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+                        var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+                        var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
 
-                            var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
+                        var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
 
-                            $(fahrerdetailElement).html("Fahrrad ist inaktiv");
+                        $(fahrerdetailElement).html("Fahrrad ist inaktiv");
 
-                            $(btnAbmelden).css("display", "none");
-                            $(btnAnmelden).css("display", "block");
-                            $(btnHilfeInaktiv).css("display", "block");
-                            $(btnHilfeAktiv).css("display", "none");
+                        $(btnAbmelden).css("display", "none");
+                        $(btnAnmelden).css("display", "block");
+                        $(btnHilfeInaktiv).css("display", "block");
+                        $(btnHilfeAktiv).css("display", "none");
 
-                        }
-                    });
+                    }
+                });
             });
         });
     });
-
     $(".btnAnmelden").each(function(){
 
         $( "#keinFahrerAusgewaehlt" ).dialog({
@@ -145,8 +117,8 @@ $(document).ready(function () {
                 $( "#keinFahrerAusgewaehlt" ).dialog( "open" );
 
                 $( "#btnCloseKeinFahrerAusgewaehlt" ).on( "click", function() {
-                        $( "#keinFahrerAusgewaehlt" ).dialog( "close" );
-                    });
+                    $( "#keinFahrerAusgewaehlt" ).dialog( "close" );
+                });
 
             }else{
 
@@ -218,7 +190,6 @@ $(document).ready(function () {
             }
         });
     });
-
     $("#btnAddFahrer").click(function (e) {
         $(".formAddFahrer").show();
         $("#newUserTable").editableTableWidget();
@@ -240,25 +211,25 @@ $(document).ready(function () {
 
             var template = '<tr draggable="true" id="' + data.id + '">' +
                 '<th id="th_fahrer_id">' +
-                    '<fieldset>' +
-                        '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.id + '">' +
-                    '</fieldset>' +
+                '<fieldset>' +
+                '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.id + '">' +
+                '</fieldset>' +
                 '</th>' +
                 '<td id="name">' + data.name + '</td>' +
                 '<td id="email">' + data.email + '</td>' +
                 '<td id="gewicht">' + data.gewicht + '</td>' +
                 '<td id="groesse">' + data.groesse + '</td>' +
                 '<td id="betriebsmodus">' +
-                    '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
-                        '<option value="1">Strecke</option>' +
-                        '<option value="2">Konstantes Drehmoment</option>' +
-                        '<option value="3">Konstante Leistung</option>' +
-                    '</select>' +
+                '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
+                '<option value="1">Strecke</option>' +
+                '<option value="2">Konstantes Drehmoment</option>' +
+                '<option value="3">Konstante Leistung</option>' +
+                '</select>' +
                 '</td>' +
                 '<th>' +
-                    '<div class="btn btn-default btnDelete">' +
-                        '<span class="glyphicon glyphicon-trash"></span>' +
-                    '</div>' +
+                '<div class="btn btn-default btnDelete">' +
+                '<span class="glyphicon glyphicon-trash"></span>' +
+                '</div>' +
                 '</th>' +
                 '</tr>';
 
@@ -280,15 +251,12 @@ $(document).ready(function () {
         $(".formAddFahrer").hide();
     });
 
-
     $("#userTable").editableTableWidget();
-
     $( "#fahrerLoeschen" ).dialog({
         autoOpen: false,
         dialogClass:"warnung",
         resizable: false,
     });
-
     $("#userTable").on("click", ".btnDelete", function () {
         var form = $(this).closest("form");
 
@@ -432,232 +400,8 @@ $(document).ready(function () {
 
     });
     $("#btnAddFahrer").on("click", function(){
-       $("#addFahrer").dialog("open");
+        $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
 
     });
-
-
 });
-
-/*
- * Chart Functions
- * */
-
-function updateChartData() {
-    // Todo: Strecke id irgendwo her holen (hidden input zb)
-    var strecke_id = 2;
-
-    getDataFromAPI("strecke/" + strecke_id, true, function(response) {
-        if(response && response.strecke ) {
-            window.streckeData = { data: [], labels: [] };
-            var gesamtlaenge = 0;
-            $.each(response.strecke.abschnitte,
-                function(index, value) {
-                    gesamtlaenge += value.laenge;
-                    window.streckeData.labels.push(gesamtlaenge); // X
-                    window.streckeData.data.push(value.hoehe);  // Y
-                }
-            );
-        }
-    });
-
-    getDataFromAPI("leistung", true, function(response) {
-        if(response && response.fahrerleistung ) {
-            window.leistungData = { data: [], labels: [] };
-            window.leistungAllAbsolute = 0;
-
-            $.each(response.fahrerleistung,
-                function(index, value) {
-                    window.leistungData.labels.push(value.name);
-                    window.leistungData.data.push(value.istLeistung);
-
-                    window.leistungAllAbsolute += value.istLeistung;
-                }
-            );
-        }
-    });
-}
-
-function updateCharts() {
-    this.updateChartData();
-
-    var track_chart = new Chart(document.getElementById("track"), {
-        type: 'line',
-        data: {
-            labels: window.streckeData.labels, // X AXIS
-            datasets: [
-                {
-                    type: "line",
-                    label: "My First dataset",
-                    fill: true,
-                    data: window.streckeData.data // Y AXIS
-                },
-                {
-                    type: "bubble",
-                    label: "My First dataset",
-                    fill: true,
-                    data: [
-                        {
-                            x: 215,
-                            y: 0,
-                            r: 10
-                        }
-                    ] // Y AXIS
-                }
-            ]
-        },
-        options: {
-            animation: false,
-            scales: {
-                xAxes: [{
-                    display: true
-                }],
-                yAxes: [{
-                    ticks: {
-                        suggestedMax: 300,
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-    var energy_chart = new Chart(document.getElementById("energy-current"), {
-        type: 'bar',
-        data: {
-            labels: window.leistungData.labels,
-            datasets: [
-                {
-                    label: "My First dataset",
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    data: window.leistungData.data
-                }
-            ]
-        },
-        options: {
-            animation: false,
-            scales: {
-                xAxes: [{
-                    display: true
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-    var energy_all_chart = new Chart(document.getElementById("energy"), {
-        type: 'bar',
-        data: {
-            labels: ["Leistung aller Fahrer"],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    data: [window.leistungAllAbsolute]
-                }
-            ]
-        },
-        options: {
-            animation: false,
-            scales: {
-                xAxes: [{
-                    display: true
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-}
-
-function updateFahrradKasten(fahrrad){
-    var cond = fahrrad.fahrer_id == null;
-
-    if(cond){
-        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "none");
-        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "block");
-    }else{
-        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "block");
-        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "none");
-    }
-
-    var name             = cond ? "" : fahrrad.fahrer.name;
-    var modus            = cond ? "" : fahrrad.modus.name;
-    var geschwindigkeit  = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
-    var istLeistung      = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
-    var strecke          = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
-
-    $("#fahrername-anzeige-"+fahrrad.id).html(name);
-    $("#fahrermodus-anzeige-"+fahrrad.id).html(modus);
-    $("#geschwindigkeit-anzeige-"+fahrrad.id).html(geschwindigkeit);
-    $("#gesamtleistung-anzeige-"+fahrrad.id).html(istLeistung);
-    $("#strecke-anzeige-"+fahrrad.id).html(strecke);
-}
-
-function updateDetails(){
-    getDataFromAPI("data", true, function(response) {
-        if(response && response.data ) {
-            $.each( response.data.fahrrad,
-                function(index, fahrrad) {
-                    updateFahrradKasten(fahrrad);
-                }
-            );
-        }
-    });
-    /*$.ajax({
-        url: BASE_PATH + "data",
-        type: 'get',
-        dataType: 'json',
-        async: true,
-        success: function(response) {
-
-        }
-    });*/
-}
-
-function getDataFromAPI(url, async, successHandler){
-    $.ajax({
-        url: BASE_PATH + url,
-        type: 'get',
-        async: async,
-        success: successHandler
-    });
-}

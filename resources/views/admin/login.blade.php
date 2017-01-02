@@ -15,7 +15,7 @@
             </div>
             <form class="panel-body form-inline" id="panelBodyAdmin" action="{{ url("admin/login") }}" method="post">
                 <div class="form-group">
-                    <input class="form-control" type="password" name="password" placeholder="Admin-Passwort">
+                    <input class="form-control" type="password" name="password" autocomplete="new-password" placeholder="Admin-Passwort">
                     <input class="btn btn-default" type="submit" value="Login">
                     {{ csrf_field() }}
                 </div>

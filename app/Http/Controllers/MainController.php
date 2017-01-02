@@ -75,6 +75,21 @@ class MainController extends Controller
         return Strecke::all();
     }
 
+    public function fahrerstrecke(){
+        $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
+        $result = [];
+
+        foreach ($fahrraeder as $fahrrad){
+            $result[] = [
+                "id" => $fahrrad->getFahrerID(),
+                "name" => $fahrrad->getFahrerName(),
+                "strecke" => $fahrrad->strecke
+            ];
+        }
+
+        return response()->json(["fahrerstrecke" => $result], 200);
+    }
+
     public function leistung()
     {
         $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
@@ -84,7 +99,7 @@ class MainController extends Controller
             $result[] = [
                 "id" => $fahrrad->getFahrerID(),
                 "name" => $fahrrad->getFahrerName(),
-                "istLeistung" => $fahrrad->istLeistung,
+                "istLeistung" => $fahrrad->istLeistung
             ];
         }
 

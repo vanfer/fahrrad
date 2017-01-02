@@ -70,6 +70,8 @@ class CreateStructureTable extends Migration
 
             $table->integer("strecke")->default(0)->nullable();
 
+            $table->string("color");
+
             $table->integer("strecke_id")->unsigned()->nullable();
             $table->foreign("strecke_id")->references("id")->on("strecke");
 

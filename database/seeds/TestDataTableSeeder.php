@@ -45,8 +45,9 @@ class TestDataTableSeeder extends Seeder
         }
 
         DB::table('fahrrad')->truncate();
-        for($i = 1; $i <= 3; $i++){
-            Fahrrad::create(['ip' => '10.0.0.'.$i, 'mac' => '00:00:00:00:00:0'.$i]);
+        $colors = ["#EC87C0", "#5D9CEC", "#FFCE54"];
+        for($i = 0; $i < 3; $i++){
+            Fahrrad::create(['ip' => '10.0.0.'.$i, 'mac' => '00:00:00:00:00:0'.$i, 'color' => $colors[$i] ]);
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');

@@ -68,6 +68,7 @@ Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");
 
 Route::get("leistung", "MainController@leistung");
+Route::get("fahrerstrecke", "MainController@fahrerstrecke");
 
 Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "FahrradController@zuordnungHerstellen");
 Route::delete("fahrrad/{fahrrad}", "FahrradController@zuordnungLoeschen");

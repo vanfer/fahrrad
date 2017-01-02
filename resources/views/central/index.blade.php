@@ -10,7 +10,8 @@
             </div>
             <div class="panel-body panel-body-zd">
                 <div id="track-wrapper col-lg-12">
-                    <canvas id="track"></canvas>
+                    <!--<canvas id="track"></canvas>-->
+                    <div id="container-strecke" style="width:100%; height: 250px;"></div>
                 </div>
             </div>
         </div>
@@ -22,7 +23,7 @@
             </div>
             <div class="panel-body panel-body-zd">
                 <div id="energy-current-wrapper col-lg-12">
-                    <canvas id="energy-current"></canvas>
+                    <div id="container-leistung" style="width:100%; height: 250px;"></div>
                 </div>
             </div>
         </div>
@@ -60,4 +61,6 @@
 
 @endsection
 
-
+@section("scripts")
+    <script src="{{ asset("js/central.js") }}"></script>
+@endsection

@@ -54,11 +54,15 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset("js/bootstrap.js") }}"></script>
-    <script src="{{ asset("js/jquery.js") }}"></script>
-    <script src="{{ asset("js/jquery-ui.min.js") }}"></script>
-    <script src="{{ asset("js/mindmup-editabletable.js") }}"></script>
-    <script src="{{ asset("js/Chart.bundle.js") }}"></script>
-    <script src="{{ asset("js/main.js") }}"></script>
+
+    <script src="{{ asset("js/libs/jquery.js") }}"></script>
+    <script src="{{ asset("js/libs/jquery-ui.min.js") }}"></script>
+
+    <script src="{{ asset("js/libs/bootstrap.js") }}"></script>
+
+    <script src="{{ asset("js/libs/highcharts.js") }}"></script>
+    <script src="{{ asset("js/libs/mindmup-editabletable.js") }}"></script>
+
+    @yield('scripts')
 </body>
 </html>
