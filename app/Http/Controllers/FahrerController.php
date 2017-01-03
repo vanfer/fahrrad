@@ -39,6 +39,10 @@ class FahrerController extends Controller
             $fahrer->groesse = Input::get("groesse");
         }
 
+        if($request->has("betriebsmodus")){
+            $fahrer->modus_id = Input::get("betriebsmodus");
+        }
+
         $fahrer->save();
         $fahrer->touch();
 

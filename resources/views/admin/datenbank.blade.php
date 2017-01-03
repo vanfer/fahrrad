@@ -17,48 +17,6 @@
         </div>
 
         <div class="panel-body" id="panelBodyAdmin">
-            <div class="formAddFahrer">
-                <strong>Neuen Fahrer anlegen:</strong>
-                <form action="{{ url("fahrer") }}" method="POST">
-                    <table class="table table-striped table-bordered table-hover" id="newUserTable">
-                        <thead>
-                        <tr>
-                            <th>Name*</th>
-                            <th>Email</th>
-                            <th>Gewicht (kg)</th>
-                            <th>Größe (m)</th>
-                            <th colspan="2">Optionen</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="name"></td>
-                                <td id="email"></td>
-                                <td id="gewicht"></td>
-                                <td id="groesse"></td>
-                                <th>
-                                    <div class="btn btn-default btnSave" style="width: 100%;">
-                                        <span class="glyphicon glyphicon-floppy-save"></span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="btn btn-default btnCancel" style="width: 100%;">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="6"><small><strong>Legende</strong> * = Pflichtfeld</small></td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </form>
-            </div>
-
-
-
             <form action="{{ url("fahrer") }}" method="PUT">
                 <table class="table table-striped table-bordered table-hover" id="userTable">
                     <thead>

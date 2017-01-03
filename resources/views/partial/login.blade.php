@@ -1,7 +1,7 @@
 <div id="addFahrer" title="Fahrer hinzufügen">
     <div>
         <br>
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('fahrer') }}">
             {{ csrf_field() }}
 
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -27,26 +27,6 @@
                 </div>
             </div>
 
-            <div class="form-group{{ $errors->has('fahrrad') ? ' has-error' : '' }}">
-                <label for="fahrrad" class="col-md-4 control-label">Fahrrad w&auml;hlen</label>
-
-                <div class="col-md-6">
-                    <select name="fahrrad" id="selFahrrad" class="form-control">
-                        <option value="1">Fahrrad 1</option>
-                        <option value="2">Fahrrad 2</option>
-                        <option value="3">Fahrrad 3</option>
-                    </select>
-                </div>
-
-                @if (isset($err_fahhrad))
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <strong>{{ $err_fahhrad }}</strong><br>
-                        </div>
-                    </div>
-                @endif
-            </div>
-
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                 <label for="email" class="col-md-4 control-label">E-Mail Addresse <small>(optional)</small></label>
 
@@ -64,24 +44,9 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Wunschbetriebsmodus</label>
                 <div class="col-md-6">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsfeldRadio" value="option1" checked>
-                            Konstante Leistung
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsfeldRadio" value="option2">
-                            Konstante mechanische Kraft
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsfeldRadio" value="option3">
-                            Streckenmodus
-                        </label>
-                    </div>
+                    <div class="radio"><label><input type="radio" name="betriebsmodus" value="1" checked>Streckenmodus</label></div>
+                    <div class="radio"><label><input type="radio" name="betriebsmodus" value="2">Konstantes Drehmoment</label></div>
+                    <div class="radio"><label><input type="radio" name="betriebsmodus" value="3">Konstante Leistung</label></div>
                 </div>
             </div>
 
@@ -115,9 +80,7 @@
 
             <div class="form-group">
                 <div class="col-md-8 col-md-offset-4">
-                    <button type="submit" class="btn btn-primary">
-                        Hinzufügen
-                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSubmitAddFahrer">Hinzufügen</button>
                 </div>
             </div>
         </form>

@@ -1,7 +1,6 @@
 $(document).ready(function () {
     window.selectedUserRow = 0;
     window.selectedUserMode = 0;
-    window.newUserTemp = {};
 
     $(".formAddFahrer").hide();
 
@@ -244,21 +243,25 @@ $(document).ready(function () {
     });
 
     //Fahrer hinzufügen
-    $("#btnAddFahrer").click(function (e) {
-        $(".formAddFahrer").show();
-        $("#newUserTable").editableTableWidget();
+
+    $("#addFahrer").dialog({
+        dialogClass:"addFahrer",
+        resizable: false,
+        autoOpen: false,
+        modal: true
     });
-    $(".btnCancel").click(function (e) {
-        $(".formAddFahrer").hide();
-        //window.newUserTemp = {};
+    $("#btnAddFahrer").on("click", function(){
+        $("#addFahrer").dialog("open");
+        $('.ui-widget-overlay').addClass('custom-overlay');
     });
-    $(".btnSave").click(function (e) {
+
+    $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
         $.ajax({
             url: $(form).attr("action"),
             method: $(form).attr("method"),
-            data: window.newUserTemp
+            data: $(form).serialize()
         }).done(function (data, statusText, xhr){
             var status = xhr.status;
 
@@ -274,9 +277,9 @@ $(document).ready(function () {
                 '<td id="groesse">' + data.groesse + '</td>' +
                 '<td id="betriebsmodus">' +
                 '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
-                '<option value="1">Strecke</option>' +
-                '<option value="2">Konstantes Drehmoment</option>' +
-                '<option value="3">Konstante Leistung</option>' +
+                '<option value="1" ' + ((data.modus_id == 1) ? 'selected' : '') + '>Strecke</option>' +
+                '<option value="2" ' + ((data.modus_id == 2) ? 'selected' : '') + '>Konstantes Drehmoment</option>' +
+                '<option value="3" ' + ((data.modus_id == 3) ? 'selected' : '') + '>Konstante Leistung</option>' +
                 '</select>' +
                 '</td>' +
                 '<th>' +
@@ -289,20 +292,13 @@ $(document).ready(function () {
             $('#userTable tr:last').after(template);
             $("#userTable").editableTableWidget();
 
-            window.newUserTemp = {};
-
-
-            $(form).find("tbody > tr > td").each(function (index, value) {
-                $(value).html("");
-            });
-
             if(status == 200){
-                //console.log("success");
+                console.log("success");
+                console.log(data);
+
+                $("#addFahrer").dialog("close");
             }
         });
-
-
-        $(".formAddFahrer").hide();
     });
 
 
@@ -451,16 +447,5 @@ $(document).ready(function () {
     });
     $(".btnHilfeAktiv").on("click", function() {
         $("#hilfeAktiv").dialog("open");
-    });
-
-    $("#addFahrer").dialog({
-        dialogClass:"addFahrer",
-        resizable: false,
-        autoOpen: false,
-        modal: true,
-    });
-    $("#btnAddFahrer").on("click", function(){
-        $("#addFahrer").dialog("open");
-        $('.ui-widget-overlay').addClass('custom-overlay');
     });
 });
