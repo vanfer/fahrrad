@@ -10,7 +10,7 @@ $(document).ready(function () {
     // Repräsentation eines Fahrers auf der Strecke
     window.fahrrad = [];
 
-    // Strecke Daten und Chart
+    // Strecke Daten
     window.streckeData = { data: [], labels: [] };
 
     // Zurückgelegte Meter pro Fahrrad
@@ -180,6 +180,10 @@ function updateDetails(){
             }
         }
     });
+}
+
+function updateStatistik(){
+
 }
 
 // Lädt die Daten zur Strecke mit der angegebenen ID von der API

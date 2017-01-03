@@ -87,8 +87,6 @@
 <div id="zuordnungLoeschen" title="Warnung">
     <h3><b>Zuordnung löschen</b></h3><hr/>
     <p>Die Zuordnung vom Fahrer zum Fahrrad wird gelöscht. Möchten Sie die Zuordnung wirklich löschen?</p>
-    <button id="btnZuordnungLoeschenJa">Ja</button>
-    <button id="btnZuordnungLoeschenNein">Nein</button>
 </div>
 
 <div id="fahrerLoeschen" title="Warnung">

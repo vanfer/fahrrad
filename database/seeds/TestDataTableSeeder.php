@@ -4,6 +4,7 @@ use App\Abschnitt;
 use App\Fahrer;
 use App\Fahrrad;
 use App\Modus;
+use App\Statistik;
 use App\Strecke;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +50,9 @@ class TestDataTableSeeder extends Seeder
         for($i = 0; $i < 3; $i++){
             Fahrrad::create(['ip' => '10.0.0.'.$i, 'mac' => '00:00:00:00:00:0'.$i, 'color' => $colors[$i] ]);
         }
+
+        DB::table('statistik')->truncate();
+        Statistik::create([]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         #DB::statement('PRAGMA foreign_keys = ON');

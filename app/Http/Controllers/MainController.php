@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Abschnitt;
 use App\Fahrer;
 use App\Fahrrad;
+use App\Statistik;
 use App\Strecke;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -106,5 +107,15 @@ class MainController extends Controller
         return response()->json(["fahrerleistung" => $result], 200);
     }
 
+    public function statistik()
+    {
+        Statistik::addTeilnehmer();
+        Statistik::addKilometer(20);
+        Statistik::addHoehenmeter(20);
+        Statistik::addEnergie(20);
 
+        return response()->json([
+            "statistik" => Statistik::get()
+        ], 200);
+    }
 }

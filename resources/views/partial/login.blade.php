@@ -55,14 +55,14 @@
 
                     @if ($errors->has('email'))
                         <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label">Betriebsmodus</label>
+                <label class="col-md-4 control-label">Wunschbetriebsmodus</label>
                 <div class="col-md-6">
                     <div class="radio">
                         <label>
@@ -93,8 +93,8 @@
 
                     @if ($errors->has('groesse'))
                         <span class="help-block">
-                                        <strong>{{ $errors->first('groesse') }}</strong>
-                                    </span>
+                            <strong>{{ $errors->first('groesse') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -107,8 +107,8 @@
 
                     @if ($errors->has('gewicht'))
                         <span class="help-block">
-                                        <strong>{{ $errors->first('gewicht') }}</strong>
-                                    </span>
+                            <strong>{{ $errors->first('gewicht') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -116,7 +116,7 @@
             <div class="form-group">
                 <div class="col-md-8 col-md-offset-4">
                     <button type="submit" class="btn btn-primary">
-                        Login
+                        Hinzufügen
                     </button>
                 </div>
             </div>

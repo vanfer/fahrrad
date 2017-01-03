@@ -18,10 +18,15 @@ $(document).ready(function () {
         }
     });
 
+
+
     /*
      * Button bindings
      * */
 
+
+
+    // Todo: Admin Login zu AJAX, Fehlerdialog statt Blade Fehler
     $("#falschesPasswort").dialog({
         autoOpen: false,
         dialogClass: "warnung",
@@ -61,65 +66,77 @@ $(document).ready(function () {
     });
 
     //Zuordnung löschen
+    $( "#zuordnungLoeschen" ).dialog({
+        autoOpen: false,
+        dialogClass: "warnung",
+        resizable: false,
+        modal: true
+    });
+
     $(".btnAbmelden").each(function(){
-
-        $( "#zuordnungLoeschen" ).dialog({
-            autoOpen: false,
-            dialogClass:"warnung",
-            resizable: false,
-            modal: true,
-        });
-
         $(this).click(function(e){
-
             var form = e.currentTarget.closest("form");
 
-            $( "#zuordnungLoeschen" ).dialog( "open" );
-            $('.ui-widget-overlay').addClass('custom-overlay');
+            $("#zuordnungLoeschen").dialog({
+                buttons : {
+                    "Ja" : function() {
+                        $.ajax({
+                            url: $(form).attr("action"),
+                            method: $(form).attr("method"),
+                            async: false
+                        }).done(function (data, statusText, xhr){
+                            if(xhr.status == 200){
+                                zuordnungGeloescht(form);
+                            }
+                        });
 
-            $( "#btnZuordnungLoeschenNein" ).on( "click", function() {
-                $( "#zuordnungLoeschen" ).dialog( "close" );
-            });
-
-            //Erzeugt Bug
-            $( "#btnZuordnungLoeschenJa" ).on( "click", function() {
-                $( "#zuordnungLoeschen" ).dialog( "close" );
-
-                $.ajax({
-                    url: $(form).attr("action"),
-                    method: $(form).attr("method")
-                }).done(function (data, statusText, xhr){
-
-                    var status = xhr.status;
-
-                    if(status == 200){
-
-                        var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-                        var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-                        var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-                        var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-
-                        var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
-
-                        $(fahrerdetailElement).html("Fahrrad ist inaktiv");
-
-                        $(btnAbmelden).css("display", "none");
-                        $(btnAnmelden).css("display", "block");
-                        $(btnHilfeInaktiv).css("display", "block");
-                        $(btnHilfeAktiv).css("display", "none");
-
+                        $(this).dialog("close");
+                    },
+                    "Nein" : function() {
+                        $(this).dialog("close");
                     }
-                });
+                }
             });
+
+            $("#zuordnungLoeschen").dialog("open");
         });
     });
+
+    function zuordnungGeloescht(form){
+        var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+        var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+        var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
+        var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
+
+        var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
+
+        $(fahrerdetailElement).html("Fahrrad ist inaktiv");
+
+        $(btnAbmelden).css("display", "none");
+        $(btnAnmelden).css("display", "block");
+        $(btnHilfeInaktiv).css("display", "block");
+        $(btnHilfeAktiv).css("display", "none");
+    }
+
+
+    //  Todo: Dialoge vereinfachen und redundanten Code vermeiden
+    /*
+    function showDialog(el, el_class){
+        $(el).dialog({
+            dialogClass: el_class,
+            resizable: false,
+            autoOpen: false,
+            modal: true
+        });
+    }
+    */
 
     //Dialog "Kein Fahrer ausgewählt"
     $( "#keinFahrerAusgewaehlt" ).dialog({
         dialogClass:"fehler",
         resizable: false,
         autoOpen: false,
-        modal: true,
+        modal: true
     });
 
     //Dialog "Fahrer schon zugeordnet
@@ -215,14 +232,12 @@ $(document).ready(function () {
                     }
 
                 }).fail(function(data, statusText, xhr) {
+                    $("#fahrerSchonZugeordnet").dialog("open");
+                    $(".ui-widget-overlay").addClass('custom-overlay');
 
-                        $("#fahrerSchonZugeordnet").dialog("open");
-                        $(".ui-widget-overlay").addClass('custom-overlay');
-
-                        $("#btnCloseFahrerSchonZugeordnet").on("click", function () {
-                            $("#fahrerSchonZugeordnet").dialog("close");
-                        });
-
+                    $("#btnCloseFahrerSchonZugeordnet").on("click", function () {
+                        $("#fahrerSchonZugeordnet").dialog("close");
+                    });
                 });
             }
         });
