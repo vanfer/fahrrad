@@ -17,20 +17,12 @@ $(document).ready(function () {
         }
     });
 
-
-
-    /*
-     * Button bindings
-     * */
-
-
-
     // Todo: Admin Login zu AJAX, Fehlerdialog statt Blade Fehler
     $("#falschesPasswort").dialog({
         autoOpen: false,
         dialogClass: "warnung",
         resizable: false,
-        modal: true,
+        modal: true
     });
 
     /*
@@ -61,7 +53,7 @@ $(document).ready(function () {
         // Gibt einen zufälligen Eintrag aus dem namen Array zurück
         var name = namen.sort(function() {return 0.5 - Math.random()})[0];
 
-        $("#name").attr("value", name);
+        $("input#name").attr("value", name);
     });
 
     //Zuordnung löschen
@@ -104,31 +96,24 @@ $(document).ready(function () {
     function zuordnungGeloescht(form){
         var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
         var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-        var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-        var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
 
         var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
-
         $(fahrerdetailElement).html("Fahrrad ist inaktiv");
 
         $(btnAbmelden).css("display", "none");
         $(btnAnmelden).css("display", "block");
-        $(btnHilfeInaktiv).css("display", "block");
-        $(btnHilfeAktiv).css("display", "none");
     }
 
 
     //  Todo: Dialoge vereinfachen und redundanten Code vermeiden
-    /*
-    function showDialog(el, el_class){
+    /*function showDialog(el, el_class){
         $(el).dialog({
             dialogClass: el_class,
             resizable: false,
             autoOpen: false,
             modal: true
         });
-    }
-    */
+    }*/
 
     //Dialog "Kein Fahrer ausgewählt"
     $( "#keinFahrerAusgewaehlt" ).dialog({
@@ -320,33 +305,41 @@ $(document).ready(function () {
         var fahrer_tr = $(this).parents("tr");
         var fahrer_id = $(fahrer_tr).attr("id");
 
-        $( "#fahrerLoeschen" ).dialog( "open" );
-        $('.ui-widget-overlay').addClass('custom-overlay');
 
-        $( "#btnFahrerLoeschenNein" ).on( "click", function() {
-            $( "#fahrerLoeschen" ).dialog( "close" );
-        });
+        $("#fahrerLoeschen").dialog({
+            buttons : {
+                "Ja" : function() {
+                    $.ajax({
+                        url: $(form).attr("action") + "/" + fahrer_id,
+                        method: "delete"
+                    }).done(function (data, statusText, xhr){
+                        var status = xhr.status;
 
-        $( "#btnFahrerLoeschenJa" ).on( "click", function() {
-            $( "#fahrerLoeschen" ).dialog( "close" );
+                        if(status == 200){
+                            $(fahrer_tr).remove();
 
-        $.ajax({
-            url: $(form).attr("action") + "/" + fahrer_id,
-            method: "delete"
-        }).done(function (data, statusText, xhr){
-            var status = xhr.status;
+                            var fahrrad_kasten = $("#panelBodyAdmin-"+data.id);
+                            fahrrad_kasten.html("Fahrrad ist inaktiv");
 
-                if(status == 200){
-                    $("#panelBodyAdmin-"+data.id).html("Fahrrad ist inaktiv");
+                            var buttons = fahrrad_kasten.siblings(".panel-heading").find(".pull-right");
+                            var btnAbmelden = buttons.find(".fahrradBtnAbmelden");
+                            var btnAnmelden = buttons.find(".fahrradBtnAnmelden");
 
-                    //Anpassung der Hilfe- und Zuordnung-Buttons fehlt
+                            $(btnAbmelden).css("display", "none");
+                            $(btnAnmelden).css("display", "block");
+                        }
+                    });
 
-                    $(fahrer_tr).remove();
-
+                    $(this).dialog("close");
+                },
+                "Nein" : function() {
+                    $(this).dialog("close");
                 }
-
-            });
+            }
         });
+
+        $("#fahrerLoeschen").dialog("open");
+        $('.ui-widget-overlay').addClass('custom-overlay');
     });
 
     $('#userTable').on('change', 'td', function(e, newValue) {

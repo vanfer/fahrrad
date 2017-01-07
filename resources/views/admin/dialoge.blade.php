@@ -92,8 +92,6 @@
 <div id="fahrerLoeschen" title="Warnung">
     <h3><b>Fahrer löschen</b></h3><hr/>
     <p>Der Fahrer wird unwiderruflich aus der Datenbank gelöscht. Möchten Sie den Fahrer wirklich löschen?</p>
-    <button id="btnFahrerLoeschenJa">Ja</button>
-    <button id="btnFahrerLoeschenNein">Nein</button>
 </div>
 
 
