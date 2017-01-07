@@ -17,6 +17,8 @@
     <link href="{{ asset("css/jquery-ui.structure.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/jquery-ui.theme.min.css") }}" rel="stylesheet">
 
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset("favicon.ico") }}">
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
