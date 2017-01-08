@@ -14,6 +14,7 @@
         <li><u>Button zur Löschung des gesamten Fahrerdatensatzes:</u> Dieser wird somit aus der Datenbank entfernt
         und kann auch nicht wiederhergestellt werden.</li>
     </ol>
+
     <p>Um die Spalten 2, 3 und 4 zu bearbeiten muss ****.<br><p>
 
     <p>Mithilfe des Buttons "Fahrer hinzufügen" kann ein neuer Datensatz erstellt werden.<br></p>
