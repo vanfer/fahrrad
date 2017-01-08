@@ -76,13 +76,11 @@
 <div id="keinFahrerAusgewaehlt" title="Fehler">
     <h3><b>Kein Fahrer ausgewählt</b></h3><hr/>
     <p>Sie müssen erst einen Fahrer auswählen, der einem Fahrrad zugeordnet werden soll.</p>
-    <button id="btnCloseKeinFahrerAusgewaehlt">OK</button>
 </div>
 
 <div id="fahrerSchonZugeordnet" title="Fehler">
     <h3><b>Fahrer schon zugeordnet</b></h3><hr/>
     <p>Der ausgewählte Fahrer ist schon einem Fahrrad zugeordnet. Bitte wählen Sie einen anderen Fahrer aus, der diesem Fahrrad zugeordnet werden soll.</p>
-    <button id="btnCloseFahrerSchonZugeordnet">OK</button>
 </div>
 
 <div id="zuordnungLoeschen" title="Warnung">

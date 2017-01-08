@@ -104,17 +104,6 @@ $(document).ready(function () {
         $(btnAnmelden).css("display", "block");
     }
 
-
-    //  Todo: Dialoge vereinfachen und redundanten Code vermeiden
-    /*function showDialog(el, el_class){
-        $(el).dialog({
-            dialogClass: el_class,
-            resizable: false,
-            autoOpen: false,
-            modal: true
-        });
-    }*/
-
     //Dialog "Kein Fahrer ausgewählt"
     $( "#keinFahrerAusgewaehlt" ).dialog({
         dialogClass:"fehler",
@@ -145,14 +134,15 @@ $(document).ready(function () {
             var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
 
             if(window.selectedUserRow == 0){
-
-                $( "#keinFahrerAusgewaehlt" ).dialog( "open" );
-                $(".ui-widget-overlay").addClass('custom-overlay');
-
-                $( "#btnCloseKeinFahrerAusgewaehlt" ).on( "click", function() {
-                    $( "#keinFahrerAusgewaehlt" ).dialog( "close" );
+                $("#keinFahrerAusgewaehlt").dialog({
+                    buttons : {
+                        "OK" : function() {
+                            $(this).dialog("close");
+                        }
+                    }
                 });
-
+                $("#keinFahrerAusgewaehlt").dialog("open");
+                $(".ui-widget-overlay").addClass('custom-overlay');
             }else{
 
                 // Zuordnen Request
@@ -216,19 +206,21 @@ $(document).ready(function () {
                     }
 
                 }).fail(function(data, statusText, xhr) {
+                    $("#fahrerSchonZugeordnet").dialog({
+                        buttons : {
+                            "OK" : function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
                     $("#fahrerSchonZugeordnet").dialog("open");
                     $(".ui-widget-overlay").addClass('custom-overlay');
-
-                    $("#btnCloseFahrerSchonZugeordnet").on("click", function () {
-                        $("#fahrerSchonZugeordnet").dialog("close");
-                    });
                 });
             }
         });
     });
 
     //Fahrer hinzufügen
-
     $("#addFahrer").dialog({
         dialogClass:"addFahrer",
         resizable: false,
