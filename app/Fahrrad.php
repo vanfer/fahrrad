@@ -64,7 +64,5 @@ class Fahrrad extends Model
         $this->geschwindigkeit = 0;
         $this->sollLeistung = null;
         $this->sollDrehmoment = null;
-        $this->strecke_id = null;
-        $this->abschnitt_id = null;
     }
 }

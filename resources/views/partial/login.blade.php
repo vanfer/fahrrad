@@ -1,4 +1,4 @@
-<div id="addFahrer" title="Fahrer hinzufügen">
+<div id="addFahrer" title="Fahrer hinzufügen" style="display: none;">
     <div>
         <br>
         <form class="form-horizontal" role="form" method="POST" action="{{ url('fahrer') }}">

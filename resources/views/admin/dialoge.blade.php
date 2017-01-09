@@ -1,4 +1,4 @@
-<div id="hilfeTabelle" title="Hilfe">
+<div id="hilfeTabelle" title="Hilfe" style="display: none;">
     <h3><b>Fahrertabelle</b></h3><hr/>
     <p>In dieser Tabelle werden alle bereits registrierten Fahrer angezeigt.<br>In den Spalten sind folgende
     Funktionen oder Daten dargestellt:</p>
@@ -23,7 +23,7 @@
     der Name des gesuchten Fahrers in das Suchfeld eingegeben werden.</p>
 </div>
 
-<div id="hilfeInaktiv" title="Hilfe">
+<div id="hilfeInaktiv" title="Hilfe" style="display: none;">
     <h3><b>Fahrrad ist inaktiv</b></h3><hr/>
     <p>Dieses Fahrrad wird aktuell nicht benutzt und ist somit inaktiv.<br>Es gibt zwei
         verschiedene Möglichkeiten ihm einen Fahrer zuzuordnen:</p>
@@ -40,7 +40,7 @@
         angezeigt werden.</p>
 </div>
 
-<div id="hilfeAktiv" title="Hilfe">
+<div id="hilfeAktiv" title="Hilfe" style="display: none;">
     <h3><b>Fahrrad ist aktiv</b></h3><hr/>
     <p>Diesem Fahrrad ist ein Fahrer zugeordnet und es wird somit aktiv benutzt.<br>Es werden
         folgende Daten angezeigt:</p>
@@ -71,35 +71,31 @@
         als inaktiv gekennzeichnet.</p>
 </div>
 
-
-
-<div id="keinFahrerAusgewaehlt" title="Fehler">
+<div id="keinFahrerAusgewaehlt" title="Fehler" style="display: none;">
     <h3><b>Kein Fahrer ausgewählt</b></h3><hr/>
     <p>Sie müssen erst einen Fahrer auswählen, der einem Fahrrad zugeordnet werden soll.</p>
 </div>
 
-<div id="fahrerSchonZugeordnet" title="Fehler">
+<div id="fahrerSchonZugeordnet" title="Fehler" style="display: none;">
     <h3><b>Fahrer schon zugeordnet</b></h3><hr/>
     <p>Der ausgewählte Fahrer ist schon einem Fahrrad zugeordnet. Bitte wählen Sie einen anderen Fahrer aus, der diesem Fahrrad zugeordnet werden soll.</p>
 </div>
 
-<div id="zuordnungLoeschen" title="Warnung">
+<div id="zuordnungLoeschen" title="Warnung" style="display: none;">
     <h3><b>Zuordnung löschen</b></h3><hr/>
     <p>Die Zuordnung vom Fahrer zum Fahrrad wird gelöscht. Möchten Sie die Zuordnung wirklich löschen?</p>
 </div>
 
-<div id="fahrerLoeschen" title="Warnung">
+<div id="fahrerLoeschen" title="Warnung" style="display: none;">
     <h3><b>Fahrer löschen</b></h3><hr/>
     <p>Der Fahrer wird unwiderruflich aus der Datenbank gelöscht. Möchten Sie den Fahrer wirklich löschen?</p>
 </div>
 
 
 {{--
-<div id="fahrerNichtGefunden" title="Fehler">
+<div id="fahrerNichtGefunden" title="Fehler" style="display: none;">
     <h3><b>Fahrer nicht gefunden.</b></h3><hr/>
     <p>Ein Fahrer mit dem eingegebenen Namen existiert nicht. Möchten Sie einen neuen Fahrer mit dem eingegebenen Namen hinzufügen?</p>
-    <button id="btnNeuenFahrerHinzuJa">Ja</button>
-    <button id="btnNeuenFahrerHinzuNein">Nein</button>
 </div>
 --}}
 

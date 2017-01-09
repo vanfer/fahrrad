@@ -10,59 +10,6 @@ use Illuminate\Support\Facades\Input;
 class FahrradController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  \App\Fahrrad $fahrrad
-     * @return \Illuminate\Http\Response
-     */
-    public function show(\App\Fahrrad $fahrrad)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  \App\Fahrrad $fahrrad
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(\App\Fahrrad $fahrrad)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -74,24 +21,35 @@ class FahrradController extends Controller
         if($request->has("modus_id")){
             $fahrrad->resetData();
 
-            $fahrrad->modus_id = Input::get("modus_id");
+            $modus_id = Input::get("modus_id");
+            $fahrrad->modus_id = $modus_id;
+
+            if($modus_id != 1){ // Nicht Strecke
+                if($request->has("modus_value")){
+                    $modus_value = Input::get("modus_value");
+                }else{
+                    $modus_value = 200; // Standardwert
+                }
+
+                if($modus_id == 2){ // Drehmoment
+                    $fahrrad->sollLeistung = null;
+                    $fahrrad->sollDrehmoment = $modus_value;
+                }elseif($modus_id == 3){ // Leistung
+                    $fahrrad->sollDrehmoment = null;
+                    $fahrrad->sollLeistung = $modus_value;
+                }
+            }
+        }
+
+        // Eine Strecke hat für jeden Abschnitt verschiedene Drehmomente
+        if($request->has("strecke_update_drehmoment")){
+            $fahrrad->sollDrehmoment = Input::get("strecke_update_drehmoment");
         }
 
         $fahrrad->touch();
         $fahrrad->save();
 
         return $fahrrad;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  \App\Fahrrad $fahrrad
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(\App\Fahrrad $fahrrad)
-    {
-        //
     }
 
     public function zuordnungHerstellen(Request $request, \App\Fahrrad $fahrrad, \App\Fahrer $fahrer)

@@ -38,19 +38,52 @@ $(document).ready(function () {
     initDialog("#hilfeInaktiv",             "hilfe",    false);
     initDialog("#hilfeTabelle",             "hilfe",    false);
 
+
+
     // Element Bindings
 
+    // Modus ändern (Fahrradkasten)
     $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
+        var context = $(this).parents(".panel-body");
+
         $.ajax({
             url: $(this).closest("form").attr("action"),
             method: "PUT",
             data: { modus_id: $(this).val() }
         }).done(function (data, statusText, xhr){
-            var status = xhr.status;
-
-            if(status == 200){
-                console.log("success");
+            if(xhr.status == 200){
+                // Hack
+                window.location.reload();
             }
+        });
+    });
+    // Modus Option anpassen
+    $(".modus_option").each(function () {
+        $(this).on("change", function () {
+            var value_html = $(this).parents(".row").find(".modus_value");
+
+            var modus_id = $(this).parents(".row").find("#betriebsmodusAuswahlFahrrad").val();
+            var modus_value = $(this).val();
+
+            var einheit = (modus_id == 2) ? "Nm" : ((modus_id == 3) ? "W" : "");
+            value_html.html($(this).val() + " " + einheit);
+
+            var fahrrad_id = $(this).parents(".panelBodyAdmin").attr("id").split("-")[1];
+
+            // Ajax /fahrrad/ID PUT - modus_id, modus_value
+            $.ajax({
+                url: BASE_PATH + "fahrrad/" + fahrrad_id,
+                method: "PUT",
+                data: {
+                    modus_id: modus_id,
+                    modus_value: modus_value
+                }
+            }).done(function (data, statusText, xhr){
+                if(xhr.status == 200){
+                    // Hack
+                    window.location.reload();
+                }
+            });
         });
     });
 
@@ -158,6 +191,9 @@ $(document).ready(function () {
                 console.log(data);
 
                 $("#addFahrer").dialog("close");
+
+                // Hack
+                window.location.reload();
             }
         });
     });
@@ -369,6 +405,9 @@ function updateFahrradKasten(context, modus, fahrrad, fahrer){
         $(btnAbmelden).css("display", "none");
         $(btnAnmelden).css("display", "block");
     }
+
+    // Hack
+    window.location.reload();
 }
 
 // Drag & Drop

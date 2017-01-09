@@ -67,6 +67,28 @@
                             </div>
                         </form>
                     </div>
+
+                    @if($fahrrad->modus_id != 1)                <!-- Nicht Streckenmodus -->
+                        <div class="row modus">
+                            <div class="col-md-6">Modus Option</div>
+                            <div id="modus-option-{{ $fahrrad->id }}" class="col-md-3">
+                                @if($fahrrad->modus_id == 2)     <!-- Drehmoment -->
+                                    <input type="range" min="0" max="1000" step="100" value="{{ ($fahrrad->sollDrehmoment == null) ? 200 : $fahrrad->sollDrehmoment }}" id="{{ $fahrrad->modus_id }}" class="modus_option" />
+                                @elseif($fahrrad->modus_id == 3) <!--  Leistung  -->
+                                    <input type="range" min="0" max="1000" step="100" value="{{ ($fahrrad->sollLeistung == null) ? 200 : $fahrrad->sollLeistung }}" id="{{ $fahrrad->modus_id }}" class="modus_option" />
+                                @endif
+
+                            </div>
+
+                            <div class="modus_value" class="col-md-1">
+                                @if($fahrrad->modus_id == 2)     <!-- Drehmoment -->
+                                    {{ $fahrrad->sollDrehmoment }} Nm
+                                @elseif($fahrrad->modus_id == 3) <!--  Leistung  -->
+                                    {{ $fahrrad->sollLeistung }} W
+                                @endif
+                            </div>
+                        </div>
+                    @endif
                 @else
                     Fahrrad ist inaktiv
                 @endif
