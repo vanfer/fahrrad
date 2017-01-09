@@ -14,7 +14,7 @@ Die Anwendung nutzt verschiedene Bibliotheken und Frameworks.
 * [Mysql 5]
 * [Twitter Bootstrap]
 * [jQuery]
-* [Chart.js]
+* [Highchart.js]
 
 ### Installation
 
@@ -78,6 +78,5 @@ Die Anwendung wurde nun vollständig installiert und kann über http://localhost
 Vorhandene Routen sind u.a.:
 * Zentraler Display: /central
 * Admin Ansicht (Passwort="test"): /admin
-* Mobile Ansicht: /, bzw. /login
 
 Diese befinden sich noch in der Entwicklung, mit Änderungen muss also gerechnet werden.
