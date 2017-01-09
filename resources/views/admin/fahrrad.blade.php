@@ -1,17 +1,15 @@
 <div class="row">
     <div class="col-md-12 text-nowrap">
-        <div class="panel panel-default" id="panelAdmin">
+        <div class="panel panel-default" id="panelAdmin" ondrop="drop(event)" ondragover="allowDrop(event)">
             <div class="panel-heading" id="panelHeadingAdmin">
                 <h3 class="panel-title pull-left" id="panelTitelAdmin">Fahrrad #{{$fahrrad->id}}</h3>
                 <div class="pull-right">
                     <div class="fahrradBtnAbmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "none" : "block"  }}">
                         <div class="pull-left">
-                            <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="DELETE">
-                                <button type="button" class="btn btn-default btnAbmelden">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                    Zuordnung löschen
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-default btnAbmelden" id="{{$fahrrad->id}}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Zuordnung löschen
+                            </button>
                         </div>
                         <div class="pull-right">
                         <button type="button" class="btn btn-default btnHilfeAktiv">Hilfe</button>
@@ -19,12 +17,10 @@
                     </div>
                     <div class="fahrradBtnAnmelden" style="display: {{ ($fahrrad->fahrer_id == null) ? "block" : "none"  }}">
                         <div class="pull-left">
-                            <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="POST">
-                                <button type="button" class="btn btn-default btnAnmelden">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    Zuordnung hinzufügen
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-default btnAnmelden" id="{{$fahrrad->id}}">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Zuordnung hinzufügen
+                            </button>
                         </div>
                         <div class="pull-right">
                             <button type="button" class="btn btn-default btnHilfeInaktiv ">Hilfe</button>

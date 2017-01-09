@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                     @foreach($fahrer as $f)
-                        <tr draggable="true" id="{{$f->id}}">
+                        <tr draggable="true" id="{{$f->id}}" ondragstart="drag(event)">
                             <th id="th_fahrer_id">
                                 <fieldset>
                                     <input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="{{$f->id}}">

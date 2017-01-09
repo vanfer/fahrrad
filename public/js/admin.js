@@ -1,12 +1,13 @@
+// WICHTIG: IP ändern, oder einfach localhost nehmen!
+var BASE_PATH = "http://localhost/fahrrad/public/";
+
 $(document).ready(function () {
     window.selectedUserRow = 0;
     window.selectedUserMode = 0;
 
     $(".formAddFahrer").hide();
 
-    /*
-     * autocomplete admin fahrer suche
-     * */
+    // autocomplete admin fahrer suche
     $("#q").autocomplete({
         source: "search/autocomplete",
         minLength: 1,
@@ -17,21 +18,27 @@ $(document).ready(function () {
         }
     });
 
-    // Todo: Admin Login zu AJAX, Fehlerdialog statt Blade Fehler
-    $("#falschesPasswort").dialog({
-        autoOpen: false,
-        dialogClass: "warnung",
-        resizable: false,
-        modal: true
-    });
+    // Dialoginitialisierungen
+    function initDialog(selector, dialogClass, modal) {
+        $(selector).dialog({
+            autoOpen: false,
+            dialogClass: dialogClass,
+            resizable: false,
+            modal: modal
+        });
+    }
 
-    /*
-    $("#falschesPasswort").dialog("open");
-    $('.ui-widget-overlay').addClass('custom-overlay');
-    $("#btnfalschespasswort").on("click", function () {
-        $("#falschesPasswort").dialog("close");
-    });
-    */
+    initDialog("#falschesPasswort",         "warnung",   true);
+    initDialog("#zuordnungLoeschen",        "warnung",   true);
+    initDialog("#keinFahrerAusgewaehlt",    "fehler",    true);
+    initDialog("#fahrerSchonZugeordnet",    "fehler",    true);
+    initDialog("#addFahrer",                "addFahrer", true);
+    initDialog("#fahrerLoeschen",           "fehler",   true);
+    initDialog("#hilfeAktiv",               "hilfe",    false);
+    initDialog("#hilfeInaktiv",             "hilfe",    false);
+    initDialog("#hilfeTabelle",             "hilfe",    false);
+
+    // Element Bindings
 
     $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
         $.ajax({
@@ -56,30 +63,42 @@ $(document).ready(function () {
         $("input#name").attr("value", name);
     });
 
-    //Zuordnung löschen
-    $( "#zuordnungLoeschen" ).dialog({
-        autoOpen: false,
-        dialogClass: "warnung",
-        resizable: false,
-        modal: true
-    });
+    $(".btnAnmelden").each(function(){
+        $(this).click(function(e){
+            var fahrrad_id = $(this).attr("id");
+            var context = $(this).parents("#panelAdmin");
 
+            if(window.selectedUserRow == 0){
+                $("#keinFahrerAusgewaehlt").dialog({
+                    buttons : {
+                        "OK" : function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#keinFahrerAusgewaehlt").dialog("open");
+                $(".ui-widget-overlay").addClass('custom-overlay');
+            }else{
+                zuordnungHerstellen(context, fahrrad_id, window.selectedUserRow, window.selectedUserMode);
+
+                $(".radio-fahrer-id").each(function () {
+                    $(this).prop('checked', false);
+                });
+
+                window.selectedUserRow = 0;
+                window.selectedUserMode = 0;
+            }
+        });
+    });
     $(".btnAbmelden").each(function(){
         $(this).click(function(e){
-            var form = e.currentTarget.closest("form");
+            var fahrrad_id = $(this).attr("id");
+            var context = $(this).parents("#panelAdmin");
 
             $("#zuordnungLoeschen").dialog({
                 buttons : {
                     "Ja" : function() {
-                        $.ajax({
-                            url: $(form).attr("action"),
-                            method: $(form).attr("method"),
-                            async: false
-                        }).done(function (data, statusText, xhr){
-                            if(xhr.status == 200){
-                                zuordnungGeloescht(form);
-                            }
-                        });
+                        zuordnungLoeschen(context, fahrrad_id);
 
                         $(this).dialog("close");
                     },
@@ -93,145 +112,10 @@ $(document).ready(function () {
         });
     });
 
-    function zuordnungGeloescht(form){
-        var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-        var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-
-        var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
-        $(fahrerdetailElement).html("Fahrrad ist inaktiv");
-
-        $(btnAbmelden).css("display", "none");
-        $(btnAnmelden).css("display", "block");
-    }
-
-    //Dialog "Kein Fahrer ausgewählt"
-    $( "#keinFahrerAusgewaehlt" ).dialog({
-        dialogClass:"fehler",
-        resizable: false,
-        autoOpen: false,
-        modal: true
-    });
-
-    //Dialog "Fahrer schon zugeordnet
-    $( "#fahrerSchonZugeordnet" ).dialog({
-        dialogClass:"fehler",
-        resizable: false,
-        autoOpen: false,
-        modal: true,
-    });
-
-    //Zuordnung hinzufügen
-    $(".btnAnmelden").each(function(){
-
-        $(this).click(function(e){
-            var form = e.currentTarget.closest("form");
-
-            var btnAbmelden = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-            var btnAnmelden = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-            var btnHilfeAktiv = $(form).parents(".panel").find(".fahrradBtnAbmelden");
-            var btnHilfeInaktiv = $(form).parents(".panel").find(".fahrradBtnAnmelden");
-
-            var fahrerdetailElement = $(form).parents(".panel").find(".panel-body");
-
-            if(window.selectedUserRow == 0){
-                $("#keinFahrerAusgewaehlt").dialog({
-                    buttons : {
-                        "OK" : function() {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                $("#keinFahrerAusgewaehlt").dialog("open");
-                $(".ui-widget-overlay").addClass('custom-overlay');
-            }else{
-
-                // Zuordnen Request
-                var url = $(form).attr("action") + "/fahrer/" + window.selectedUserRow;
-                $.ajax({
-                    url: url,
-                    method: "GET",
-                    data: {
-                        modus_id: window.selectedUserMode
-                    }
-                }).done(function (data, statusText, xhr){
-                    var status = xhr.status;
-
-                        if(status == 200){
-                        var fahrrad = data.fahrrad;
-                        var fahrer = data.fahrer;
-
-                        var template = '<div class="row">' +
-                            '	<div class="col-md-6">Fahrer:</div>' +
-                            '	<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrer.name + '</div>' +
-                            '</div>' +
-                            '<div class="row">' +
-                            '	<div class="col-md-6 ">Geschwindigkeit</div>' +
-                            '	<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.geschwindigkeit + ' km/h</div>' +
-                            '</div>' +
-                            '<div class="row">' +
-                            '	<div class="col-md-6">Gesamtleistung</div>' +
-                            '	<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.istLeistung + '</div>' +
-                            '</div>' +
-                            '<div class="row">' +
-                            '	<div class="col-md-6">Zurückgelegte Strecke</div>' +
-                            '	<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.strecke + '</div>' +
-                            '</div>' +
-                            '<div class="row">' +
-                            '	<form action="./fahrrad/'+fahrrad.id+'" method="PUT">' +
-                            '		<div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>' +
-                            '		<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-4">' +
-                            '			<select class="form-control" id="betriebsmodusAuswahlFahrrad">' +
-                            '				<option value="1"' + ((data.fahrer.modus_id == 1) ? ' selected' : '') + '>Strecke</option>' +
-                            '				<option value="2"' + ((data.fahrer.modus_id == 2) ? ' selected' : '') + '>Konstantes Drehmoment</option>' +
-                            '				<option value="3"' + ((data.fahrer.modus_id == 3) ? ' selected' : '') + '>Konstante Leistung</option>' +
-                            '			</select>' +
-                            '		</div>' +
-                            '	</form>' +
-                            '</div>';
-
-                        $(fahrerdetailElement).html(template);
-
-                        $(btnAbmelden).css("display", "block");
-                        $(btnAnmelden).css("display", "none");
-                        $(btnHilfeInaktiv).css("display", "none");
-                        $(btnHilfeAktiv).css("display", "block");
-
-                        $(".radio-fahrer-id").each(function () {
-                            $(this).prop('checked', false);
-                        });
-
-                        window.selectedUserRow = 0;
-                        window.selectedUserMode = 0;
-
-                    }
-
-                }).fail(function(data, statusText, xhr) {
-                    $("#fahrerSchonZugeordnet").dialog({
-                        buttons : {
-                            "OK" : function() {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
-                    $("#fahrerSchonZugeordnet").dialog("open");
-                    $(".ui-widget-overlay").addClass('custom-overlay');
-                });
-            }
-        });
-    });
-
-    //Fahrer hinzufügen
-    $("#addFahrer").dialog({
-        dialogClass:"addFahrer",
-        resizable: false,
-        autoOpen: false,
-        modal: true
-    });
     $("#btnAddFahrer").on("click", function(){
         $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
     });
-
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
@@ -278,18 +162,7 @@ $(document).ready(function () {
         });
     });
 
-
     $("#userTable").editableTableWidget();
-
-    //Dialog "Fahrer wirklich löschen"
-    $( "#fahrerLoeschen" ).dialog({
-        dialogClass:"fehler",
-        resizable: false,
-        autoOpen: false,
-        modal: true,
-    });
-
-    //Fahrer löschen
     $("#userTable").on("click", ".btnDelete", function () {
 
         var form = $(this).closest("form");
@@ -333,7 +206,6 @@ $(document).ready(function () {
         $("#fahrerLoeschen").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
     });
-
     $('#userTable').on('change', 'td', function(e, newValue) {
         var form = e.currentTarget.closest("form");
 
@@ -383,54 +255,137 @@ $(document).ready(function () {
             }
         });
     });
-    $('#newUserTable').on('change', 'td', function(e, newValue) {
-        var form = e.currentTarget.closest("form");
-
-        var changedElement = $(this).attr("id");
-        var fahrer_id = $(this).parents("tr").attr("id");
-
-        var data = null;
-        if(changedElement == "name"){
-            window.newUserTemp.name = newValue;
-        }else if(changedElement == "email"){
-            window.newUserTemp.email = newValue ;
-        }else if(changedElement == "groesse"){
-            window.newUserTemp.groesse = newValue;
-        }else if(changedElement == "gewicht"){
-            window.newUserTemp.gewicht = newValue ;
-        }
-    });
-
     $("#userTable").on("click", ".radio-fahrer-id", function () {
         window.selectedUserRow = $(this).val();
         window.selectedUserMode = $(this).parents("tr").find("select").val();
     });
 
-    $("#hilfeTabelle").dialog({
-        dialogClass:"hilfe",
-        resizable: false,
-        autoOpen: false,
-    });
-
     $("#btnHilfeTabelle").on("click", function() {
         $("#hilfeTabelle").dialog("open");
     });
-
-    $("#hilfeInaktiv").dialog({
-        dialogClass:"hilfe",
-        resizable: false,
-        autoOpen: false,
-    });
     $(".btnHilfeInaktiv").on("click", function() {
         $("#hilfeInaktiv").dialog("open");
-    });
-
-    $("#hilfeAktiv").dialog({
-        dialogClass:"hilfe",
-        resizable: false,
-        autoOpen: false,
     });
     $(".btnHilfeAktiv").on("click", function() {
         $("#hilfeAktiv").dialog("open");
     });
 });
+
+function zuordnungLoeschen(context, fahrrad_id){
+    $.ajax({
+        url: BASE_PATH + "fahrrad/" + fahrrad_id,
+        method: "DELETE",
+        async: false
+    }).done(function (data, statusText, xhr){
+        if(xhr.status == 200){
+            updateFahrradKasten(context, false);
+        }
+    });
+}
+function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
+    var url =  BASE_PATH + "fahrrad/" + fahrrad_id + "/fahrer/" + fahrer_id;
+
+    console.log(context);
+
+    $.ajax({
+        url: url,
+        method: "GET",
+        data: {
+            modus_id: modus_id
+        }
+    }).done(function (data, statusText, xhr){
+        var status = xhr.status;
+
+        if(status == 200){
+            var fahrrad = data.fahrrad;
+            var fahrer = data.fahrer;
+
+            updateFahrradKasten(context, true, fahrrad, fahrer);
+        }
+    }).fail(function(data, statusText, xhr) {
+        $("#fahrerSchonZugeordnet").dialog({
+            buttons : {
+                "OK" : function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#fahrerSchonZugeordnet").dialog("open");
+        $(".ui-widget-overlay").addClass('custom-overlay');
+    });
+}
+
+// Wird nach dem herstellen/löschen einer Zuordnung aufgerufen um den Kasten zu aktualisieren
+function updateFahrradKasten(context, modus, fahrrad, fahrer){
+    // Optionale Parameter nur bei Zuordnung herstellen nötig
+    fahrrad = fahrrad || null;
+    fahrer  = fahrer  || null;
+
+    var btnAbmelden = $(context).find(".fahrradBtnAbmelden");
+    var btnAnmelden = $(context).find(".fahrradBtnAnmelden");
+
+    var fahrerdetailElement = $(context).find(".panel-body");
+
+    if(modus){ // Zuordnung Herstellen
+        if(fahrrad && fahrer){
+            var template = '<div class="row">' +
+                '	<div class="col-md-6">Fahrer:</div>' +
+                '	<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrer.name + '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '	<div class="col-md-6 ">Geschwindigkeit</div>' +
+                '	<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.geschwindigkeit + ' km/h</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '	<div class="col-md-6">Gesamtleistung</div>' +
+                '	<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.istLeistung + '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '	<div class="col-md-6">Zurückgelegte Strecke</div>' +
+                '	<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.strecke + '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '	<form action="./fahrrad/'+fahrrad.id+'" method="PUT">' +
+                '		<div class="col-md-6" id="betriebsmodusText">Betriebsmodus</div>' +
+                '		<div id="betriebsmodus-anzeige-' + fahrrad.id + '" class="col-md-4">' +
+                '			<select class="form-control" id="betriebsmodusAuswahlFahrrad">' +
+                '				<option value="1"' + ((fahrer.modus_id == 1) ? ' selected' : '') + '>Strecke</option>' +
+                '				<option value="2"' + ((fahrer.modus_id == 2) ? ' selected' : '') + '>Konstantes Drehmoment</option>' +
+                '				<option value="3"' + ((fahrer.modus_id == 3) ? ' selected' : '') + '>Konstante Leistung</option>' +
+                '			</select>' +
+                '		</div>' +
+                '	</form>' +
+                '</div>';
+
+            $(fahrerdetailElement).html(template);
+
+            $(btnAbmelden).css("display", "block");
+            $(btnAnmelden).css("display", "none");
+        }
+    }
+    else{ // Zuordnung Löschen
+        $(fahrerdetailElement).html("Fahrrad ist inaktiv");
+
+        $(btnAbmelden).css("display", "none");
+        $(btnAnmelden).css("display", "block");
+    }
+}
+
+// Drag & Drop
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("modus", $(ev.target).find("#betriebsmodus").find("select").val());
+}
+function drop(ev) {
+    ev.preventDefault();
+
+    var fahrrad_id = $(ev.target).attr("id").split("-")[1];
+    var user_id = ev.dataTransfer.getData("text");
+    var modus_id = ev.dataTransfer.getData("modus");
+    var context = $(ev.target).parents("#panelAdmin");
+
+    zuordnungHerstellen(context, fahrrad_id, user_id, modus_id);
+}

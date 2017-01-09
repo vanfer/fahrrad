@@ -23,21 +23,19 @@ Route::resource("fahrrad", "FahrradController");
 |--------------------------------------------------------------------------
 */
 Route::get("central", "MainController@showCentral"); /*  */
+Route::get("/", function (){ return redirect("central"); });
 
 /*
 |--------------------------------------------------------------------------
-| Mobile Ansicht (Standardansicht)
+| Mobile Ansicht
 |--------------------------------------------------------------------------
-*/
+
 
 Route::get("login", "LoginController@index");
 Route::post("login", "LoginController@login");
 Route::post("logout", "LoginController@logout");
 
-
-Route::get("/", function (){ return redirect("mobile"); });
-Route::get("mobile", "MobileController@index");
-
+Route::get("mobile", "MobileController@index");*/
 
 /*
 |--------------------------------------------------------------------------
