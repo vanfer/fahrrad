@@ -18,9 +18,17 @@ $(document).ready(function () {
 
     updateChartStreckeData();
     window.chart_strecke = new Highcharts.Chart({
+        title:{
+            text:''
+        },
         chart: {
             renderTo: 'container-strecke',
             animation: true,
+            backgroundColor: "#E6E9ED",
+            spacingBottom: 10,
+            spacingTop: 10,
+            spacingLeft: 10,
+            spacingRight: 10,
             events: {
                 load: function(){
                     renderFahrerPositionen(this);
@@ -70,24 +78,29 @@ $(document).ready(function () {
         }]
     });
 
+
+    // Leistung Daten und Chart
+    window.leistungData = { data: [], labels: [] };
     window.chart_leistung = new Highcharts.Chart({
+        title:{
+            text:''
+        },
         chart: {
             renderTo: 'container-leistung',
             type: 'column',
-            events: {
-                load: function(){
-
-                },
-                redraw: function(){
-
-                }
-            }
+            backgroundColor: "#E6E9ED",
+            spacingBottom: 10,
+            spacingTop: 10,
+            spacingLeft: 10,
+            spacingRight: 10
         },
         xAxis: {
-            categories: [],
+            categories: window.leistungData.labels,
             crosshair: true
         },
         yAxis: {
+            gridLineWidth: 1,
+            gridLineColor: '#D0D3D6',
             min: 0,
             title: {
                 text: 'Leistung (Watt)'
@@ -99,19 +112,61 @@ $(document).ready(function () {
         plotOptions: {
             column: {
                 pointPadding: 0.2,
-                borderWidth: 0
+                borderWidth: 0,
+                colorByPoint: true
             }
         },
+        colors: [
+            '#EC87C0',
+            '#5D9CEC',
+            '#FFCE54'
+        ],
         series: [{
-            data: [49.9,49.9,49.9]
+            showInLegend: false,
+            data: window.leistungData.data
         }]
     });
 
-    // Leistung Daten und Chart
-    window.leistungData = { data: [], labels: [] };
-
     // leistung (Alle) Daten und Chart
-    window.leistungAllAbsolute = 0;
+    window.gesamtleistungData = { absolute: 0, data: [] };
+    window.chart_gesamtleistung = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container-gesamtleistung',
+            type: 'pie',
+            backgroundColor: "#E6E9ED",
+            margin: [30, 0, 0, 0],
+            spacingTop: 0,
+            spacingBottom: 0,
+            spacingLeft: 0,
+            spacingRight: 0
+        },
+        title: {
+            text: '0 W',
+            style: {
+                fontSize: '30px'
+            }
+        },
+        tooltip: {
+            enabled: false
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: false,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        },
+        colors: [
+            '#EC87C0',
+            '#5D9CEC',
+            '#FFCE54'
+        ],
+        series: [{
+            colorByPoint: true,
+            data: []
+        }]
+    });
 
     /*
     * Aktualisierung der Daten: Charts und Fahredetails
@@ -152,6 +207,7 @@ function updateDetails(){
         if(response && response.data ) {
             window.leistungData = { data: [], labels: []};
             window.fahrrad_strecke = { data: []};
+            window.gesamtleistungData = { absolute: 0, data: [] };
 
             for(var j = 0; j < window.fahrrad.length; j++){
                 if(window.fahrrad[j].element != null){
@@ -167,8 +223,10 @@ function updateDetails(){
                     if(fahrrad.fahrer_id != null){
                         addFahrrad(fahrrad.id, fahrrad.color, fahrrad.modus_id);
 
-                        window.leistungData.labels.push(fahrrad.fahrer_id);
+                        window.leistungData.labels.push(fahrrad.fahrer.name);
                         window.leistungData.data.push(fahrrad.istLeistung);
+
+                        window.gesamtleistungData.absolute += fahrrad.istLeistung;
 
                         window.fahrrad_strecke.data.push(fahrrad.strecke);
                     }
@@ -180,10 +238,25 @@ function updateDetails(){
             }
         }
     });
-}
 
-function updateStatistik(){
+    window.chart_leistung.series[0].setData(window.leistungData.data);
+    window.chart_leistung.xAxis[0].setCategories(window.leistungData.labels);
+    window.chart_leistung.redraw();
 
+    // Gesamtleistung
+    for(var i = 0; i <= window.leistungData.data.length - 1; i++){
+        window.gesamtleistungData.data.push([
+            window.leistungData.labels[i],
+            Math.floor((window.leistungData.data[i] * 100) / window.gesamtleistungData.absolute)
+        ]);
+    }
+
+    window.chart_gesamtleistung.setTitle({
+        text: window.gesamtleistungData.absolute + " W"
+    });
+
+    window.chart_gesamtleistung.series[0].setData(window.gesamtleistungData.data);
+    window.chart_gesamtleistung.redraw();
 }
 
 // Lädt die Daten zur Strecke mit der angegebenen ID von der API

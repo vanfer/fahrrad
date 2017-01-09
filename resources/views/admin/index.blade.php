@@ -1,5 +1,9 @@
 @extends("layouts.app")
 
+@section("title")
+    - Admin
+@endsection
+
 @section('content')
     {{-- Linke Seite in der Adminansicht --}}
     @include("admin.fahrraeder")
