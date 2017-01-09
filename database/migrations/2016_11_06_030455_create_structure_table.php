@@ -72,12 +72,6 @@ class CreateStructureTable extends Migration
 
             $table->string("color");
 
-            $table->integer("strecke_id")->unsigned()->nullable();
-            $table->foreign("strecke_id")->references("id")->on("strecke");
-
-            $table->integer("abschnitt_id")->unsigned()->nullable();
-            $table->foreign("abschnitt_id")->references("id")->on("abschnitt");
-
             $table->integer("modus_id")->unsigned()->default(1);
             $table->foreign("modus_id")->references("id")->on("modus");
 

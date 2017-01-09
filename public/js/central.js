@@ -163,6 +163,7 @@ $(document).ready(function () {
     //Aktualisierung der Daten: Charts, Fahredetails und Fahrerpositionen
     window.setInterval(function () {
         updateDetails();
+        updateChartStreckeData();
         updateChartStreckeFahrer();
     }, 1000);
 });
