@@ -82,6 +82,8 @@ class CreateStructureTable extends Migration
             $table->foreign("modus_id")->references("id")->on("modus");
 
             $table->timestamps();
+
+            $table->integer("zugeordnet_at")->nullable();
         });
 
         Schema::create('statistik', function (Blueprint $table) {

@@ -105,6 +105,7 @@ class FahrradController extends Controller
 
             $fahrrad->strecke = 0;
             $fahrrad->fahrer_id = $fahrer->id;
+            $fahrrad->zugeordnet_at = time();
             $fahrrad->touch();
 
             $fahrrad->save();

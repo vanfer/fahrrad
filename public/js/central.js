@@ -183,12 +183,26 @@ function updateFahrradKasten(fahrrad){
     var geschwindigkeit  = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
     var istLeistung      = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
     var strecke          = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
+    var fahrdauer        = cond ? "00:00:00" : getElapsedTime(fahrrad.zugeordnet_at);
 
     $("#fahrername-anzeige-"+fahrrad.id).html(name);
     $("#fahrermodus-anzeige-"+fahrrad.id).html(modus);
     $("#geschwindigkeit-anzeige-"+fahrrad.id).html(geschwindigkeit);
     $("#gesamtleistung-anzeige-"+fahrrad.id).html(istLeistung);
     $("#strecke-anzeige-"+fahrrad.id).html(strecke);
+    $("#fahrdauer-anzeige-"+fahrrad.id).html(fahrdauer);
+}
+
+function getElapsedTime(fahrrad_timestamp) {
+    var current_timestamp = Math.floor(new Date().getTime() / 1000);
+    var elapsed_seconds = (current_timestamp - fahrrad_timestamp);
+
+    var d = new Date(null);
+    d.setSeconds(elapsed_seconds); // Sekunden zu JS Date Objekt
+    d.setTime( d.getTime() + d.getTimezoneOffset()*60*1000 ); // Zeitzone anpassen!
+
+    // String zusammenbauen
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + (d.getMinutes())).slice(-2) + ':' + ('0' + (d.getSeconds()+1)).slice(-2);
 }
 
 function updateDetails(){
