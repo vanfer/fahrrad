@@ -2,21 +2,20 @@
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
-    /*
-     * Setup & Globale Variablen
-     * */
+    //Setup & Globale Variablen
     window.strecke_id = 1; // Todo: Strecke id irgendwo her holen (hidden input zb)
 
-    // Repräsentation eines Fahrers auf der Strecke
+    // Datenobjekte
     window.fahrrad = [];
-
-    // Strecke Daten
     window.streckeData = { data: [], labels: [] };
-
-    // Zurückgelegte Meter pro Fahrrad
     window.fahrrad_strecke = { data: [] };
+    window.leistungData = { data: [], labels: [] };
+    window.gesamtleistungData = { absolute: 0, data: [] };
 
+    // Einmalig Strecke laden
     updateChartStreckeData();
+
+    // Chart Definitionen
     window.chart_strecke = new Highcharts.Chart({
         title:{
             text:''
@@ -77,10 +76,6 @@ $(document).ready(function () {
             zIndex: 5
         }]
     });
-
-
-    // Leistung Daten und Chart
-    window.leistungData = { data: [], labels: [] };
     window.chart_leistung = new Highcharts.Chart({
         title:{
             text:''
@@ -126,9 +121,6 @@ $(document).ready(function () {
             data: window.leistungData.data
         }]
     });
-
-    // leistung (Alle) Daten und Chart
-    window.gesamtleistungData = { absolute: 0, data: [] };
     window.chart_gesamtleistung = new Highcharts.Chart({
         chart: {
             renderTo: 'container-gesamtleistung',
@@ -168,10 +160,7 @@ $(document).ready(function () {
         }]
     });
 
-    /*
-    * Aktualisierung der Daten: Charts und Fahredetails
-    *
-    * */
+    //Aktualisierung der Daten: Charts, Fahredetails und Fahrerpositionen
     window.setInterval(function () {
         updateDetails();
         updateChartStreckeFahrer();
