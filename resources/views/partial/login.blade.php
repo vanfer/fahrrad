@@ -4,7 +4,7 @@
         <form class="form-horizontal" role="form" method="POST" action="{{ url('fahrer') }}">
             {{ csrf_field() }}
 
-            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} col-md-12">
                 <label for="name" class="col-md-4 control-label">Name</label>
 
                 <div class="col-md-6">
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} col-md-12 text-nowrap">
                 <label for="email" class="col-md-4 control-label">E-Mail Addresse <small>(optional)</small></label>
 
                 <div class="col-md-6">
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-12">
                 <label class="col-md-4 control-label">Wunschbetriebsmodus</label>
                 <div class="col-md-6">
                     <div class="radio"><label><input type="radio" name="betriebsmodus" value="1" checked>Streckenmodus</label></div>
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="form-group{{ $errors->has('groesse') ? ' has-error' : '' }}">
+            <div class="form-group{{ $errors->has('groesse') ? ' has-error' : '' }} col-md-12">
                 <label for="groesse" class="col-md-4 control-label">Gr&ouml;&szlig;e <small>(optional)</small></label>
 
                 <div class="col-md-6">
@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="form-group{{ $errors->has('gewicht') ? ' has-error' : '' }}">
+            <div class="form-group{{ $errors->has('gewicht') ? ' has-error' : '' }} col-md-12">
                 <label for="gewicht" class="col-md-4 control-label">Gewicht <small>(optional)</small></label>
 
                 <div class="col-md-6">
@@ -78,9 +78,15 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-8 col-md-offset-4">
+            <div class="form-group col-md-6">
+                <div class="col-md-offset-10">
                     <button type="button" class="btn btn-primary" id="btnSubmitAddFahrer">Hinzufügen</button>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <div class="col-md-offset-4">
+                    <button type="button" class="btn btn-default" id="btnHilfeFahrer">Hilfe</button>
                 </div>
             </div>
         </form>
