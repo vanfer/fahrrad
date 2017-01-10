@@ -33,11 +33,18 @@ $(document).ready(function () {
     initDialog("#keinFahrerAusgewaehlt",    "fehler",    true);
     initDialog("#fahrerSchonZugeordnet",    "fehler",    true);
     initDialog("#addFahrer",                "addFahrer", true);
-    initDialog("#fahrerLoeschen",           "fehler",   true);
+    initDialog("#fahrerLoeschen",           "fehler",    true);
     initDialog("#hilfeAktiv",               "hilfe",    false);
     initDialog("#hilfeInaktiv",             "hilfe",    false);
     initDialog("#hilfeTabelle",             "hilfe",    false);
 
+    $("#hilfeFahrer").dialog({
+        autoOpen: false,
+        dialogClass: "hilfe",
+        modal: false,
+        resizable: false,
+        stack: true
+    })
 
 
     // Element Bindings
@@ -88,7 +95,9 @@ $(document).ready(function () {
     });
 
     $("#btnGenerateName").click(function(){
-        var namen = ["test1", "test2", "test3", "test4", "test5", "test6"];
+        var namen = ["Athletische Ameise", "Schnelle Schnecke", "Flinker Fuchs", "Kräftiges Känguru",
+            "Sportlicher Seehund", "Muskulöse Maus", "Beweglicher Biber", "Starke Schildkröte", "Rasantes Rentier",
+            "Trainierter Tiger", "Aktiver Affe"];
 
         // Gibt einen zufälligen Eintrag aus dem namen Array zurück
         var name = namen.sort(function() {return 0.5 - Math.random()})[0];
@@ -149,6 +158,7 @@ $(document).ready(function () {
         $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
     });
+
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
@@ -305,6 +315,9 @@ $(document).ready(function () {
     $(".btnHilfeAktiv").on("click", function() {
         $("#hilfeAktiv").dialog("open");
     });
+    $("#btnHilfeFahrer").on("click", function() {
+        $("#hilfeFahrer").dialog("open");
+    })
 });
 
 function zuordnungLoeschen(context, fahrrad_id){

@@ -551,7 +551,6 @@ body{
     width: 650px !important;
     background-color: #F5F7FA;
     border: 2px solid black !important;
-    overflow-y: hidden;
 }
 
 .addFahrer.ui-dialog > .ui-widget-header{
