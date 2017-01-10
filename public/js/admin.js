@@ -142,6 +142,7 @@ $(document).ready(function () {
             });
 
             $("#zuordnungLoeschen").dialog("open");
+            $(".ui-widget-overlay").addClass('custom-overlay');
         });
     });
 
