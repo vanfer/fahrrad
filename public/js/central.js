@@ -18,7 +18,7 @@ $(document).ready(function () {
     // Chart Definitionen
     window.chart_strecke = new Highcharts.Chart({
         title:{
-            text:''
+            text:'',
         },
         chart: {
             renderTo: 'container-strecke',
@@ -44,6 +44,9 @@ $(document).ready(function () {
             labels: {
                 formatter: function() {
                     if(window.streckeData.labels[this.value]) return window.streckeData.labels[this.value].toFixed(2) + " m";
+                },
+                style: {
+                    fontSize: '14px',
                 }
             }
         },
@@ -51,10 +54,17 @@ $(document).ready(function () {
             min: 0,
             max: 250,
             labels: {
-                format: '{value}'
+                format: '{value}',
+                style:{
+                    fontSize:'18px',
+                }
             },
             title: {
-                text: 'Höhe (Meter)'
+                text: 'Höhe (Meter)',
+                x: -10,
+                style:{
+                    fontSize: '16px'
+                }
             }
         },
         plotOptions: {
@@ -91,14 +101,28 @@ $(document).ready(function () {
         },
         xAxis: {
             categories: window.leistungData.labels,
-            crosshair: true
+            crosshair: true,
+            labels:{
+                style:{
+                    fontSize:'16px',
+                }
+            }
         },
         yAxis: {
             gridLineWidth: 1,
             gridLineColor: '#D0D3D6',
             min: 0,
             title: {
-                text: 'Leistung (Watt)'
+                text: 'Leistung (Watt)',
+                x: -10,
+                style: {
+                    fontSize: '16px',
+                }
+            },
+            labels:{
+                style:{
+                    fontSize:'18px',
+                }
             }
         },
         tooltip: {

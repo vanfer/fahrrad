@@ -529,6 +529,10 @@ body{
     border:2px solid black !important;
 }
 
+.warnung.ui-dialog > .ui-dialog-buttonpane{
+    background-color: #F5F7FA;
+}
+
 .warnung.ui-dialog > .ui-widget-header{
     background-color: #BF263C;
     border-color: black;
@@ -539,6 +543,10 @@ body{
     width:400px !important;
     background-color: #F5F7FA;
     border:2px solid black !important;
+}
+
+.fehler.ui-dialog > .ui-dialog-buttonpane{
+    background-color: #F5F7FA;
 }
 
 .fehler.ui-dialog > .ui-widget-header{
@@ -566,7 +574,18 @@ body{
     z-index: 1040;
 }
 
-/* ##### Misc ##### */
+
+/* ##### Charts #### */
+
+.highcharts-axis-line {
+    stroke:#3C3B3D;
+}
+.highcharts-xaxis-grid .highcharts-grid-line {
+    stroke-width: 1px;
+    stroke: #CCD1D9;
+}
+
+    /* ##### Misc ##### */
 
 /* Breite beträgt höchstens 1366px */
 /*@media handheld and (max-device-width: 1366px)  {
