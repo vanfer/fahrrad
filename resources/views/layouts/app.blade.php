@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,6 +16,8 @@
     <link href="{{ asset("css/jquery-ui.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/jquery-ui.structure.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/jquery-ui.theme.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/dataTables.bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/jquery.dataTables.min.css") }}" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("favicon.ico") }}">
 
@@ -64,6 +66,9 @@
 
     <script src="{{ asset("js/libs/highcharts.js") }}"></script>
     <script src="{{ asset("js/libs/mindmup-editabletable.js") }}"></script>
+
+    <script src="{{ asset("js/libs/dataTables.bootstrap.min.js") }}"></script>
+    <script src="{{ asset("js/libs/jquery.dataTables.min.js") }}"></script>
 
     @yield('scripts')
 </body>
