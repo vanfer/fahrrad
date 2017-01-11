@@ -81,7 +81,7 @@ $(document).ready(function () {
         series: [{
             data: window.streckeData.data,
             type: 'area',
-            color: '#90c00f',
+            color: '#AAB2BD',
             enableMouseTracking: false,
             zIndex: 5
         }]
