@@ -162,6 +162,14 @@ body{
 .inaktives_fahrrad{
 }
 
+.timeout-meldung{
+    text-align: center;
+}
+
+span.glyphicon-alert{
+    font-size: 2em;
+}
+
 /* ##### Tagesstatistik #####*/
 .tagesstatistik-panel{
     background: #E6E9ED!important;
@@ -210,8 +218,22 @@ body{
     width:20%;
 }
 
-.platzierung{
-    margin:1.5%;
+.highscore-platzierung{
+    margin: 0 0 10px 0 ;
+}
+
+.highscore-name{
+    line-height:40px;
+    margin-left:15px;
+}
+
+.highscore-wert{
+    line-height:40px;
+    margin-right:10px;
+}
+
+.highscore-medaille{
+    margin-left:10px;
 }
 
 /* ##### Batterie #####*/
@@ -572,6 +594,7 @@ body{
     opacity: 0.5;
     z-index: 1040;
 }
+
 
 
 /* ##### Charts #### */
