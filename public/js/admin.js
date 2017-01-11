@@ -306,6 +306,12 @@ $(document).ready(function () {
         window.selectedUserRow = $(this).val();
         window.selectedUserMode = $(this).parents("tr").find("select").val();
     });
+    $("#userTable").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+        }
+    });
+
 
     $("#btnHilfeTabelle").on("click", function() {
         $("#hilfeTabelle").dialog("open");

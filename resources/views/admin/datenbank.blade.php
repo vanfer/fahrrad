@@ -21,13 +21,13 @@
                 <table class="table table-striped table-bordered table-hover" id="userTable">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th class="no-sort"></th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Gewicht</th>
                             <th>Größe</th>
-                            <th>Betriebsmodus</th>
-                            <th></th>
+                            <th class="no-sort">Betriebsmodus</th>
+                            <th class="no-sort"></th>
                         </tr>
                     </thead>
                     <tbody>
