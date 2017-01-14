@@ -85,6 +85,7 @@ class FahrradController extends Controller
 
         $fahrrad->fahrer_id = null;
         $fahrrad->modus_id = 1;
+        $fahrrad->abschnitt_id = null;
 
         $fahrrad->save();
 
@@ -93,5 +94,15 @@ class FahrradController extends Controller
         }
 
         return response()->json(["msg" => "Error"], 400);
+    }
+
+    // Gibt die Daten zu allen Fahrrädern, inkl. Modi und Fahrerinformationen zurück
+    public function getData()
+    {
+        return response()->json([
+            "data" => [
+                "fahrrad" => Fahrrad::with("modus")->with("fahrer")->get()
+            ]
+        ], 200);
     }
 }

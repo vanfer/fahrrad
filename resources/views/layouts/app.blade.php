@@ -60,15 +60,14 @@
     <!-- Scripts -->
 
     <script src="{{ asset("js/libs/jquery.js") }}"></script>
-    <script src="{{ asset("js/libs/bootstrap.js") }}"></script>
-
     <script src="{{ asset("js/libs/jquery-ui.min.js") }}"></script>
+    <script src="{{ asset("js/libs/jquery.dataTables.min.js") }}"></script>
+
+    <script src="{{ asset("js/libs/bootstrap.js") }}"></script>
+    <script src="{{ asset("js/libs/dataTables.bootstrap.min.js") }}"></script>
 
     <script src="{{ asset("js/libs/highcharts.js") }}"></script>
     <script src="{{ asset("js/libs/mindmup-editabletable.js") }}"></script>
-
-    <script src="{{ asset("js/libs/dataTables.bootstrap.min.js") }}"></script>
-    <script src="{{ asset("js/libs/jquery.dataTables.min.js") }}"></script>
 
     @yield('scripts')
 </body>

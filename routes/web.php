@@ -58,9 +58,12 @@ Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
 */
 Route::get('search/autocomplete', 'SearchController@autocompleteName');
 
-Route::post("data", "MainController@setData");
+Route::get("data", "FahrradController@getData");
+
+Route::post("abschnitt", "MainController@setAbschnitt");
+
 Route::post("batterydata", "MainController@setBatteryData");
-Route::get("data", "MainController@getData");
+
 
 Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");

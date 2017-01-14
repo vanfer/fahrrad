@@ -95,9 +95,19 @@ $(document).ready(function () {
     });
 
     $("#btnGenerateName").click(function(){
-        var namen = ["Athletische Ameise", "Schnelle Schnecke", "Flinker Fuchs", "Kräftiges Känguru",
-            "Sportlicher Seehund", "Muskulöse Maus", "Beweglicher Biber", "Starke Schildkröte", "Rasantes Rentier",
-            "Trainierter Tiger", "Aktiver Affe"];
+        var namen = [
+            "Athletische Ameise",
+            "Schnelle Schnecke",
+            "Flinker Fuchs",
+            "Kräftiges Känguru",
+            "Sportlicher Seehund",
+            "Muskulöse Maus",
+            "Beweglicher Biber",
+            "Starke Schildkröte",
+            "Rasantes Rentier",
+            "Trainierter Tiger",
+            "Aktiver Affe"
+        ];
 
         // Gibt einen zufälligen Eintrag aus dem namen Array zurück
         var name = namen.sort(function() {return 0.5 - Math.random()})[0];
@@ -198,9 +208,6 @@ $(document).ready(function () {
             $("#userTable").editableTableWidget();
 
             if(status == 200){
-                console.log("success");
-                console.log(data);
-
                 $("#addFahrer").dialog("close");
 
                 // Hack
@@ -274,12 +281,6 @@ $(document).ready(function () {
             url: $(form).attr("action") + "/" + fahrer_id,
             method: $(form).attr("method"),
             data: data
-        }).done(function (data, statusText, xhr){
-            var status = xhr.status;
-
-            if(status == 200){
-                console.log("success");
-            }
         });
     });
     $('#userTable').on('change', 'th', function(e, newValue) {
@@ -294,12 +295,6 @@ $(document).ready(function () {
             url: $(form).attr("action") + "/" + fahrer_id,
             method: $(form).attr("method"),
             data: { modus_id : selectVal }
-        }).done(function (data, statusText, xhr){
-            var status = xhr.status;
-
-            if(status == 200){
-                console.log("success");
-            }
         });
     });
     $("#userTable").on("click", ".radio-fahrer-id", function () {
@@ -340,8 +335,6 @@ function zuordnungLoeschen(context, fahrrad_id){
 }
 function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
     var url =  BASE_PATH + "fahrrad/" + fahrrad_id + "/fahrer/" + fahrer_id;
-
-    console.log(context);
 
     $.ajax({
         url: url,

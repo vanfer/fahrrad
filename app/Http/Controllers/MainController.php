@@ -28,42 +28,45 @@ class MainController extends Controller
 
     }
 
-    public function setData(Request $request)
+    // Fahrer wechselt den Streckenabschnitt
+    // Update von fahrrad.abschnitt_id / fahrrad.sollDrehmoment (abhängig von fahrer.gewicht und fahrer.goresse)
+    public function setAbschnitt(Request $request)
     {
-        $v = Validator::make($request->all(), [
-            "ip" => "required",
-            "strecke" => "required|numeric",
-            "geschwindigkeit" => "required|numeric",
-            "istLeistung" => "required|numeric",
+        $this->validate($request, [
+            "fahrrad_id" => "required",
+            "abschnitt_id" => "required"
         ]);
 
-        if ($v->fails()) {
-            return response()->json(["msg" => "Validation Error", "input" => Input::all()], 400);
-        }
-
-        $fahrrad = Fahrrad::where("ip", $request->input("ip"))->first();
-
+        $fahrrad = Fahrrad::whereId(Input::get("fahrrad_id"))->first();
         if($fahrrad){
-            $fahrrad->strecke = $fahrrad->strecke + $request->input("strecke");
-            $fahrrad->geschwindigkeit = $request->input("geschwindigkeit");
-            $fahrrad->istLeistung = $request->input("istLeistung");
-            $fahrrad->save();
-            $fahrrad->touch();
+            $fahrer = Fahrer::whereId($fahrrad->fahrer_id)->first();
 
-            return response()->json(null, 204);
-        }
-        else{
-            return response()->json(["msg" => "Not Found"], 404);
-        }
-    }
+            $abschnitt_id      = Input::get("abschnitt_id");
+            $abschnitt         = Abschnitt::whereId($abschnitt_id)->first();
+            $abschnitt_folgend = Abschnitt::whereId($abschnitt_id+1)->first();
 
-    public function getData()
-    {
-        return response()->json([
-            "data" => [
-                "fahrrad" => Fahrrad::with("modus")->with("fahrer")->get()
-            ]
-        ], 200);
+            if(!empty($abschnitt) && !empty($abschnitt_folgend)){
+                $fahrrad->abschnitt_id = $abschnitt->id;
+
+                // Berechnen von sollDrehmoment
+                $h = $abschnitt_folgend->hoehe - $abschnitt->hoehe;
+                $l = $abschnitt->laenge;
+
+                // Steigung des Abschnitts in Prozent
+                $prozent = intval($h / $l * 100);
+
+                $aFahrer = $fahrer->groesse * 0.28; // 0.28 Korrekturfaktor (http://www.veloagenda.ch/Velophysik/luftwid.htm)
+                $kSteigung = sin(atan($prozent / 100));
+                $mHinterrad = ($fahrer->gewicht + 15) * 9.81 * ($kSteigung + 0.01) + (0.5 * $aFahrer) * 0.55 * 1.2 * ($fahrrad->geschwindigkeit * 3.6);
+                $mRad = 2.1 / ((2 * pi()) * $mHinterrad);
+                $mPed = abs(intval($mRad * 10000));
+
+                $fahrrad->sollDrehmoment = $mPed;
+
+                $fahrrad->touch();
+                $fahrrad->save();
+            }
+        }
     }
 
     public function strecke(\App\Strecke $strecke)

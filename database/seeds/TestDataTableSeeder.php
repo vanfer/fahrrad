@@ -47,8 +47,8 @@ class TestDataTableSeeder extends Seeder
 
         DB::table('fahrrad')->truncate();
         $colors = ["#EC87C0", "#5D9CEC", "#FFCE54"];
-        for($i = 0; $i < 3; $i++){
-            Fahrrad::create(['ip' => '10.0.0.'.$i, 'mac' => '00:00:00:00:00:0'.$i, 'color' => $colors[$i] ]);
+        for($i = 3; $i < 6; $i++){
+            Fahrrad::create(['ip' => '192.168.4.'.$i, 'mac' => '00:00:00:00:00:0'.$i, 'color' => $colors[$i-3] ]);
         }
 
         DB::table('statistik')->truncate();

@@ -3,11 +3,13 @@ var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     //Setup & Globale Variablen
-    window.strecke_id = 1; // Todo: Strecke id irgendwo her holen (hidden input zb)
+    window.strecke_id = 2; // Todo: Strecke id irgendwo her holen (hidden input zb)
 
     // Datenobjekte
     window.fahrrad = [];
     window.streckeData = { data: [], labels: [] };
+    window.strecke_abschnitte = [];
+    window.strecke_fahrrad_abschnitte = [0,0,0];
     window.fahrrad_strecke = { data: [] };
     window.leistungData = { data: [], labels: [] };
     window.gesamtleistungData = { absolute: 0, data: [] };
@@ -187,7 +189,6 @@ $(document).ready(function () {
     //Aktualisierung der Daten: Charts, Fahredetails und Fahrerpositionen
     window.setInterval(function () {
         updateDetails();
-        updateChartStreckeData();
         updateChartStreckeFahrer();
     }, 1000);
 });
@@ -249,7 +250,7 @@ function updateDetails(){
                     updateFahrradKasten(fahrrad);
 
                     if(fahrrad.fahrer_id != null){
-                        addFahrrad(fahrrad.id, fahrrad.color, fahrrad.modus_id);
+                        addFahrrad(fahrrad.id, fahrrad.color, fahrrad.modus_id, fahrrad.abschnitt_id);
 
                         window.leistungData.labels.push(fahrrad.fahrer.name);
                         window.leistungData.data.push(fahrrad.istLeistung);
@@ -291,6 +292,7 @@ function updateDetails(){
 function updateChartStreckeData() {
     getDataFromAPI("strecke/" + window.strecke_id, false, function (response) {
         if (response && response.strecke) {
+            window.strecke_abschnitte = [];
             window.streckeData = {data: [0], labels: [0]};
             var gesamtlaenge = 0;
 
@@ -299,6 +301,8 @@ function updateChartStreckeData() {
                     gesamtlaenge += value.laenge;
                     window.streckeData.labels.push(gesamtlaenge); // X
                     window.streckeData.data.push(value.hoehe);  // Y
+
+                    window.strecke_abschnitte.push(value.id);
                 }
             );
         }
@@ -356,6 +360,28 @@ function updateChartStreckeFahrer(){
         }
 
         if(abschnitt < strecke.points.length){
+
+            if(window.strecke_fahrrad_abschnitte.indexOf(i) != -1){
+
+                if(window.strecke_fahrrad_abschnitte[i] != abschnitt){
+                    // Abschnitt letzter merken
+                    window.strecke_fahrrad_abschnitte[i] = abschnitt;
+
+                    // Set Abschnitt to
+                    // window.strecke_abschnitte[abschnitt];
+                    $.ajax({
+                        url: BASE_PATH + "abschnitt",
+                        type: 'post',
+                        data: {
+                            fahrrad_id: window.fahrrad[i].id,
+                            abschnitt_id: window.strecke_abschnitte[window.strecke_fahrrad_abschnitte[i]]
+                        },
+                        async: false,
+                        success: function (data) { }
+                    });
+                }
+            }
+
             if(typeof x_wert != "undefined"){
                 window.fahrrad[i].x = parseFloat(x_wert);
                 window.fahrrad[i].y = parseFloat(y_wert);
@@ -379,7 +405,7 @@ function getDataFromAPI(url, async, successHandler){
     });
 }
 
-function addFahrrad(id, color, modus){
+function addFahrrad(id, color, modus, abschnitt_id){
     window.fahrrad.push(
         {
             id: id,
@@ -388,7 +414,8 @@ function addFahrrad(id, color, modus){
             element: null,
             x: 0,
             y: 0,
-            modus: modus
+            modus: modus,
+            abschnitt_id: abschnitt_id
         }
     );
 

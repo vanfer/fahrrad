@@ -75,6 +75,9 @@ class CreateStructureTable extends Migration
             $table->integer("modus_id")->unsigned()->default(1);
             $table->foreign("modus_id")->references("id")->on("modus");
 
+            $table->integer("abschnitt_id")->unsigned()->nullable();
+            $table->foreign("abschnitt_id")->references("id")->on("abschnitt");
+
             $table->timestamps();
 
             $table->integer("zugeordnet_at")->nullable();
