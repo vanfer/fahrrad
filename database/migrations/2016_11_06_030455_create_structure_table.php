@@ -20,7 +20,7 @@ class CreateStructureTable extends Migration
         Schema::create('fahrer', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique()->nullable();
             $table->integer('gewicht')->default(80);
             $table->float('groesse')->default(1.8);
