@@ -183,7 +183,7 @@
                 </div>
             </div>
 
-            <div class="form-group{{ $errors->has('gewicht') ? ' has-error' : '' }} col-md-12">
+            <div class="form-group {{ $errors->has('gewicht') ? 'has-error' : '' }} col-md-12">
                 <label for="gewicht" class="col-md-4 control-label">Gewicht <small>(optional)</small></label>
 
                 <div class="col-md-6">
@@ -197,15 +197,16 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-6">
-                <div class="col-md-offset-10">
-                    <button type="button" class="btn btn-primary" id="btnSubmitAddFahrer">Hinzufügen</button>
-                </div>
-            </div>
-
-            <div class="form-group col-md-6">
-                <div class="col-md-offset-4">
-                    <button type="button" class="btn btn-default" id="btnHilfeFahrer">Hilfe</button>
+            <div class="form-group{{ $errors->has('groesse') ? ' has-error' : '' }} col-md-12">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" id="btnSubmitAddFahrer">Hinzufügen</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-default" id="btnHilfeFahrer">Hilfe</button>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
         </form>

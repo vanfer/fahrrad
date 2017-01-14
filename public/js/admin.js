@@ -57,9 +57,6 @@ $(document).ready(function () {
         $(form).trigger("reset");
     });
 
-
-    // Element Bindings
-
     // Modus ändern (Fahrradkasten)
     $(".panelBodyAdmin").on("change", "select", function (e, newValue) {
         var context = $(this).parents(".panel-body");
@@ -75,6 +72,7 @@ $(document).ready(function () {
             }
         });
     });
+
     // Modus Option anpassen
     $(".modus_option").each(function () {
         $(this).on("change", function () {
@@ -184,47 +182,53 @@ $(document).ready(function () {
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
-        $.ajax({
-            url: $(form).attr("action"),
-            method: $(form).attr("method"),
-            data: $(form).serialize()
-        }).done(function (data, statusText, xhr){
-            var status = xhr.status;
+        if(!validateInput(form)) {
+            alert("Validation failed");
+        }
+        else{
+            $.ajax({
+                url: $(form).attr("action"),
+                method: $(form).attr("method"),
+                data: $(form).serialize()
+            }).done(function (data, statusText, xhr)
+            {
+                var status = xhr.status;
 
-            var template = '<tr draggable="true" id="' + data.id + '">' +
-                '<th id="th_fahrer_id">' +
-                '<fieldset>' +
-                '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.id + '">' +
-                '</fieldset>' +
-                '</th>' +
-                '<td id="name">' + data.name + '</td>' +
-                '<td id="email">' + data.email + '</td>' +
-                '<td id="gewicht">' + data.gewicht + '</td>' +
-                '<td id="groesse">' + data.groesse + '</td>' +
-                '<td id="betriebsmodus">' +
-                '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
-                '<option value="1" ' + ((data.modus_id == 1) ? 'selected' : '') + '>Strecke</option>' +
-                '<option value="2" ' + ((data.modus_id == 2) ? 'selected' : '') + '>Konstantes Drehmoment</option>' +
-                '<option value="3" ' + ((data.modus_id == 3) ? 'selected' : '') + '>Konstante Leistung</option>' +
-                '</select>' +
-                '</td>' +
-                '<th>' +
-                '<div class="btn btn-default btnDelete">' +
-                '<span class="glyphicon glyphicon-trash"></span>' +
-                '</div>' +
-                '</th>' +
-                '</tr>';
+                var template = '<tr draggable="true" id="' + data.id + '">' +
+                    '<th id="th_fahrer_id">' +
+                    '<fieldset>' +
+                    '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.id + '">' +
+                    '</fieldset>' +
+                    '</th>' +
+                    '<td id="name">' + data.name + '</td>' +
+                    '<td id="email">' + data.email + '</td>' +
+                    '<td id="gewicht">' + data.gewicht + '</td>' +
+                    '<td id="groesse">' + data.groesse + '</td>' +
+                    '<td id="betriebsmodus">' +
+                    '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
+                    '<option value="1" ' + ((data.modus_id == 1) ? 'selected' : '') + '>Strecke</option>' +
+                    '<option value="2" ' + ((data.modus_id == 2) ? 'selected' : '') + '>Konstantes Drehmoment</option>' +
+                    '<option value="3" ' + ((data.modus_id == 3) ? 'selected' : '') + '>Konstante Leistung</option>' +
+                    '</select>' +
+                    '</td>' +
+                    '<th>' +
+                    '<div class="btn btn-default btnDelete">' +
+                    '<span class="glyphicon glyphicon-trash"></span>' +
+                    '</div>' +
+                    '</th>' +
+                    '</tr>';
 
-            $('#userTable tr:last').after(template);
-            $("#userTable").editableTableWidget();
+                $('#userTable tr:last').after(template);
+                $("#userTable").editableTableWidget();
 
-            if(status == 200){
-                $("#addFahrer").dialog("close");
+                if(status == 200){
+                    $("#addFahrer").dialog("close");
 
-                // Hack
-                window.location.reload();
-            }
-        });
+                    // Hack
+                    window.location.reload();
+                }
+            });
+        }
     });
 
     $("#userTable").editableTableWidget();
@@ -431,6 +435,48 @@ function updateFahrradKasten(context, modus, fahrrad, fahrer){
 
     // Hack
     window.location.reload();
+}
+
+function validateInput(form){
+    var validates = true;
+
+    var name = $(form).find("input#name").val();
+    if(!name){
+        validates = false;
+    }
+
+    var email = $(form).find("input#email").val();
+    var regex_email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(email){
+        if(regex_email.test(email) == false){
+            validates = false;
+        }
+    }
+
+    var modus = $('input[name=betriebsmodus]:checked', form).val();
+    if(!modus){
+        validates = false;
+    }
+
+    var groesse = $(form).find("input#groesse").val();
+    if(groesse){
+        try{
+            validates = $.isNumeric(groesse);
+        }catch (ex){
+            validates = false;
+        }
+    }
+
+    var gewicht = $(form).find("input#gewicht").val();
+    if(gewicht){
+        try{
+            validates = $.isNumeric(gewicht);
+        }catch (ex){
+            validates = false;
+        }
+    }
+
+    return validates;
 }
 
 // Drag & Drop
