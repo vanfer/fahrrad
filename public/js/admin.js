@@ -5,8 +5,6 @@ $(document).ready(function () {
     window.selectedUserRow = 0;
     window.selectedUserMode = 0;
 
-    $(".formAddFahrer").hide();
-
     // autocomplete admin fahrer suche
     $("#q").autocomplete({
         source: "search/autocomplete",
@@ -44,7 +42,20 @@ $(document).ready(function () {
         modal: false,
         resizable: false,
         stack: true
-    })
+    });
+
+    // Close Button Fix
+    $(".ui-dialog-titlebar-close").each(function () {
+       $(this).css("color", "#000");
+       $(this).css("font-size", "12px");
+       $(this).html("X");
+    });
+
+    // Form Felder beim schließen leeren
+    $('.addFahrer').on('dialogclose', function(event) {
+        var form = $(this).find("#addFahrer").find("form");
+        $(form).trigger("reset");
+    });
 
 
     // Element Bindings
@@ -166,10 +177,10 @@ $(document).ready(function () {
     });
 
     $("#btnAddFahrer").on("click", function(){
+
         $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
     });
-
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
@@ -306,7 +317,6 @@ $(document).ready(function () {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         }
     });
-
 
     $("#btnHilfeTabelle").on("click", function() {
         $("#hilfeTabelle").dialog("open");

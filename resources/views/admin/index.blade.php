@@ -16,8 +16,6 @@
     </div>
 
     @include("admin.dialoge")
-
-    @include("partial.login")
 @endsection
 
 @section("scripts")
