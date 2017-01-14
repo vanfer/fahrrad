@@ -97,22 +97,38 @@
         als inaktiv gekennzeichnet.</p>
 </div>
 
-<div id="keinFahrerAusgewaehlt" title="Fehler" style="display: none;">
+<div id="hilfeEinstellungen" title="Hilfe" style="display: none;">
+    <h3><b>Einstellungen</b></h3><hr/>
+    <p>Es können folgende Einstellungen vorgenommen werden:</p>
+    <ul>
+            <li><b><u>Allgemein</u></b></li>
+            <lu><ul><li><b><u>Lorem</u></b></li></ul></lu>
+            <li><b><u>Strecke:</u></b><br>Hier kann die Auswahl der Strecke vorgenommen werden.<br>Es steht, je nach Schweregrad ("leicht", "mittel", "schwer"), je eine Strecke zur Auswahl.</li>
+        </ul>
+</div>
+
+<div id="dialogKeinFahrerAusgewaehlt" title="Fehler" style="display: none;">
     <h3><b>Kein Fahrer ausgewählt</b></h3><hr/>
     <p>Sie müssen erst einen Fahrer auswählen, der einem Fahrrad zugeordnet werden soll.</p>
 </div>
 
-<div id="fahrerSchonZugeordnet" title="Fehler" style="display: none;">
+<div id="dialogFahrernameSchonVergeben" title="Fehler" style="display: none;">
+    <h3><b>Name schon vergeben</b></h3><hr/>
+    <p>Der angebene Name ist schon vergeben. Bitte wähle einen anderen Namen.</p>
+    <p></p>
+</div>
+
+<div id="dialogFahrerSchonZugeordnet" title="Fehler" style="display: none;">
     <h3><b>Fahrer schon zugeordnet</b></h3><hr/>
     <p>Der ausgewählte Fahrer ist schon einem Fahrrad zugeordnet. Bitte wählen Sie einen anderen Fahrer aus, der diesem Fahrrad zugeordnet werden soll.</p>
 </div>
 
-<div id="zuordnungLoeschen" title="Warnung" style="display: none;">
+<div id="dialogZuordnungLoeschen" title="Warnung" style="display: none;">
     <h3><b>Zuordnung löschen</b></h3><hr/>
     <p>Die Zuordnung vom Fahrer zum Fahrrad wird gelöscht. Möchten Sie die Zuordnung wirklich löschen?</p>
 </div>
 
-<div id="fahrerLoeschen" title="Warnung" style="display: none;">
+<div id="dialogFahrerLoeschen" title="Warnung" style="display: none;">
     <h3><b>Fahrer löschen</b></h3><hr/>
     <p>Der Fahrer wird unwiderruflich aus der Datenbank gelöscht. Möchten Sie den Fahrer wirklich löschen?</p>
 </div>
@@ -213,8 +229,72 @@
     </div>
 </div>
 
+<div id="dialogEinstellungen" title="Einstellungen" style="display: none;">
+    <div class="einstellungen-wrapper">
+        <form class="form-horizontal" role="form" method="POST" action="">
+
+            <!-- Tabs-Navs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tabAllgemein" role="tab" data-toggle="tab">Allgemein</a></li>
+                <li role="presentation"><a href="#tabStrecke" role="tab" data-toggle="tab">Strecke</a></li>
+            </ul>
+
+            <!-- Tab-Inhalte -->
+            <div class="tab-content">
+                <!-- Allgemeine Einstellungen -->
+                <div role="tabpanel" class="tab-pane tab-wrapper active" id="tabAllgemein">
+
+                </div>
+                <!-- Streckeneinstellungen -->
+                <div role="tabpanel" class="tab-pane tab-wrapper" id="tabStrecke">
+                    <div class="input-group col-md-12 streckenauswahl-wrapper">
+                        <div class="col-md-4 pull-left">
+                            <label for="streckenauswahl">Streckenauswahl</label>
+                            <fieldset name="streckenauswahl">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="1" checked>
+                                            <span>leicht</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="2">
+                                            <span>mittel</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="3">
+                                            <span>schwer</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-8 pull-right">
+                            <label for="streckenvorschau">Streckenvorschau</label>
+                            <div class="streckenvorschau"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button Speichern -->
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary pull-right" id="btnSubmitEinstellungen">Speichern</button>
+            </div>
+            <!-- Button Hilfe -->
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default pull-left" id="btnHilfeEinstellungen">Hilfe</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 {{--
-<div id="fahrerNichtGefunden" title="Fehler" style="display: none;">
+<div id="dialogFahrerNichtGefunden" title="Fehler" style="display: none;">
     <h3><b>Fahrer nicht gefunden.</b></h3><hr/>
     <p>Ein Fahrer mit dem eingegebenen Namen existiert nicht. Möchten Sie einen neuen Fahrer mit dem eingegebenen Namen hinzufügen?</p>
 </div>

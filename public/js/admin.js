@@ -26,15 +26,19 @@ $(document).ready(function () {
         });
     }
 
-    initDialog("#falschesPasswort",         "warnung",   true);
-    initDialog("#zuordnungLoeschen",        "warnung",   true);
-    initDialog("#keinFahrerAusgewaehlt",    "fehler",    true);
-    initDialog("#fahrerSchonZugeordnet",    "fehler",    true);
-    initDialog("#addFahrer",                "addFahrer", true);
-    initDialog("#fahrerLoeschen",           "fehler",    true);
-    initDialog("#hilfeAktiv",               "hilfe",    false);
-    initDialog("#hilfeInaktiv",             "hilfe",    false);
-    initDialog("#hilfeTabelle",             "hilfe",    false);
+    initDialog("#dialogFalschesPasswort",           "warnung",          true);
+    initDialog("#dialogZuordnungLoeschen",          "warnung",          true);
+    initDialog("#dialogEinstellungenSpeichern",     "warnung",          true);
+    initDialog("#dialogFahrerLoeschen",             "warnung",          true);
+    initDialog("#dialogKeinFahrerAusgewaehlt",      "fehler",           true);
+    initDialog("#dialogFahrerSchonZugeordnet",      "fehler",           true);
+    initDialog("#dialogFahrernameSchonVergeben",    "fehler",           true);
+    initDialog("#dialogEinstellungen",              "einstellungen",    true);
+    initDialog("#addFahrer",                        "addFahrer",        true);
+    initDialog("#hilfeAktiv",                       "hilfe",            false);
+    initDialog("#hilfeInaktiv",                     "hilfe",            false);
+    initDialog("#hilfeTabelle",                     "hilfe",            false);
+    initDialog("#hilfeEinstellungen",               "hilfe",            false);
 
     $("#hilfeFahrer").dialog({
         autoOpen: false,
@@ -104,10 +108,11 @@ $(document).ready(function () {
     });
 
     $("#btnGenerateName").click(function(){
+        //Zufallsnamen, max. 19 Zeichen
         var namen = [
-            "Athletische Ameise",
-            "Schnelle Schnecke",
-            "Flinker Fuchs",
+            "Athletische Ameise", 
+            "Schnelle Schnecke", 
+            "Flinker Fuchs", 
             "Kräftiges Känguru",
             "Sportlicher Seehund",
             "Muskulöse Maus",
@@ -115,7 +120,26 @@ $(document).ready(function () {
             "Starke Schildkröte",
             "Rasantes Rentier",
             "Trainierter Tiger",
-            "Aktiver Affe"
+            "Aktiver Affe",
+            "Dynamischer Dachs",
+            "Springender Storch",
+            "Wildes Wiesel",
+            "Lebhafter Lemming",
+            "Stürmischer Specht",
+            "Eifriger Elch",
+            "Forscher Frosch",
+            "Fittes Faultier",
+            "Strammer Springbock",
+            "Wendiger Waschbär",
+            "Flotte Fliege",
+            "Eiliges Erdmännchen",
+            "Leichtfüßiger Luchs",
+            "Quirlige Qualle",
+            "Energische Eule",
+            "Schwungvoller Stier",
+            "Zügiges Zebra",
+            "Zackiger Zitteraal",
+            "Agile Antilope"
         ];
 
         // Gibt einen zufälligen Eintrag aus dem namen Array zurück
@@ -130,14 +154,14 @@ $(document).ready(function () {
             var context = $(this).parents("#panelAdmin");
 
             if(window.selectedUserRow == 0){
-                $("#keinFahrerAusgewaehlt").dialog({
+                $("#dialogKeinFahrerAusgewaehlt").dialog({
                     buttons : {
                         "OK" : function() {
                             $(this).dialog("close");
                         }
                     }
                 });
-                $("#keinFahrerAusgewaehlt").dialog("open");
+                $("#dialogKeinFahrerAusgewaehlt").dialog("open");
                 $(".ui-widget-overlay").addClass('custom-overlay');
             }else{
                 zuordnungHerstellen(context, fahrrad_id, window.selectedUserRow, window.selectedUserMode);
@@ -156,7 +180,7 @@ $(document).ready(function () {
             var fahrrad_id = $(this).attr("id");
             var context = $(this).parents("#panelAdmin");
 
-            $("#zuordnungLoeschen").dialog({
+            $("#dialogZuordnungLoeschen").dialog({
                 buttons : {
                     "Ja" : function() {
                         zuordnungLoeschen(context, fahrrad_id);
@@ -169,7 +193,7 @@ $(document).ready(function () {
                 }
             });
 
-            $("#zuordnungLoeschen").dialog("open");
+            $("#dialogZuordnungLoeschen").dialog("open");
             $(".ui-widget-overlay").addClass('custom-overlay');
         });
     });
@@ -240,7 +264,7 @@ $(document).ready(function () {
         var fahrer_id = $(fahrer_tr).attr("id");
 
 
-        $("#fahrerLoeschen").dialog({
+        $("#dialogFahrerLoeschen").dialog({
             buttons : {
                 "Ja" : function() {
                     $.ajax({
@@ -334,6 +358,32 @@ $(document).ready(function () {
     $("#btnHilfeFahrer").on("click", function() {
         $("#hilfeFahrer").dialog("open");
     })
+
+    $("#btnEinstellungen").on("click", function(){
+        $("#dialogEinstellungen").dialog("open");
+        $('.ui-widget-overlay').addClass('custom-overlay');
+    });
+    $("#btnSubmitEinstellungen").on("click", function() {
+        $("#dialogEinstellungenSpeichern").dialog({
+            buttons : {
+                "Ja" : function() {
+                    //Speichern
+                    $(this).dialog("close");
+                    $("#dialogEinstellungen").dialog("close");
+                },
+                "Nein" : function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialogEinstellungenSpeichern").dialog("open");
+        $(".ui-widget-overlay").addClass('custom-overlay');
+    });
+
+    $("#btnHilfeEinstellungen").on("click", function() {
+            $("#hilfeEinstellungen").dialog("open");
+        });
 });
 
 function zuordnungLoeschen(context, fahrrad_id){
@@ -366,14 +416,14 @@ function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
             updateFahrradKasten(context, true, fahrrad, fahrer);
         }
     }).fail(function(data, statusText, xhr) {
-        $("#fahrerSchonZugeordnet").dialog({
+        $("#dialogFahrerSchonZugeordnet").dialog({
             buttons : {
                 "OK" : function() {
                     $(this).dialog("close");
                 }
             }
         });
-        $("#fahrerSchonZugeordnet").dialog("open");
+        $("#dialogFahrerSchonZugeordnet").dialog("open");
         $(".ui-widget-overlay").addClass('custom-overlay');
     });
 }
