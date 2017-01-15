@@ -7,36 +7,43 @@ use Illuminate\Database\Eloquent\Model;
 class Statistik extends Model
 {
     protected $table = "statistik";
+    protected $fillable = ["fahrer_id", "modus", "geschwindigkeit", "gesamtleistung", "strecke", "hoehenmeter", "fahrdauer", "vorgang"];
 
-    public static function addTeilnehmer()
-    {
-        $statistik = Statistik::find(1);
-        $statistik->teilnehmer++;
-        $statistik->save();
+
+    public function fahrer(){
+        return $this->belongsTo("App\Fahrer");
     }
 
-    public static function addKilometer($num)
-    {
-        $statistik = Statistik::find(1);
-        $statistik->kilometer += $num;
-        $statistik->save();
+    public static function addEntry(\App\Fahrer $fahrer, \App\Fahrrad $fahrrad){
+        Statistik::create([
+            "fahrer_id" => $fahrer->id,
+            "modus_id" => $fahrer->modus->name,
+            "vorgang" => $fahrer->vorgang,
+            "geschwindigkeit" => $fahrrad->geschwindigkeit,
+            "gesamtleistung" => $fahrrad->istLeistung,
+            "strecke" => $fahrrad->strecke,
+            "hoehenmeter" => $fahrrad->hoehenmeter,
+            "fahrdauer" => time() - $fahrrad->zugeordnet_at,
+        ]);
     }
 
-    public static function addHoehenmeter($num)
+    public static function getTeilnehmerGesamt()
     {
-        $statistik = Statistik::find(1);
-        $statistik->hoehenmeter += $num;
-        $statistik->save();
+
     }
 
-    public static function addEnergie($num)
+    public static function getKilometerGesamt()
     {
-        $statistik = Statistik::find(1);
-        $statistik->energie += $num;
-        $statistik->save();
+
     }
 
-    public static function get(){
-        return Statistik::find(1);
+    public static function getHoehenmeterGesamt()
+    {
+
+    }
+
+    public static function getEnergieGesamt()
+    {
+
     }
 }

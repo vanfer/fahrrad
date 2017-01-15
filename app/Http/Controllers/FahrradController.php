@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Fahrer;
 use App\Fahrrad;
 use App\Modus;
+use App\Statistik;
+use App\StatistikMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -61,11 +64,15 @@ class FahrradController extends Controller
                 $fahrrad->modus_id = Input::get("modus_id");
             }
 
+            $fahrer->vorgang = str_random(20);
+            $fahrer->touch();
+            $fahrer->save();
+
             $fahrrad->strecke = 0;
             $fahrrad->fahrer_id = $fahrer->id;
             $fahrrad->zugeordnet_at = time();
-            $fahrrad->touch();
 
+            $fahrrad->touch();
             $fahrrad->save();
 
             return response()->json([
@@ -80,17 +87,35 @@ class FahrradController extends Controller
 
     public function zuordnungLoeschen(\App\Fahrrad $fahrrad)
     {
-        $fahrrad->touch();
-        $fahrrad->fahrer()->touch();
+        $fahrer = Fahrer::whereId($fahrrad->fahrer_id)->first();
+        if($fahrer){
+            Statistik::addEntry($fahrer, $fahrrad);
 
-        $fahrrad->fahrer_id = null;
-        $fahrrad->modus_id = 1;
-        $fahrrad->abschnitt_id = null;
+            $email_sent = false;
+            if(!empty($fahrer->email)){
+                if(StatistikMail::sendMail($fahrer)){
+                    $email_sent = true;
+                }
+            }
 
-        $fahrrad->save();
+            // Reset
+            $fahrrad->fahrer_id = null;
+            $fahrrad->modus_id = 1;
+            $fahrrad->abschnitt_id = null;
 
-        if($fahrrad->fahrer_id == null){
-            return response()->json(["msg" => "ok"], 200);
+            $fahrer->vorgang = null;
+
+            // Update
+            $fahrrad->touch();
+            $fahrrad->save();
+
+            $fahrer->touch();
+            $fahrer->save();
+
+            // Return success
+            if($fahrrad->fahrer_id == null){
+                return response()->json(["msg" => "ok", "email" => $email_sent], 200);
+            }
         }
 
         return response()->json(["msg" => "Error"], 400);

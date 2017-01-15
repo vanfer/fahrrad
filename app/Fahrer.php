@@ -17,7 +17,7 @@ class Fahrer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'groesse', 'gewicht'
+        'name', 'email', 'groesse', 'gewicht', 'vorgang'
     ];
 
     /**
@@ -32,6 +32,10 @@ class Fahrer extends Authenticatable
     public function fahrrad()
     {
         return $this->hasOne("App\Fahrrad");
+    }
+
+    public function statistik(){
+        return $this->hasMany("App\Statistik");
     }
 
     public function modus()

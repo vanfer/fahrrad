@@ -28,7 +28,8 @@ class CreateStructureTable extends Migration
             $table->integer("modus_id")->unsigned()->default(1);
             $table->foreign("modus_id")->references("id")->on("modus");
 
-            $table->rememberToken();
+            $table->string("vorgang")->nullable();
+
             $table->timestamps();
         });
 
@@ -69,6 +70,7 @@ class CreateStructureTable extends Migration
             $table->float("sollDrehmoment")->nullable();
 
             $table->integer("strecke")->default(0)->nullable();
+            $table->integer("hoehenmeter")->default(0)->nullable();
 
             $table->string("color");
 
@@ -85,10 +87,20 @@ class CreateStructureTable extends Migration
 
         Schema::create('statistik', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("teilnehmer")->default(0);
-            $table->integer("kilometer")->default(0);
+
+            $table->integer("fahrer_id")->unsigned()->nullable();
+            $table->foreign("fahrer_id")->references("id")->on("fahrer")->onDelete('set null');
+
+            $table->integer("modus_id")->unsigned()->default(1)->nullable();
+            $table->foreign("modus_id")->references("id")->on("modus")->onDelete('set null');
+
+            $table->string("vorgang");
+
+            $table->integer("geschwindigkeit")->default(0);
+            $table->integer("gesamtleistung")->default(0);
+            $table->integer("strecke")->default(0);
             $table->integer("hoehenmeter")->default(0);
-            $table->integer("energie")->default(0);
+            $table->integer("fahrdauer")->default(0);
 
             $table->timestamps();
         });

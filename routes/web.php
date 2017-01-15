@@ -11,9 +11,11 @@
 |
 */
 
-/* Resourcen*/
 Route::resource("fahrer", "FahrerController");
+
 Route::resource("fahrrad", "FahrradController");
+Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "FahrradController@zuordnungHerstellen");
+Route::delete("fahrrad/{fahrrad}", "FahrradController@zuordnungLoeschen");
 
 /*
 |--------------------------------------------------------------------------
@@ -24,18 +26,6 @@ Route::resource("fahrrad", "FahrradController");
 */
 Route::get("central", "MainController@showCentral"); /*  */
 Route::get("/", function (){ return redirect("central"); });
-
-/*
-|--------------------------------------------------------------------------
-| Mobile Ansicht
-|--------------------------------------------------------------------------
-
-
-Route::get("login", "LoginController@index");
-Route::post("login", "LoginController@login");
-Route::post("logout", "LoginController@logout");
-
-Route::get("mobile", "MobileController@index");*/
 
 /*
 |--------------------------------------------------------------------------
@@ -59,29 +49,19 @@ Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
 */
 Route::get('mail', "MailController@sendmail");
 
-
 /*
 |--------------------------------------------------------------------------
 | Datenaustausch
 |--------------------------------------------------------------------------
 */
 Route::get('search/autocomplete', 'SearchController@autocompleteName');
-
 Route::get("data", "FahrradController@getData");
-
+Route::get("leistung", "MainController@leistung");
 Route::post("abschnitt", "MainController@setAbschnitt");
-
 Route::post("batterydata", "MainController@setBatteryData");
-
-
 Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");
-
-Route::get("leistung", "MainController@leistung");
-
 Route::get("fahrerstrecke", "MainController@fahrerstrecke");
-
 Route::get("statistik", "MainController@statistik");
 
-Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "FahrradController@zuordnungHerstellen");
-Route::delete("fahrrad/{fahrrad}", "FahrradController@zuordnungLoeschen");
+

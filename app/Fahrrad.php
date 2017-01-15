@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Fahrrad extends Model
 {
     protected $table = "fahrrad";
-
     protected $touches = ['fahrer'];
 
     public function fahrer()

@@ -30,6 +30,7 @@ class MainController extends Controller
 
     // Fahrer wechselt den Streckenabschnitt
     // Update von fahrrad.abschnitt_id / fahrrad.sollDrehmoment (abhängig von fahrer.gewicht und fahrer.goresse)
+    // Update und Berechnung der zurückgelegten Hoehenmeter im Abschnitt
     public function setAbschnitt(Request $request)
     {
         $this->validate($request, [
@@ -41,11 +42,23 @@ class MainController extends Controller
         if($fahrrad){
             $fahrer = Fahrer::whereId($fahrrad->fahrer_id)->first();
 
+            Statistik::addEntry($fahrer, $fahrrad);
+
             $abschnitt_id      = Input::get("abschnitt_id");
             $abschnitt         = Abschnitt::whereId($abschnitt_id)->first();
             $abschnitt_folgend = Abschnitt::whereId($abschnitt_id+1)->first();
+            $abschnitt_zuletzt = Abschnitt::whereId($abschnitt_id-1)->first();
 
             if(!empty($abschnitt) && !empty($abschnitt_folgend)){
+                if(!empty($abschnitt_zuletzt)){
+                    $hoehenDifferenz = $abschnitt->hoehe - $abschnitt_zuletzt->hoehe;
+                    if($hoehenDifferenz > 0){
+                        $fahrrad->hoehenmeter += $hoehenDifferenz;
+                        $fahrrad->touch();
+                        $fahrrad->save();
+                    }
+                }
+
                 $fahrrad->abschnitt_id = $abschnitt->id;
 
                 // Berechnen von sollDrehmoment

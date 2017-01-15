@@ -19,7 +19,7 @@ class TestDataTableSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        #DB::statement('PRAGMA foreign_keys = OFF');
+        #DB::statement('PRAGMA foreign_keys = OFF'); # Für Sqlite
 
         DB::table('fahrer')->truncate();
         Fahrer::create(['name' => 'test', 'email' => 'test@test.local']);
@@ -51,10 +51,10 @@ class TestDataTableSeeder extends Seeder
             Fahrrad::create(['ip' => '192.168.4.'.$i, 'mac' => '00:00:00:00:00:0'.$i, 'color' => $colors[$i-3] ]);
         }
 
-        DB::table('statistik')->truncate();
-        Statistik::create([]);
+        #DB::table('statistik')->truncate();
+        #Statistik::create([]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
-        #DB::statement('PRAGMA foreign_keys = ON');
+        #DB::statement('PRAGMA foreign_keys = ON'); # Für Sqlite
     }
 }
