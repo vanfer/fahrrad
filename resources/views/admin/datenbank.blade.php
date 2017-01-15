@@ -24,8 +24,8 @@
                             <th class="no-sort"></th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Gewicht</th>
-                            <th>Größe</th>
+                            <th>Gewicht(kg)</th>
+                            <th>Größe(m)</th>
                             <th class="no-sort">Betriebsmodus</th>
                             <th class="no-sort"></th>
                         </tr>

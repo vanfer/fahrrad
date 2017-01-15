@@ -1,10 +1,6 @@
 /* ##### General ##### */
 * {}
 
-.no-sort::after { display: none!important; }
-
-.no-sort { pointer-events: none!important; cursor: default!important; }
-
 body{
     background-color:#F5F7FA;
     font-family: "Arial";
@@ -518,6 +514,25 @@ span.glyphicon-alert{
     padding-top: 9px;
 }
 
+.modus {
+    padding-top: 9px;
+}
+
+#modusSlider .slider-selection {
+    background: #C9DCB5;
+    border: solid 1px;
+}
+
+#modusSlider .slider-handle {
+    background: #72B128;
+    border: solid 1px;
+}
+
+#modusSlider .slider-tick.round.in-selection {
+    background: #72B128;
+    border: solid 1px;
+}
+
 /* ##### Fahrer #####*/
 #fahrerNav {
     margin-top: -25px;
@@ -543,6 +558,15 @@ span.glyphicon-alert{
 
 .table-hover tbody tr:hover  {
     background-color: #C9DCB5;
+}
+
+.no-sort::after {
+    display: none!important;
+}
+
+.no-sort {
+    pointer-events: none!important;
+    cursor: default!important;
 }
 
 /* ##### Dialoge #####*/
