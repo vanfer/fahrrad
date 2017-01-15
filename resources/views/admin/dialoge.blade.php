@@ -229,6 +229,11 @@
     </div>
 </div>
 
+<div id="dialogEinstellungenSpeichern" title="Warnung" style="display: none;">
+    <h3><b>Einstellungen Speichern</b></h3><hr/>
+    <p>Sollen die Einstellungen wirklich gespeichert werden?</p>
+</div>
+
 <div id="dialogEinstellungen" title="Einstellungen" style="display: none;">
     <div class="einstellungen-wrapper">
         <form class="form-horizontal" role="form" method="POST" action="">
