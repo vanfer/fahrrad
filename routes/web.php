@@ -58,9 +58,8 @@ Route::get('search/autocomplete', 'SearchController@autocompleteName');
 Route::get("data", "FahrradController@getData");
 Route::get("leistung", "MainController@leistung");
 Route::post("abschnitt", "MainController@setAbschnitt");
-Route::post("batterydata", "MainController@setBatteryData");
 Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");
 Route::get("fahrerstrecke", "MainController@fahrerstrecke");
 Route::get("statistik", "MainController@statistik");
-
+Route::get("batterie", "MainController@batterie");

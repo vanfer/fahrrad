@@ -9,7 +9,7 @@
             <div class="balken3"></div>
             <div class="balken4"></div>
             <div class="balken5"></div>
-            <div class="batterie discharge3"></div> {{-- hier discharge[ANZAHL]  oder charge[ANZAHL] anpassen --}}
+            <div class="batterie discharge3" id="batterieladung"></div> {{-- hier discharge[ANZAHL]  oder charge[ANZAHL] anpassen --}}
         </div>
     </div>
 </div>

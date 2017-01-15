@@ -191,6 +191,7 @@ $(document).ready(function () {
         updateDetails();
         updateChartStreckeFahrer();
         updateStatistik();
+        updateBatterie();
     }, 1000);
 });
 
@@ -202,6 +203,41 @@ function updateStatistik() {
             $("#statistik_gesamtstrecke").html(statistik.kilometer);
             $("#statistik_hoehenmeter").html(statistik.hoehenmeter);
             $("#statistik_energie").html(statistik.energie);
+        }
+    });
+}
+
+function updateBatterie() {
+    getDataFromAPI("batterie", false, function(response) {
+        if(response && response.batterie ) {
+            var batterie = response.batterie;
+
+            var modus = "";
+            if(batterie.laststrom > batterie.generatorstrom){
+                modus = "discharge";
+            }else{
+                modus = "charge";
+            }
+
+            var modus_num = 0;
+            if(batterie.spannung <= 11.8){ // Batterie leer
+                modus_num = 0;
+            }else if(batterie.spannung > 11.8 && batterie.spannung <= 12.2){
+                modus_num = 1;
+            }else if(batterie.spannung > 12.2 && batterie.spannung <= 12.6){
+                modus_num = 2;
+            }else if(batterie.spannung > 12.6 && batterie.spannung <= 13.0){
+                modus_num = 3;
+            }else if(batterie.spannung > 13.0 && batterie.spannung <= 13.4){
+                modus_num = 4;
+            }else if(batterie.spannung > 13.4 && batterie.spannung <= 13.8){
+                modus_num = 5;
+            }else if(batterie.spannung >= 13.8){
+                modus_num = 5;
+            }
+
+            var class_name = "batterie " + modus + modus_num;
+            $("#batterieladung").attr("class", class_name);
         }
     });
 }

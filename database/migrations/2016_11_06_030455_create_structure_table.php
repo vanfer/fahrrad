@@ -105,6 +105,16 @@ class CreateStructureTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('batterie', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->float("spannung");
+            $table->float("generatorstrom");
+            $table->float("laststrom");
+        });
+
+
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         #DB::statement('PRAGMA foreign_keys = ON');
     }
@@ -125,6 +135,7 @@ class CreateStructureTable extends Migration
         Schema::dropIfExists('fahrrad');
         Schema::dropIfExists('fahrer');
         Schema::dropIfExists('statistik');
+        Schema::dropIfExists('batterie');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         #DB::statement('PRAGMA foreign_keys = ON');

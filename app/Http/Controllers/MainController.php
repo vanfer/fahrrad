@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Abschnitt;
+use App\Batterie;
 use App\Fahrer;
 use App\Fahrrad;
 use App\Statistik;
@@ -127,6 +128,13 @@ class MainController extends Controller
     {
         return response()->json([
             "statistik" => Statistik::getGesamtStatistik()
+        ], 200);
+    }
+
+    public function batterie()
+    {
+        return response()->json([
+            "batterie" => Batterie::getCurrent()
         ], 200);
     }
 }
