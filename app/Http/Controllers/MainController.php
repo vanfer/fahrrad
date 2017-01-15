@@ -125,13 +125,8 @@ class MainController extends Controller
 
     public function statistik()
     {
-        Statistik::addTeilnehmer();
-        Statistik::addKilometer(20);
-        Statistik::addHoehenmeter(20);
-        Statistik::addEnergie(20);
-
         return response()->json([
-            "statistik" => Statistik::get()
+            "statistik" => Statistik::getGesamtStatistik()
         ], 200);
     }
 }

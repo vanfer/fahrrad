@@ -64,4 +64,3 @@ Route::get("strecke/{strecke}", "MainController@strecke");
 Route::get("fahrerstrecke", "MainController@fahrerstrecke");
 Route::get("statistik", "MainController@statistik");
 
-

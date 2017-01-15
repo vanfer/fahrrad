@@ -257,12 +257,10 @@ $(document).ready(function () {
 
     $("#userTable").editableTableWidget();
     $("#userTable").on("click", ".btnDelete", function () {
-
         var form = $(this).closest("form");
 
         var fahrer_tr = $(this).parents("tr");
         var fahrer_id = $(fahrer_tr).attr("id");
-
 
         $("#dialogFahrerLoeschen").dialog({
             buttons : {
@@ -296,7 +294,7 @@ $(document).ready(function () {
             }
         });
 
-        $("#fahrerLoeschen").dialog("open");
+        $("#dialogFahrerLoeschen").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
     });
     $('#userTable').on('change', 'td', function(e, newValue) {

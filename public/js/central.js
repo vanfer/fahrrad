@@ -190,8 +190,21 @@ $(document).ready(function () {
     window.setInterval(function () {
         updateDetails();
         updateChartStreckeFahrer();
+        updateStatistik();
     }, 1000);
 });
+
+function updateStatistik() {
+    getDataFromAPI("statistik", false, function(response) {
+        if(response && response.statistik ) {
+            var statistik = response.statistik;
+            $("#statistik_teilnehmer").html(statistik.teilnehmer);
+            $("#statistik_gesamtstrecke").html(statistik.kilometer);
+            $("#statistik_hoehenmeter").html(statistik.hoehenmeter);
+            $("#statistik_energie").html(statistik.energie);
+        }
+    });
+}
 
 function updateFahrradKasten(fahrrad){
     var cond = fahrrad.fahrer_id == null;
