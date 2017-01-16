@@ -191,6 +191,7 @@ $(document).ready(function () {
         updateDetails();
         updateChartStreckeFahrer();
         updateStatistik();
+        updateHighscore();
         updateBatterie();
     }, 1000);
 });
@@ -203,6 +204,21 @@ function updateStatistik() {
             $("#statistik_gesamtstrecke").html(statistik.kilometer);
             $("#statistik_hoehenmeter").html(statistik.hoehenmeter);
             $("#statistik_energie").html(statistik.energie);
+        }
+    });
+}
+
+function updateHighscore() {
+    getDataFromAPI("highscore", false, function(response) {
+        if(response) {
+            $("#hs_name_1").html(response[0][0]);
+            $("#hs_val_1").html(response[0][1] + " Wh");
+            
+            $("#hs_name_2").html(response[1][0]);
+            $("#hs_val_2").html(response[1][1] + " Wh");
+
+            $("#hs_name_3").html(response[2][0]);
+            $("#hs_val_3").html(response[2][1] + " Wh");
         }
     });
 }

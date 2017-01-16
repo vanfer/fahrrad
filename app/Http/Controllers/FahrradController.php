@@ -99,9 +99,7 @@ class FahrradController extends Controller
             }
 
             // Reset
-            $fahrrad->fahrer_id = null;
-            $fahrrad->modus_id = 1;
-            $fahrrad->abschnitt_id = null;
+            $fahrrad->resetData();
 
             $fahrer->vorgang = null;
 

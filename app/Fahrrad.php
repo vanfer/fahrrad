@@ -58,10 +58,15 @@ class Fahrrad extends Model
 
     public function resetData()
     {
-        $this->istLeistung = 0;
-        $this->strecke = 0;
+        $this->fahrer_id = null;
+        $this->modus_id = 1;
+        $this->abschnitt_id = null;
         $this->geschwindigkeit = 0;
+        $this->istLeistung = 0;
         $this->sollLeistung = null;
         $this->sollDrehmoment = null;
+        $this->strecke = 0;
+        $this->hoehenmeter = 0;
+        $this->zugeordnet_at = null;
     }
 }

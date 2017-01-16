@@ -24,11 +24,6 @@ class MainController extends Controller
         return view('central.index')->with("fahrraeder", Fahrrad::all());
     }
 
-    public function setBatteryData(Request $request)
-    {
-
-    }
-
     // Fahrer wechselt den Streckenabschnitt
     // Update von fahrrad.abschnitt_id / fahrrad.sollDrehmoment (abhängig von fahrer.gewicht und fahrer.goresse)
     // Update und Berechnung der zurückgelegten Hoehenmeter im Abschnitt
@@ -136,5 +131,30 @@ class MainController extends Controller
         return response()->json([
             "batterie" => Batterie::getCurrent()
         ], 200);
+    }
+
+    public function highscore(){
+        $highscoreListe = [];
+
+        $statistiken = Statistik::all()->groupBy('vorgang');
+
+        foreach ($statistiken as $statistik){
+            $gesamtWatt = 0;
+            foreach ($statistik as $s){
+                $gesamtWatt += $s["attributes"]["gesamtleistung"];
+            }
+
+            $gesamtWh = (((($gesamtWatt / $statistik->count()) * $statistik->last()->fahrdauer) / 60));
+            $gesamtWh = number_format((float)$gesamtWh, 2, '.', '');
+
+            $fahrer_name = Fahrer::whereId($statistik[0]->fahrer_id)->first()->name;
+            array_push($highscoreListe, [$fahrer_name, $gesamtWh]);
+        }
+
+        usort($highscoreListe, function($a, $b) {
+            return $b[1] - $a[1];
+        });
+
+        return [$highscoreListe[0], $highscoreListe[1], $highscoreListe[2]];
     }
 }
