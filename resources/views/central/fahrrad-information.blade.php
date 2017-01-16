@@ -13,7 +13,7 @@
                 <div id="fahrrad-timeout-wrapper-{{ $fahrrad->id}}" style="display: none;">
                     <div class="row">
                         <div class="col-lg-12 fahrerinformation timeout-meldung">
-                            <span class="glyphicon glyphicon-alert"></span><br><br>
+                            <img src="{{URL::asset('/img/timeout_alert.png')}}" alt="Warnung" class="timeout-alert">
                             <span>Du bist seit längerer Zeit inaktiv.</span><br>
                             <span>Bitte fahre weiter, da du sonst automatisch abgemeldet wirst.</span>
                         </div>

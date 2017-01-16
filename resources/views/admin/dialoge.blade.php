@@ -101,10 +101,19 @@
     <h3><b>Einstellungen</b></h3><hr/>
     <p>Es können folgende Einstellungen vorgenommen werden:</p>
     <ul>
-            <li><b><u>Allgemein</u></b></li>
-            <lu><ul><li><b><u>Lorem</u></b></li></ul></lu>
-            <li><b><u>Strecke:</u></b><br>Hier kann die Auswahl der Strecke vorgenommen werden.<br>Es steht, je nach Schweregrad ("leicht", "mittel", "schwer"), je eine Strecke zur Auswahl.</li>
-        </ul>
+        <li><b><u>Allgemein</u></b></li>
+        <lu><ul><li><b><u>Individualmodus vs Gruppenmodus</u></b><br>Hier kann ausgewählt werden,
+                    ob der Individualmodus oder der Gruppenmodus betrieben wird:
+                    Im <b>Individualmodus</b> kann jeder Fahrer seinen individuellen Betriebsmodus wählen.
+                    Im <b>Gruppenmodus</b> wird ein Betriebsmodus ausgewählt, der für alle Fahrer gilt. </li></ul></lu>
+        <li><b><u>Strecke:</u></b><br>Hier kann die Auswahl der Strecke vorgenommen werden.<br>
+            Es steht, je nach Schweregrad ("leicht", "mittel", "schwer"), eine Strecke zur Auswahl.</li>
+    </ul>
+</div>
+
+<div id="dialogValidationFailed" title="Fehler" style="display: none;">
+    <h3><b>Üngültige Eingaben</b></h3><hr/>
+    <p>Der Fahrer kann nicht hinzugefügt werden. Bitte überprüfen Sie die Eingaben und versuchen Sie es erneut.</p>
 </div>
 
 <div id="dialogKeinFahrerAusgewaehlt" title="Fehler" style="display: none;">
@@ -240,42 +249,55 @@
 
             <!-- Tabs-Navs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#tabAllgemein" role="tab" data-toggle="tab">Allgemein</a></li>
-                <li role="presentation"><a href="#tabStrecke" role="tab" data-toggle="tab">Strecke</a></li>
+                <li role="presentation"><a href="#tabAllgemein" role="tab" data-toggle="tab">Allgemein</a></li>
+                <li role="presentation" class="active"><a href="#tabStrecke" role="tab" data-toggle="tab">Strecke</a></li>
             </ul>
 
             <!-- Tab-Inhalte -->
             <div class="tab-content">
                 <!-- Allgemeine Einstellungen -->
-                <div role="tabpanel" class="tab-pane tab-wrapper active" id="tabAllgemein">
-
+                <div role="tabpanel" class="tab-pane tab-wrapper" id="tabAllgemein">
+                    <div id="einstellungen-modus" title="Funktion nicht implementiert">
+                        <label for="streckenauswahl">Individualmodus vs. Gruppenmodus</label>
+                        <fieldset name="streckenauswahl" disabled>
+                            <div class="radio">
+                                <label><input type="radio" name="radio-individualmodus" class="radio-modus" value="1" checked>Individualmodus</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="radio-gruppenmodus" class="radio-modus" value="2">Gruppenmodus</label>
+                            </div>
+                        </fieldset>
+                        <div class="p-20 einstellungen-betriebsmodus" style="display: none">
+                            <label for="betriebsmodus">Betriebsmodus</label>
+                            <fieldset name="betriebsmodus" disabled>
+                                <div class="radio">
+                                    <label><input type="radio" name="radio-betriebsmodus" class="radio-betriebsmodus" value="1" checked>Streckenmodus</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="radio-betriebsmodus" class="radio-betriebsmodus"value="2">Konstantes Drehmoment</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="radio-betriebsmodus" class="radio-betriebsmodus"value="3">Konstante Leistung</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
                 </div>
                 <!-- Streckeneinstellungen -->
-                <div role="tabpanel" class="tab-pane tab-wrapper" id="tabStrecke">
+                <div role="tabpanel" class="tab-pane tab-wrapper active" id="tabStrecke">
                     <div class="input-group col-md-12 streckenauswahl-wrapper">
                         <div class="col-md-4 pull-left">
                             <label for="streckenauswahl">Streckenauswahl</label>
                             <fieldset name="streckenauswahl">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="1" checked>
-                                            <span>leicht</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="2">
-                                            <span>mittel</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="3">
-                                            <span>schwer</span>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <div class="radio">
+                                    <label><input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="1" checked>leicht</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="2">mittel</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="3">schwer</label>
+                                </div>
                             </fieldset>
                         </div>
                         <div class="col-md-8 pull-right">

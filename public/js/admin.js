@@ -30,6 +30,7 @@ $(document).ready(function () {
     initDialog("#dialogZuordnungLoeschen",          "warnung",          true);
     initDialog("#dialogEinstellungenSpeichern",     "warnung",          true);
     initDialog("#dialogFahrerLoeschen",             "warnung",          true);
+    initDialog("#dialogValidationFailed",           "fehler",           true);
     initDialog("#dialogKeinFahrerAusgewaehlt",      "fehler",           true);
     initDialog("#dialogFahrerSchonZugeordnet",      "fehler",           true);
     initDialog("#dialogFahrernameSchonVergeben",    "fehler",           true);
@@ -207,7 +208,15 @@ $(document).ready(function () {
         var form = e.currentTarget.closest("form");
 
         if(!validateInput(form)) {
-            alert("Validation failed");
+            $("#dialogValidationFailed").dialog({
+                buttons : {
+                    "OK" : function() {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+            $("#dialogValidationFailed").dialog("open");
+            $(".ui-widget-overlay").addClass('custom-overlay');
         }
         else{
             $.ajax({
