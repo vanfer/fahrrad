@@ -18,6 +18,7 @@
     <link href="{{ asset("css/jquery-ui.theme.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/dataTables.bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{ asset("css/jquery.dataTables.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/bootstrap-slider.css") }}" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("favicon.ico") }}">
 
@@ -65,6 +66,7 @@
 
     <script src="{{ asset("js/libs/bootstrap.js") }}"></script>
     <script src="{{ asset("js/libs/dataTables.bootstrap.min.js") }}"></script>
+    <script src="{{ asset("js/libs/bootstrap-slider.js") }}"></script>
 
     <script src="{{ asset("js/libs/highcharts.js") }}"></script>
     <script src="{{ asset("js/libs/mindmup-editabletable.js") }}"></script>
