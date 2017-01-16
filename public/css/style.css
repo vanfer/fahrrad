@@ -6,6 +6,10 @@ body{
     font-family: "Arial";
 }
 
+.p-20{
+    padding: 20px !important;
+}
+
 .smartphone-overlay{
     display: none;
 }
@@ -173,6 +177,12 @@ body{
 
 .timeout-meldung{
     text-align: center;
+}
+
+
+.timeout-alert{
+    display:block;
+    margin: 0 auto 20px auto;
 }
 
 span.glyphicon-alert{
