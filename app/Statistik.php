@@ -14,16 +14,18 @@ class Statistik extends Model
     }
 
     public static function addEntry(\App\Fahrer $fahrer, \App\Fahrrad $fahrrad){
-        Statistik::create([
-            "fahrer_id" => $fahrer->id,
-            "modus_id" => $fahrer->modus->name,
-            "vorgang" => $fahrer->vorgang,
-            "geschwindigkeit" => $fahrrad->geschwindigkeit,
-            "gesamtleistung" => $fahrrad->istLeistung,
-            "strecke" => $fahrrad->strecke,
-            "hoehenmeter" => $fahrrad->hoehenmeter,
-            "fahrdauer" => time() - $fahrrad->zugeordnet_at,
-        ]);
+        if($fahrrad->istLeistung > 0){
+            Statistik::create([
+                "fahrer_id" => $fahrer->id,
+                "modus_id" => $fahrer->modus->name,
+                "vorgang" => $fahrer->vorgang,
+                "geschwindigkeit" => $fahrrad->geschwindigkeit,
+                "gesamtleistung" => $fahrrad->istLeistung,
+                "strecke" => $fahrrad->strecke,
+                "hoehenmeter" => $fahrrad->hoehenmeter,
+                "fahrdauer" => time() - $fahrrad->zugeordnet_at,
+            ]);
+        }
     }
 
     public static function getTeilnehmerGesamt()
@@ -70,7 +72,7 @@ class Statistik extends Model
             }
             $durchschnittWatt = $gesamtWatt / $statistik->count();
 
-            $gesamt += ((($durchschnittWatt * $statistik->last()->fahrdauer) / 60) / 1000);
+            $gesamt += ((($durchschnittWatt * $statistik->last()->fahrdauer) / 3600) / 1000);
             $gesamt = number_format((float)$gesamt, 2, '.', '');
         }
 

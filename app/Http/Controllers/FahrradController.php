@@ -92,13 +92,16 @@ class FahrradController extends Controller
             Statistik::addEntry($fahrer, $fahrrad);
 
             $email_sent = false;
-            if(!empty($fahrer->email)){
+            /*if(!empty($fahrer->email)){
                 if(StatistikMail::sendMail($fahrer)){
                     $email_sent = true;
                 }
-            }
+            }*/
 
             // Reset
+            $fahrrad->fahrer_id = null;
+            $fahrrad->zugeordnet_at = null;
+            $fahrrad->modus_id = 1;
             $fahrrad->resetData();
 
             $fahrer->vorgang = null;

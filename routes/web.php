@@ -61,6 +61,9 @@ Route::post("abschnitt", "MainController@setAbschnitt");
 Route::get("strecke", "MainController@strecken");
 Route::get("strecke/{strecke}", "MainController@strecke");
 Route::get("fahrerstrecke", "MainController@fahrerstrecke");
+
 Route::get("statistik", "MainController@statistik");
+Route::get("statistikupdate", "MainController@statistikUpdate");
+
 Route::get("batterie", "MainController@batterie");
 Route::get("highscore", "MainController@highscore");

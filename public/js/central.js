@@ -3,24 +3,28 @@ var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
     //Setup & Globale Variablen
-    window.strecke_id = 2; // Todo: Strecke id irgendwo her holen (hidden input zb)
+    window.strecke_id = 1; // Todo: Strecke id irgendwo her holen (hidden input zb)
 
     // Datenobjekte
     window.fahrrad = [];
-    window.streckeData = { data: [], labels: [] };
+    window.streckeData = {data: [], labels: []};
     window.strecke_abschnitte = [];
-    window.strecke_fahrrad_abschnitte = [0,0,0];
-    window.fahrrad_strecke = { data: [] };
-    window.leistungData = { data: [], labels: [] };
-    window.gesamtleistungData = { absolute: 0, data: [] };
+    window.strecke_fahrrad_abschnitte = [0, 0, 0];
+    window.fahrrad_strecke = {data: []};
+    window.leistungData = {data: [], labels: []};
+    window.gesamtleistungData = {absolute: 0, data: []};
+
+    window.statistikEntryTimeCount = 0;
+    window.statistikEntryTime = 10;
+
 
     // Einmalig Strecke laden
     updateChartStreckeData();
 
     // Chart Definitionen
     window.chart_strecke = new Highcharts.Chart({
-        title:{
-            text:'',
+        title: {
+            text: '',
         },
         chart: {
             renderTo: 'container-strecke',
@@ -31,10 +35,10 @@ $(document).ready(function () {
             spacingLeft: 10,
             spacingRight: 10,
             events: {
-                load: function(){
+                load: function () {
                     renderFahrerPositionen(this);
                 },
-                redraw: function(){
+                redraw: function () {
                     renderFahrerPositionen(this);
                 }
             }
@@ -44,8 +48,8 @@ $(document).ready(function () {
         },
         xAxis: {
             labels: {
-                formatter: function() {
-                    if(window.streckeData.labels[this.value]) return window.streckeData.labels[this.value].toFixed(2) + " m";
+                formatter: function () {
+                    if (window.streckeData.labels[this.value]) return window.streckeData.labels[this.value].toFixed(2) + " m";
                 },
                 style: {
                     fontSize: '14px',
@@ -54,17 +58,17 @@ $(document).ready(function () {
         },
         yAxis: {
             min: 0,
-            max: 250,
+            max: 50,
             labels: {
                 format: '{value}',
-                style:{
-                    fontSize:'18px',
+                style: {
+                    fontSize: '18px',
                 }
             },
             title: {
                 text: 'Höhe (Meter)',
                 x: -10,
-                style:{
+                style: {
                     fontSize: '16px'
                 }
             }
@@ -89,8 +93,8 @@ $(document).ready(function () {
         }]
     });
     window.chart_leistung = new Highcharts.Chart({
-        title:{
-            text:''
+        title: {
+            text: ''
         },
         chart: {
             renderTo: 'container-leistung',
@@ -104,9 +108,9 @@ $(document).ready(function () {
         xAxis: {
             categories: window.leistungData.labels,
             crosshair: true,
-            labels:{
-                style:{
-                    fontSize:'16px',
+            labels: {
+                style: {
+                    fontSize: '16px',
                 }
             }
         },
@@ -121,9 +125,9 @@ $(document).ready(function () {
                     fontSize: '16px',
                 }
             },
-            labels:{
-                style:{
-                    fontSize:'18px',
+            labels: {
+                style: {
+                    fontSize: '18px',
                 }
             }
         },
@@ -197,8 +201,8 @@ $(document).ready(function () {
 });
 
 function updateStatistik() {
-    getDataFromAPI("statistik", false, function(response) {
-        if(response && response.statistik ) {
+    getDataFromAPI("statistik", false, function (response) {
+        if (response && response.statistik) {
             var statistik = response.statistik;
             $("#statistik_teilnehmer").html(statistik.teilnehmer);
             $("#statistik_gesamtstrecke").html(statistik.kilometer);
@@ -206,49 +210,75 @@ function updateStatistik() {
             $("#statistik_energie").html(statistik.energie);
         }
     });
+
+    window.statistikEntryTimeCount += 1;
+    if(window.statistikEntryTimeCount >= window.statistikEntryTime){
+        // Update
+        $.ajax({
+            url: BASE_PATH + "statistikupdate",
+            type: 'get',
+            async: true,
+            success: function (data) {}
+        });
+
+        window.statistikEntryTime = 0;
+    }
 }
 
 function updateHighscore() {
-    getDataFromAPI("highscore", false, function(response) {
-        if(response) {
-            $("#hs_name_1").html(response[0][0]);
-            $("#hs_val_1").html(response[0][1] + " Wh");
-            
-            $("#hs_name_2").html(response[1][0]);
-            $("#hs_val_2").html(response[1][1] + " Wh");
+    getDataFromAPI("highscore", false, function (response) {
+        if (response) {
 
-            $("#hs_name_3").html(response[2][0]);
-            $("#hs_val_3").html(response[2][1] + " Wh");
+            try {
+                if (typeof response[0] != "undefined") {
+                    $("#hs_name_1").html(response[0][0]);
+                    $("#hs_val_1").html(response[0][1] + " Wh");
+                }
+
+                if (typeof response[1] != "undefined") {
+                    $("#hs_name_2").html(response[1][0]);
+                    $("#hs_val_2").html(response[1][1] + " Wh");
+                }
+
+                if (typeof response[2] != "undefined") {
+                    $("#hs_name_3").html(response[2][0]);
+                    $("#hs_val_3").html(response[2][1] + " Wh");
+                }
+
+            } catch (ex) {
+            }
+
+
         }
     });
 }
 
 function updateBatterie() {
-    getDataFromAPI("batterie", false, function(response) {
-        if(response && response.batterie ) {
+    getDataFromAPI("batterie", true, function (response) {
+        if (response && response.batterie) {
             var batterie = response.batterie;
 
             var modus = "";
-            if(batterie.laststrom > batterie.generatorstrom){
+            if (batterie.laststrom > batterie.generatorstrom) {
                 modus = "discharge";
-            }else{
+            } else {
                 modus = "charge";
             }
 
             var modus_num = 0;
-            if(batterie.spannung <= 11.8){ // Batterie leer
+            if (batterie.spannung <= 11.8) { // Batterie leer
                 modus_num = 0;
-            }else if(batterie.spannung > 11.8 && batterie.spannung <= 12.2){
+            } else if (batterie.spannung > 11.8 && batterie.spannung <= 12.2) {
                 modus_num = 1;
-            }else if(batterie.spannung > 12.2 && batterie.spannung <= 12.6){
+            } else if (batterie.spannung > 12.2 && batterie.spannung <= 12.6) {
                 modus_num = 2;
-            }else if(batterie.spannung > 12.6 && batterie.spannung <= 13.0){
+            } else if (batterie.spannung > 12.6 && batterie.spannung <= 13.0) {
                 modus_num = 3;
-            }else if(batterie.spannung > 13.0 && batterie.spannung <= 13.4){
+            } else if (batterie.spannung > 13.0 && batterie.spannung <= 13.4) {
                 modus_num = 4;
-            }else if(batterie.spannung > 13.4 && batterie.spannung <= 13.8){
+            } else if (batterie.spannung > 13.4 && batterie.spannung <= 13.8) {
                 modus_num = 5;
-            }else if(batterie.spannung >= 13.8){
+            } else if (batterie.spannung >= 13.8) {
                 modus_num = 5;
             }
 
@@ -258,30 +288,30 @@ function updateBatterie() {
     });
 }
 
-function updateFahrradKasten(fahrrad){
+function updateFahrradKasten(fahrrad) {
     var cond = fahrrad.fahrer_id == null;
 
-    if(cond){
-        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "none");
-        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "block");
-    }else{
-        $("#fahrrad-aktiv-wrapper-"+fahrrad.id).css("display", "block");
-        $("#fahrrad-inaktiv-wrapper-"+fahrrad.id).css("display", "none");
+    if (cond) {
+        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "none");
+        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "block");
+    } else {
+        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "block");
+        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "none");
     }
 
-    var name             = cond ? "" : fahrrad.fahrer.name;
-    var modus            = cond ? "" : fahrrad.modus.name;
-    var geschwindigkeit  = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
-    var istLeistung      = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
-    var strecke          = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
-    var fahrdauer        = cond ? "00:00:00" : getElapsedTime(fahrrad.zugeordnet_at);
+    var name = cond ? "" : fahrrad.fahrer.name;
+    var modus = cond ? "" : fahrrad.modus.name;
+    var geschwindigkeit = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
+    var istLeistung = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
+    var strecke = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
+    var fahrdauer = cond ? "00:00:00" : getElapsedTime(fahrrad.zugeordnet_at);
 
-    $("#fahrername-anzeige-"+fahrrad.id).html(name);
-    $("#fahrermodus-anzeige-"+fahrrad.id).html(modus);
-    $("#geschwindigkeit-anzeige-"+fahrrad.id).html(geschwindigkeit);
-    $("#gesamtleistung-anzeige-"+fahrrad.id).html(istLeistung);
-    $("#strecke-anzeige-"+fahrrad.id).html(strecke);
-    $("#fahrdauer-anzeige-"+fahrrad.id).html(fahrdauer);
+    $("#fahrername-anzeige-" + fahrrad.id).html(name);
+    $("#fahrermodus-anzeige-" + fahrrad.id).html(modus);
+    $("#geschwindigkeit-anzeige-" + fahrrad.id).html(geschwindigkeit);
+    $("#gesamtleistung-anzeige-" + fahrrad.id).html(istLeistung);
+    $("#strecke-anzeige-" + fahrrad.id).html(strecke);
+    $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
 }
 
 function getElapsedTime(fahrrad_timestamp) {
@@ -290,31 +320,31 @@ function getElapsedTime(fahrrad_timestamp) {
 
     var d = new Date(null);
     d.setSeconds(elapsed_seconds); // Sekunden zu JS Date Objekt
-    d.setTime( d.getTime() + d.getTimezoneOffset()*60*1000 ); // Zeitzone anpassen!
+    d.setTime(d.getTime() + d.getTimezoneOffset() * 60 * 1000); // Zeitzone anpassen!
 
     // String zusammenbauen
-    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + (d.getMinutes())).slice(-2) + ':' + ('0' + (d.getSeconds()+1)).slice(-2);
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + (d.getMinutes())).slice(-2) + ':' + ('0' + (d.getSeconds() + 1)).slice(-2);
 }
 
-function updateDetails(){
-    getDataFromAPI("data", false, function(response) {
-        if(response && response.data ) {
-            window.leistungData = { data: [], labels: []};
-            window.fahrrad_strecke = { data: []};
-            window.gesamtleistungData = { absolute: 0, data: [] };
+function updateDetails() {
+    getDataFromAPI("data", false, function (response) {
+        if (response && response.data) {
+            window.leistungData = {data: [], labels: []};
+            window.fahrrad_strecke = {data: []};
+            window.gesamtleistungData = {absolute: 0, data: []};
 
-            for(var j = 0; j < window.fahrrad.length; j++){
-                if(window.fahrrad[j].element != null){
+            for (var j = 0; j < window.fahrrad.length; j++) {
+                if (window.fahrrad[j].element != null) {
                     window.fahrrad[j].element.element.remove();
                 }
             }
             window.fahrrad = [];
 
-            $.each( response.data.fahrrad,
-                function(index, fahrrad) {
+            $.each(response.data.fahrrad,
+                function (index, fahrrad) {
                     updateFahrradKasten(fahrrad);
 
-                    if(fahrrad.fahrer_id != null){
+                    if (fahrrad.fahrer_id != null) {
                         addFahrrad(fahrrad.id, fahrrad.color, fahrrad.modus_id, fahrrad.abschnitt_id);
 
                         window.leistungData.labels.push(fahrrad.fahrer.name);
@@ -327,7 +357,7 @@ function updateDetails(){
                 }
             );
 
-            for(var i = 0; i < window.fahrrad.length; i++){
+            for (var i = 0; i < window.fahrrad.length; i++) {
                 window.fahrrad[i].gefahrene_strecke = window.fahrrad_strecke.data[i];
             }
         }
@@ -338,7 +368,7 @@ function updateDetails(){
     window.chart_leistung.redraw();
 
     // Gesamtleistung
-    for(var i = 0; i <= window.leistungData.data.length - 1; i++){
+    for (var i = 0; i <= window.leistungData.data.length - 1; i++) {
         window.gesamtleistungData.data.push([
             window.leistungData.labels[i],
             Math.floor((window.leistungData.data[i] * 100) / window.gesamtleistungData.absolute)
@@ -374,19 +404,19 @@ function updateChartStreckeData() {
     });
 }
 
-function renderFahrerPositionen(chart){
-    for(var i = 0; i < window.fahrrad.length; i++){
+function renderFahrerPositionen(chart) {
+    for (var i = 0; i < window.fahrrad.length; i++) {
         var fahrrad = window.fahrrad[i];
 
         var pixelX = chart.xAxis[0].toPixels(fahrrad.x || 0);
         var pixelY = chart.yAxis[0].toPixels(fahrrad.y || 0);
 
-        if(fahrrad.element != null){
+        if (fahrrad.element != null) {
             fahrrad.element.element.remove();
             fahrrad.element = null;
         }
 
-        if(fahrrad.modus == 1){
+        if (fahrrad.modus == 1) {
             fahrrad.element = chart.renderer.circle(pixelX, pixelY, 10).attr({
                 fill: fahrrad.color,
                 zIndex: 10
@@ -395,15 +425,15 @@ function renderFahrerPositionen(chart){
     }
 }
 
-function updateChartStreckeFahrer(){
+function updateChartStreckeFahrer() {
     var strecke = window.chart_strecke.series[0];
 
-    for(var i = 0; i < window.fahrrad.length; i++){
-        for(var abschnitt = 0; abschnitt < strecke.points.length; abschnitt++){
-            if(window.fahrrad[i].gefahrene_strecke < window.streckeData.labels[abschnitt+1]){
-                var abschnitt_len 	  = window.streckeData.labels[abschnitt+1] - window.streckeData.labels[abschnitt];
-                var rest_strecke 	  = window.fahrrad[i].gefahrene_strecke - window.streckeData.labels[abschnitt];
-                var rest_prozent 	  = (rest_strecke)/abschnitt_len;
+    for (var i = 0; i < window.fahrrad.length; i++) {
+        for (var abschnitt = 0; abschnitt < strecke.points.length; abschnitt++) {
+            if (window.fahrrad[i].gefahrene_strecke < window.streckeData.labels[abschnitt + 1]) {
+                var abschnitt_len = window.streckeData.labels[abschnitt + 1] - window.streckeData.labels[abschnitt];
+                var rest_strecke = window.fahrrad[i].gefahrene_strecke - window.streckeData.labels[abschnitt];
+                var rest_prozent = (rest_strecke) / abschnitt_len;
 
                 var pStart = {
                     x: window.streckeData.labels[abschnitt],
@@ -411,49 +441,52 @@ function updateChartStreckeFahrer(){
                 };
 
                 var pEnde = {
-                    x: window.streckeData.labels[abschnitt+1],
-                    y: window.streckeData.data[abschnitt+1]
+                    x: window.streckeData.labels[abschnitt + 1],
+                    y: window.streckeData.data[abschnitt + 1]
                 };
 
                 var x_wert = (parseFloat(abschnitt) + parseFloat(rest_prozent)).toFixed(2);
-                var m      = ((pEnde.y-pStart.y)).toFixed(2);
-                var b      = (pStart.y - m*abschnitt).toFixed(2);
+                var m = ((pEnde.y - pStart.y)).toFixed(2);
+                var b = (pStart.y - m * abschnitt).toFixed(2);
                 var y_wert = (m * x_wert + parseFloat(b)).toFixed(2);
 
                 break;
             }
         }
 
-        if(abschnitt < strecke.points.length){
+        if(window.fahrrad[i].modus == 1){
+            if (abschnitt < strecke.points.length) {
 
-            if(window.strecke_fahrrad_abschnitte.indexOf(i) != -1){
+                //if (window.strecke_fahrrad_abschnitte.indexOf(i) != -1) {
+                //if (window.strecke_fahrrad_abschnitte[i] != abschnitt) {
+                // Abschnitt letzter merken
+                window.strecke_fahrrad_abschnitte[i] = abschnitt;
 
-                if(window.strecke_fahrrad_abschnitte[i] != abschnitt){
-                    // Abschnitt letzter merken
-                    window.strecke_fahrrad_abschnitte[i] = abschnitt;
-
-                    // Set Abschnitt to
-                    // window.strecke_abschnitte[abschnitt];
-                    $.ajax({
-                        url: BASE_PATH + "abschnitt",
-                        type: 'post',
-                        data: {
-                            fahrrad_id: window.fahrrad[i].id,
-                            abschnitt_id: window.strecke_abschnitte[window.strecke_fahrrad_abschnitte[i]]
-                        },
-                        async: false,
-                        success: function (data) { }
-                    });
-                }
+                // Set Abschnitt to
+                // window.strecke_abschnitte[abschnitt];
+                $.ajax({
+                    url: BASE_PATH + "abschnitt",
+                    type: 'post',
+                    data: {
+                        fahrrad_id: window.fahrrad[i].id,
+                        abschnitt_id: window.strecke_abschnitte[window.strecke_fahrrad_abschnitte[i]]
+                    },
+                    async: true,
+                    success: function (data) {
+                    }
+                });
+                //}
+                //}
             }
+        }
 
-            if(typeof x_wert != "undefined"){
-                window.fahrrad[i].x = parseFloat(x_wert);
-                window.fahrrad[i].y = parseFloat(y_wert);
-            }
-        }else{
-            if(typeof x_wert != "undefined"){
-                window.fahrrad[i].x = parseFloat(strecke.points.length-1);
+
+        if (typeof x_wert != "undefined") {
+            window.fahrrad[i].x = parseFloat(x_wert);
+            window.fahrrad[i].y = parseFloat(y_wert);
+        } else {
+            if (typeof x_wert != "undefined") {
+                window.fahrrad[i].x = parseFloat(strecke.points.length - 1);
             }
         }
     }
@@ -461,7 +494,7 @@ function updateChartStreckeFahrer(){
     window.chart_strecke.redraw();
 }
 
-function getDataFromAPI(url, async, successHandler){
+function getDataFromAPI(url, async, successHandler) {
     $.ajax({
         url: BASE_PATH + url,
         type: 'get',
@@ -470,7 +503,7 @@ function getDataFromAPI(url, async, successHandler){
     });
 }
 
-function addFahrrad(id, color, modus, abschnitt_id){
+function addFahrrad(id, color, modus, abschnitt_id) {
     window.fahrrad.push(
         {
             id: id,

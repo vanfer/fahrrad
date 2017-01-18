@@ -35,7 +35,7 @@ class MainController extends Controller
         ]);
 
         $fahrrad = Fahrrad::whereId(Input::get("fahrrad_id"))->first();
-        if($fahrrad){
+        if($fahrrad && $fahrrad->modus_id == 1){
             $fahrer = Fahrer::whereId($fahrrad->fahrer_id)->first();
 
             Statistik::addEntry($fahrer, $fahrrad);
@@ -50,8 +50,6 @@ class MainController extends Controller
                     $hoehenDifferenz = $abschnitt->hoehe - $abschnitt_zuletzt->hoehe;
                     if($hoehenDifferenz > 0){
                         $fahrrad->hoehenmeter += $hoehenDifferenz;
-                        $fahrrad->touch();
-                        $fahrrad->save();
                     }
                 }
 
@@ -64,13 +62,15 @@ class MainController extends Controller
                 // Steigung des Abschnitts in Prozent
                 $prozent = intval($h / $l * 100);
 
+                //$a = atan($prozent / 100);
+
                 $aFahrer = $fahrer->groesse * 0.28; // 0.28 Korrekturfaktor (http://www.veloagenda.ch/Velophysik/luftwid.htm)
                 $kSteigung = sin(atan($prozent / 100));
-                $mHinterrad = ($fahrer->gewicht + 15) * 9.81 * ($kSteigung + 0.01) + (0.5 * $aFahrer) * 0.55 * 1.2 * ($fahrrad->geschwindigkeit * 3.6);
-                $mRad = 2.1 / ((2 * pi()) * $mHinterrad);
-                $mPed = abs(intval($mRad * 10000));
+                $mHinterrad = ($fahrer->gewicht + 15) * 9.81 * ($kSteigung + 0.01) + (0.5 * $aFahrer) * 0.55 * 1.2 * (($fahrrad->geschwindigkeit / 3.6) * ($fahrrad->geschwindigkeit / 3.6));
+                $mRad = (2.1 / (2 * pi())) * $mHinterrad;
+                $mPed = $mRad;
 
-                $fahrrad->sollDrehmoment = $mPed;
+                $fahrrad->sollDrehmoment = intval($mPed);
 
                 $fahrrad->touch();
                 $fahrrad->save();
@@ -126,6 +126,18 @@ class MainController extends Controller
         ], 200);
     }
 
+    public function statistikUpdate(Request $request)
+    {
+        $fahrraeder = Fahrrad::all();
+
+        foreach($fahrraeder as $fahrrad){
+            if($fahrrad->fahrer_id != null){
+                $fahrer = Fahrer::whereId($fahrrad->fahrer_id)->first();
+                Statistik::addEntry($fahrer, $fahrrad);
+            }
+        }
+    }
+
     public function batterie()
     {
         return response()->json([
@@ -155,6 +167,19 @@ class MainController extends Controller
             return $b[1] - $a[1];
         });
 
-        return [$highscoreListe[0], $highscoreListe[1], $highscoreListe[2]];
+
+        $resultArray = [];
+
+        if(isset($highscoreListe[0])){
+            array_push($resultArray, $highscoreListe[0]);
+        }
+        if(isset($highscoreListe[1])){
+            array_push($resultArray, $highscoreListe[0]);
+        }
+        if(isset($highscoreListe[2])){
+            array_push($resultArray, $highscoreListe[0]);
+        }
+
+        return $resultArray;
     }
 }
