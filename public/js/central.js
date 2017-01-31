@@ -58,7 +58,7 @@ $(document).ready(function () {
         },
         yAxis: {
             min: 0,
-            max: 50,
+            max: 20,
             labels: {
                 format: '{value}',
                 style: {
@@ -212,13 +212,14 @@ function updateStatistik() {
     });
 
     window.statistikEntryTimeCount += 1;
-    if(window.statistikEntryTimeCount >= window.statistikEntryTime){
+    if (window.statistikEntryTimeCount >= window.statistikEntryTime) {
         // Update
         $.ajax({
             url: BASE_PATH + "statistikupdate",
             type: 'get',
             async: true,
-            success: function (data) {}
+            success: function (data) {
+            }
         });
 
         window.statistikEntryTime = 0;
@@ -330,7 +331,7 @@ function updateDetails() {
     getDataFromAPI("data", false, function (response) {
         if (response && response.data) {
             window.leistungData = {data: [], labels: []};
-            window.fahrrad_strecke = {data: []};
+            window.fahrrad_strecke = {data: [0,0,0]};
             window.gesamtleistungData = {absolute: 0, data: []};
 
             for (var j = 0; j < window.fahrrad.length; j++) {
@@ -338,21 +339,27 @@ function updateDetails() {
                     window.fahrrad[j].element.element.remove();
                 }
             }
-            window.fahrrad = [];
 
-            $.each(response.data.fahrrad,
-                function (index, fahrrad) {
+            resetFahrrad();
+
+            $.each(response.data.fahrrad, function (index, fahrrad) {
                     updateFahrradKasten(fahrrad);
 
                     if (fahrrad.fahrer_id != null) {
-                        addFahrrad(fahrrad.id, fahrrad.color, fahrrad.modus_id, fahrrad.abschnitt_id);
+                        for (var i = 1; i <= window.fahrrad.length; i++) {
+                            if (fahrrad.id == i) {
+                                window.fahrrad[i-1].modus = fahrrad.modus_id;
+                                window.fahrrad[i-1].abschnitt_id = fahrrad.abschnitt_id;
+                                window.fahrrad[i-1].aktiv = true;
+
+                                window.fahrrad_strecke.data[i-1] = fahrrad.strecke;
+                            }
+                        }
 
                         window.leistungData.labels.push(fahrrad.fahrer.name);
                         window.leistungData.data.push(fahrrad.istLeistung);
 
                         window.gesamtleistungData.absolute += fahrrad.istLeistung;
-
-                        window.fahrrad_strecke.data.push(fahrrad.strecke);
                     }
                 }
             );
@@ -379,6 +386,7 @@ function updateDetails() {
         text: window.gesamtleistungData.absolute + " W"
     });
 
+    window.chart_gesamtleistung.series[0].setData([]);
     window.chart_gesamtleistung.series[0].setData(window.gesamtleistungData.data);
     window.chart_gesamtleistung.redraw();
 }
@@ -454,7 +462,7 @@ function updateChartStreckeFahrer() {
             }
         }
 
-        if(window.fahrrad[i].modus == 1){
+        if (window.fahrrad[i].modus == 1) {
             if (abschnitt < strecke.points.length) {
 
                 //if (window.strecke_fahrrad_abschnitte.indexOf(i) != -1) {
@@ -503,6 +511,14 @@ function getDataFromAPI(url, async, successHandler) {
     });
 }
 
+function resetFahrrad() {
+    window.fahrrad = [];
+
+    addFahrrad(1, "#EC87C0", 0, 0);
+    addFahrrad(2, "#5D9CEC", 0, 0);
+    addFahrrad(3, "#FFCE54", 0, 0);
+}
+
 function addFahrrad(id, color, modus, abschnitt_id) {
     window.fahrrad.push(
         {
@@ -513,7 +529,8 @@ function addFahrrad(id, color, modus, abschnitt_id) {
             x: 0,
             y: 0,
             modus: modus,
-            abschnitt_id: abschnitt_id
+            abschnitt_id: abschnitt_id,
+            aktiv: false
         }
     );
 

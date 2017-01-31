@@ -22,10 +22,10 @@ class TestDataTableSeeder extends Seeder
         #DB::statement('PRAGMA foreign_keys = OFF'); # Für Sqlite
 
         DB::table('fahrer')->truncate();
-        #Fahrer::create(['name' => 'test', 'email' => 'test@test.local']);
-        #Fahrer::create(['name' => 'test2']);
-        #Fahrer::create(['name' => 'test3', 'groesse' => 1.85, 'gewicht' => 85]);
-        #Fahrer::create(['name' => 'test4', 'email' => 'test4@test.local', 'gewicht' => 87]);
+        Fahrer::create(['name' => 'test', 'email' => 'test@test.local']);
+        Fahrer::create(['name' => 'test2']);
+        Fahrer::create(['name' => 'test3', 'groesse' => 1.85, 'gewicht' => 85]);
+        Fahrer::create(['name' => 'test4', 'email' => 'test4@test.local', 'gewicht' => 87]);
 
 
         DB::table('strecke')->truncate();
@@ -41,26 +41,26 @@ class TestDataTableSeeder extends Seeder
 
 
         DB::table('abschnitt')->truncate();
-        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 5, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 5, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 10, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 10, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 15, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 15, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 3, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 3, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 6, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 6, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 9, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 1, 'hoehe' => 9, 'laenge' => 250]);
 
         Abschnitt::create(['strecke_id' => 2, 'hoehe' => 3, 'laenge' => 250]);
         Abschnitt::create(['strecke_id' => 2, 'hoehe' => 6, 'laenge' => 250]);
         Abschnitt::create(['strecke_id' => 2, 'hoehe' => 9, 'laenge' => 250]);
         Abschnitt::create(['strecke_id' => 2, 'hoehe' => 9, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 2, 'hoehe' => 14, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 2, 'hoehe' => 19, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 2, 'hoehe' => 12, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 2, 'hoehe' => 15, 'laenge' => 250]);
 
         Abschnitt::create(['strecke_id' => 3, 'hoehe' => 3, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 3, 'hoehe' => 7, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 3, 'hoehe' => 6, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 3, 'hoehe' => 9, 'laenge' => 250]);
+        Abschnitt::create(['strecke_id' => 3, 'hoehe' => 9, 'laenge' => 250]);
         Abschnitt::create(['strecke_id' => 3, 'hoehe' => 12, 'laenge' => 250]);
         Abschnitt::create(['strecke_id' => 3, 'hoehe' => 12, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 3, 'hoehe' => 15, 'laenge' => 250]);
-        Abschnitt::create(['strecke_id' => 3, 'hoehe' => 18, 'laenge' => 250]);
 
         Abschnitt::create(['strecke_id' => 4, 'hoehe' => 5, 'laenge' => 500]);
         Abschnitt::create(['strecke_id' => 4, 'hoehe' => 5, 'laenge' => 500]);
@@ -84,8 +84,7 @@ class TestDataTableSeeder extends Seeder
         Fahrrad::create(['ip' => '192.168.4.4', 'mac' => '60:01:94:0E:C7:CE', 'color' => $colors[1] ]);
         Fahrrad::create(['ip' => '192.168.4.2', 'mac' => '60:01:94:0E:C9:8F', 'color' => $colors[2] ]);
 
-        #DB::table('statistik')->truncate();
-        #Statistik::create([]);
+        DB::table('statistik')->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         #DB::statement('PRAGMA foreign_keys = ON'); # Für Sqlite

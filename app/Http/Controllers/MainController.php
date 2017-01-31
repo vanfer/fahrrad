@@ -167,17 +167,16 @@ class MainController extends Controller
             return $b[1] - $a[1];
         });
 
-
         $resultArray = [];
 
         if(isset($highscoreListe[0])){
             array_push($resultArray, $highscoreListe[0]);
         }
         if(isset($highscoreListe[1])){
-            array_push($resultArray, $highscoreListe[0]);
+            array_push($resultArray, $highscoreListe[1]);
         }
         if(isset($highscoreListe[2])){
-            array_push($resultArray, $highscoreListe[0]);
+            array_push($resultArray, $highscoreListe[2]);
         }
 
         return $resultArray;
