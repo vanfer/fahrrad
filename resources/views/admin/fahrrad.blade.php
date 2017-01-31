@@ -44,12 +44,12 @@
                         <div id="istLeistung-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->istLeistung }} Watt</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">Zurückgelegte Kilometer</div>
-                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->strecke }} km</div>
+                        <div class="col-md-6">Zurückgelegte Strecke</div>
+                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4">{{ $fahrrad->strecke }} m</div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">Fahrdauer</div>
-                        <div id="strecke-anzeige-{{ $fahrrad->id }}" class="col-md-4">min</div>
+                        <div id="fahrdauer-anzeige-{{ $fahrrad->id }}" class="col-md-4">00:00:00</div>
                     </div>
                     <div class="row">
                         <form action="{{ url("fahrrad/".$fahrrad->id) }}" method="PUT">

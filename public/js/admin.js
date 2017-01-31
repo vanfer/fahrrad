@@ -1,9 +1,22 @@
 // WICHTIG: IP ändern, oder einfach localhost nehmen!
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
+function getDataFromAPI(url, async, successHandler) {
+    $.ajax({
+        url: BASE_PATH + url,
+        type: 'get',
+        async: async,
+        success: successHandler
+    });
+}
+
 $(document).ready(function () {
     window.selectedUserRow = 0;
     window.selectedUserMode = 0;
+
+    setInterval(function () {
+        updateFahrradKasten();
+    }, 1000);
 
     // autocomplete admin fahrer suche
     $("#q").autocomplete({
@@ -400,7 +413,7 @@ function zuordnungLoeschen(context, fahrrad_id){
         async: false
     }).done(function (data, statusText, xhr){
         if(xhr.status == 200){
-            updateFahrradKasten(context, false);
+            initFahrradKasten(context, false);
         }
     });
 }
@@ -420,7 +433,7 @@ function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
             var fahrrad = data.fahrrad;
             var fahrer = data.fahrer;
 
-            updateFahrradKasten(context, true, fahrrad, fahrer);
+            initFahrradKasten(context, true, fahrrad, fahrer);
         }
     }).fail(function(data, statusText, xhr) {
         $("#dialogFahrerSchonZugeordnet").dialog({
@@ -435,8 +448,26 @@ function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
     });
 }
 
+// Im Intervall 2s ausführen
+function updateFahrradKasten() {
+    getDataFromAPI("data", false, function (response) {
+        if (response && response.data) {
+            $.each(response.data.fahrrad, function (index, fahrrad) {
+                var fahrdauer = getElapsedTime(fahrrad.zugeordnet_at);
+
+                $("#fahrername-anzeige-" + fahrrad.id).html(fahrrad.fahrer.name);
+                $("#geschwindigkeit-anzeige-" + fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
+                $("#istLeistung-anzeige-" + fahrrad.id).html(fahrrad.istLeistung + " Watt");
+                $("#strecke-anzeige-" + fahrrad.id).html(fahrrad.strecke + " m");
+                $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
+            });
+        }
+    });
+}
+
+
 // Wird nach dem herstellen/löschen einer Zuordnung aufgerufen um den Kasten zu aktualisieren
-function updateFahrradKasten(context, modus, fahrrad, fahrer){
+function initFahrradKasten(context, modus, fahrrad, fahrer){
     // Optionale Parameter nur bei Zuordnung herstellen nötig
     fahrrad = fahrrad || null;
     fahrer  = fahrer  || null;
@@ -463,6 +494,10 @@ function updateFahrradKasten(context, modus, fahrrad, fahrer){
                 '<div class="row">' +
                 '	<div class="col-md-6">Zurückgelegte Strecke</div>' +
                 '	<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.strecke + '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                '   <div class="col-md-6">Fahrdauer</div>' +
+                '   <div id="fahrdauer-anzeige-{{ $fahrrad->id }}" class="col-md-4">00:00:00</div>' +
                 '</div>' +
                 '<div class="row">' +
                 '	<form action="./fahrrad/'+fahrrad.id+'" method="PUT">' +
@@ -554,4 +589,16 @@ function drop(ev) {
     var context = $(ev.target).parents("#panelAdmin");
 
     zuordnungHerstellen(context, fahrrad_id, user_id, modus_id);
+}
+
+function getElapsedTime(fahrrad_timestamp) {
+    var current_timestamp = Math.floor(new Date().getTime() / 1000);
+    var elapsed_seconds = (current_timestamp - fahrrad_timestamp);
+
+    var d = new Date(null);
+    d.setSeconds(elapsed_seconds); // Sekunden zu JS Date Objekt
+    d.setTime(d.getTime() + d.getTimezoneOffset() * 60 * 1000); // Zeitzone anpassen!
+
+    // String zusammenbauen
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + (d.getMinutes())).slice(-2) + ':' + ('0' + (d.getSeconds() + 1)).slice(-2);
 }

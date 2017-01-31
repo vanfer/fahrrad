@@ -321,7 +321,6 @@ function updateFahrradKasten(fahrrad) {
             // Leistung vorhanden, update timeout timestamp
             if(fahrrad.istLeistung > 0){
                 window.fahrrad_letzteAktion[fahrrad.id-1] = Date.now();
-                console.log("Leistung da:_ " + istLeistung);
             }
 
             //console.log("Fahrrad " + fahrrad.id + ": Leistung=" + istLeistung + ", letzter_timestamp="+letzter_timestamp + ", zeit_seit_letztem_timestamp="+zeit_seit_letztem_timestamp);
