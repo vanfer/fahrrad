@@ -494,6 +494,7 @@ function updateFahrradKasten(context, modus, fahrrad, fahrer){
     window.location.reload();
 }
 
+// Validiert die Eingaben beim Erstellen eines Fahrers
 function validateInput(form){
     var validates = true;
 

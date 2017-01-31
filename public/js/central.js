@@ -14,6 +14,10 @@ $(document).ready(function () {
     window.leistungData = {data: [], labels: []};
     window.gesamtleistungData = {absolute: 0, data: []};
 
+    window.max_timeout = 60;
+    // Enthält den Zeitpunkt des letzten Leistungsupdates des Fahrrads als unix timestamp
+    window.fahrrad_letzteAktion = [null, null, null];
+
     window.statistikEntryTimeCount = 0;
     window.statistikEntryTime = 10;
 
@@ -292,20 +296,61 @@ function updateBatterie() {
 function updateFahrradKasten(fahrrad) {
     var cond = fahrrad.fahrer_id == null;
 
-    if (cond) {
-        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "none");
-        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "block");
-    } else {
-        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "block");
-        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "none");
-    }
-
     var name = cond ? "" : fahrrad.fahrer.name;
     var modus = cond ? "" : fahrrad.modus.name;
     var geschwindigkeit = cond ? "- km/h" : fahrrad.geschwindigkeit + " km/h";
     var istLeistung = cond ? "- Watt" : fahrrad.istLeistung + " Watt";
     var strecke = cond ? "- km" : (fahrrad.strecke / 1000) + " km";
     var fahrdauer = cond ? "00:00:00" : getElapsedTime(fahrrad.zugeordnet_at);
+
+    if(cond){ // Fahrer ist nicht angemeldet
+        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "none");
+        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "block");
+    }
+    else{ // Fahrer ist angemeldet
+        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "block");
+        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "none");
+
+        var letzter_timestamp = window.fahrrad_letzteAktion[fahrrad.id-1];
+        var zeit_seit_letztem_timestamp = Math.ceil((Date.now() - letzter_timestamp) / 1000);
+
+        // Fahrer wurde gerade erst angemeldet
+        if(window.fahrrad_letzteAktion[fahrrad.id-1] == null){
+            window.fahrrad_letzteAktion[fahrrad.id-1] = Date.now();
+        }else{
+            // Leistung vorhanden, update timeout timestamp
+            if(fahrrad.istLeistung > 0){
+                window.fahrrad_letzteAktion[fahrrad.id-1] = Date.now();
+                console.log("Leistung da:_ " + istLeistung);
+            }
+
+            //console.log("Fahrrad " + fahrrad.id + ": Leistung=" + istLeistung + ", letzter_timestamp="+letzter_timestamp + ", zeit_seit_letztem_timestamp="+zeit_seit_letztem_timestamp);
+
+            if(zeit_seit_letztem_timestamp >= window.max_timeout / 2 && zeit_seit_letztem_timestamp < window.max_timeout){ // Hälfte des timeouts ist vorbei
+                console.log("Fahrrad #" + fahrrad.id + " scheint inaktiv");
+
+                $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "none");
+                $("#fahrrad-timeout-wrapper-" + fahrrad.id).css("display", "block");
+            }else if(zeit_seit_letztem_timestamp >= window.max_timeout){ // Timeout ist vorbei
+                console.log("Fahrrad #" + fahrrad.id + " wird abgemeldet");
+
+                $.ajax({
+                    url: BASE_PATH + "fahrrad/" + fahrrad.id,
+                    method: "DELETE",
+                    async: false
+                }).done(function (data, statusText, xhr){
+                    if(xhr.status == 200){
+                        $("#fahrrad-inaktiv-wrapper-" + fahrrad.id).css("display", "block");
+                        $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "none");
+                        $("#fahrrad-timeout-wrapper-" + fahrrad.id).css("display", "none");
+                    }
+                });
+            }else{
+                $("#fahrrad-timeout-wrapper-" + fahrrad.id).css("display", "none");
+                $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "block");
+            }
+        }
+    }
 
     $("#fahrername-anzeige-" + fahrrad.id).html(name);
     $("#fahrermodus-anzeige-" + fahrrad.id).html(modus);

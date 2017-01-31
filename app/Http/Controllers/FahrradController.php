@@ -125,10 +125,6 @@ class FahrradController extends Controller
     // Gibt die Daten zu allen Fahrrädern, inkl. Modi und Fahrerinformationen zurück
     public function getData()
     {
-        return response()->json([
-            "data" => [
-                "fahrrad" => Fahrrad::with("modus")->with("fahrer")->get()
-            ]
-        ], 200);
+        return response()->json([ "data" => ["fahrrad" => Fahrrad::with("modus")->with("fahrer")->get()] ], 200);
     }
 }
