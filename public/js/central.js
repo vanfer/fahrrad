@@ -2,8 +2,7 @@
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
-    //Setup & Globale Variablen
-    window.strecke_id = 1; // Todo: Strecke id irgendwo her holen (hidden input zb)
+    window.strecke_id = readCookie("strecke") || 1;
 
     // Datenobjekte
     window.fahrrad = [];
@@ -20,7 +19,6 @@ $(document).ready(function () {
 
     window.statistikEntryTimeCount = 0;
     window.statistikEntryTime = 10;
-
 
     // Einmalig Strecke laden
     updateChartStreckeData();
@@ -579,4 +577,15 @@ function addFahrrad(id, color, modus, abschnitt_id) {
     );
 
     window.chart_strecke.redraw();
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
 }

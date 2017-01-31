@@ -302,7 +302,7 @@
                         </div>
                         <div class="col-md-8 pull-right">
                             <label for="streckenvorschau">Streckenvorschau</label>
-                            <div class="streckenvorschau"></div>
+                            <div id="streckenvorschau"></div>
                         </div>
                         <div class="clearfix"></div>
                     </div>

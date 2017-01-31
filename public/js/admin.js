@@ -388,6 +388,9 @@ $(document).ready(function () {
             buttons : {
                 "Ja" : function() {
                     //Speichern
+                    var id = $(".radio-strecke-id:checked").val();
+                    createCookie("strecke", id, 1);
+
                     $(this).dialog("close");
                     $("#dialogEinstellungen").dialog("close");
                 },
@@ -404,6 +407,79 @@ $(document).ready(function () {
     $("#btnHilfeEinstellungen").on("click", function() {
             $("#hilfeEinstellungen").dialog("open");
         });
+
+    // Einstellungen Streckeauswahl
+
+    window.strecke_vorschau_data = {data: [], labels: []};
+    window.strecke_vorschau_abschnitte = [];
+    window.chart_strecke_vorschau = new Highcharts.Chart({
+        title: {
+            text: ''
+        },
+        chart: {
+            renderTo: 'streckenvorschau',
+            animation: true,
+            backgroundColor: "#E6E9ED",
+            spacingBottom: 10,
+            spacingTop: 10,
+            spacingLeft: 10,
+            spacingRight: 10
+        },
+        legend: {
+            enabled: false
+        },
+        xAxis: {
+            labels: {
+                formatter: function () {
+                    if (window.strecke_vorschau_data.labels[this.value]) return window.strecke_vorschau_data.labels[this.value].toFixed(2) + " m";
+                },
+                style: {
+                    fontSize: '14px'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            max: 20,
+            labels: {
+                format: '{value}',
+                style: {
+                    fontSize: '18px'
+                }
+            },
+            title: {
+                text: 'Höhe (Meter)',
+                x: -10,
+                style: {
+                    fontSize: '16px'
+                }
+            }
+        },
+        plotOptions: {
+            area: {
+                fillOpacity: 0.5,
+                marker: {
+                    enabled: true
+                }
+            }
+        },
+        tooltip: {
+            enabled: false
+        },
+        series: [{
+            data: window.strecke_vorschau_data.data,
+            type: 'area',
+            color: '#AAB2BD',
+            enableMouseTracking: false,
+            zIndex: 5
+        }]
+    });
+
+    updateChartStreckeData(1);
+
+    $(".radio-strecke-id").change(function (e) {
+        updateChartStreckeData($(e.target).val());
+    })
 });
 
 function zuordnungLoeschen(context, fahrrad_id){
@@ -447,24 +523,6 @@ function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
         $(".ui-widget-overlay").addClass('custom-overlay');
     });
 }
-
-// Im Intervall 2s ausführen
-function updateFahrradKasten() {
-    getDataFromAPI("data", false, function (response) {
-        if (response && response.data) {
-            $.each(response.data.fahrrad, function (index, fahrrad) {
-                var fahrdauer = getElapsedTime(fahrrad.zugeordnet_at);
-
-                $("#fahrername-anzeige-" + fahrrad.id).html(fahrrad.fahrer.name);
-                $("#geschwindigkeit-anzeige-" + fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
-                $("#istLeistung-anzeige-" + fahrrad.id).html(fahrrad.istLeistung + " Watt");
-                $("#strecke-anzeige-" + fahrrad.id).html(fahrrad.strecke + " m");
-                $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
-            });
-        }
-    });
-}
-
 
 // Wird nach dem herstellen/löschen einer Zuordnung aufgerufen um den Kasten zu aktualisieren
 function initFahrradKasten(context, modus, fahrrad, fahrer){
@@ -527,6 +585,24 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
 
     // Hack
     window.location.reload();
+}
+// Im Intervall 2s ausführen
+function updateFahrradKasten() {
+    getDataFromAPI("data", false, function (response) {
+        if (response && response.data) {
+            $.each(response.data.fahrrad, function (index, fahrrad) {
+                if(fahrrad.fahrer != null){
+                    var fahrdauer = getElapsedTime(fahrrad.zugeordnet_at);
+
+                    $("#fahrername-anzeige-" + fahrrad.id).html(fahrrad.fahrer.name);
+                    $("#geschwindigkeit-anzeige-" + fahrrad.id).html(fahrrad.geschwindigkeit + " km/h");
+                    $("#istLeistung-anzeige-" + fahrrad.id).html(fahrrad.istLeistung + " Watt");
+                    $("#strecke-anzeige-" + fahrrad.id).html(fahrrad.strecke + " m");
+                    $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
+                }
+            });
+        }
+    });
 }
 
 // Validiert die Eingaben beim Erstellen eines Fahrers
@@ -601,4 +677,38 @@ function getElapsedTime(fahrrad_timestamp) {
 
     // String zusammenbauen
     return ('0' + d.getHours()).slice(-2) + ':' + ('0' + (d.getMinutes())).slice(-2) + ':' + ('0' + (d.getSeconds() + 1)).slice(-2);
+}
+
+function updateChartStreckeData(id) {
+    getDataFromAPI("strecke/" + id, false, function (response) {
+        if (response && response.strecke) {
+            window.strecke_vorschau_abschnitte = [];
+            window.strecke_vorschau_data = {data: [0], labels: [0]};
+            var gesamtlaenge = 0;
+
+            $.each(response.strecke.abschnitte,
+                function (index, value) {
+                    gesamtlaenge += value.laenge;
+                    window.strecke_vorschau_data.labels.push(gesamtlaenge); // X
+                    window.strecke_vorschau_data.data.push(value.hoehe);  // Y
+
+                    window.strecke_vorschau_abschnitte.push(value.id);
+                }
+            );
+        }
+    });
+
+    window.chart_strecke_vorschau.series[0].setData(window.strecke_vorschau_data.data);
+    window.chart_strecke_vorschau.xAxis[0].setCategories(window.strecke_vorschau_data.labels);
+    window.chart_strecke_vorschau.redraw();
+}
+
+function createCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
