@@ -111,9 +111,9 @@ $(document).ready(function () {
     $("#btnGenerateName").click(function(){
         //Zufallsnamen, max. 19 Zeichen
         var namen = [
-            "Athletische Ameise", 
-            "Schnelle Schnecke", 
-            "Flinker Fuchs", 
+            "Athletische Ameise",
+            "Schnelle Schnecke",
+            "Flinker Fuchs",
             "Kräftiges Känguru",
             "Sportlicher Seehund",
             "Muskulöse Maus",
@@ -146,7 +146,7 @@ $(document).ready(function () {
         // Gibt einen zufälligen Eintrag aus dem namen Array zurück
         var name = namen.sort(function() {return 0.5 - Math.random()})[0];
 
-        $("input#name").attr("value", name);
+        $("#fahrername").val(name);
     });
 
     $(".btnAnmelden").each(function(){
@@ -497,7 +497,7 @@ function updateFahrradKasten(context, modus, fahrrad, fahrer){
 function validateInput(form){
     var validates = true;
 
-    var name = $(form).find("input#name").val();
+    var name = $(form).find("#fahrername").val();
     if(!name){
         validates = false;
     }

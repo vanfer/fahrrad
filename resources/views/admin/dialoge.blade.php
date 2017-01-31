@@ -154,7 +154,7 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-xs-8 pull-left">
-                            <input id="name" type="name" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                            <input id="fahrername" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
                         </div>
                         <div class="col-xs-4 pull-left">
                             <input id="btnGenerateName" type="button" class="form-control btn-success" value="Zufall" autofocus>
