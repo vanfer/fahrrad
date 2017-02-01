@@ -599,6 +599,8 @@ function updateFahrradKasten() {
                     $("#istLeistung-anzeige-" + fahrrad.id).html(fahrrad.istLeistung + " Watt");
                     $("#strecke-anzeige-" + fahrrad.id).html(fahrrad.strecke + " m");
                     $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
+                }else{
+                    $("#panelBodyAdmin-" + fahrrad.id).html("Fahrrad ist inaktiv");
                 }
             });
         }
