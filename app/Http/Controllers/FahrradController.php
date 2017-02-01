@@ -55,33 +55,47 @@ class FahrradController extends Controller
         return $fahrrad;
     }
 
-    public function zuordnungHerstellen(Request $request, \App\Fahrrad $fahrrad, \App\Fahrer $fahrer)
+    public function zuordnungHerstellen(Request $request, $fahrrad_id, $fahrer_id)
     {
+        $fahrrad = Fahrrad::whereId($fahrrad_id)->first();
+        if(!$fahrrad){
+            return response()->json(["msg" => "Fahrrad nicht gefunden", "err" => 3], 200);
+        }
+
+        $fahrer = Fahrer::whereId($fahrer_id)->first();
+        if(!$fahrer){
+            return response()->json(["msg" => "Fahrer nicht gefunden", "err" => 4], 200);
+        }
+
         $fahrer_fahrrad = Fahrrad::whereFahrerId($fahrer->id)->first();
-        if($fahrrad->fahrer_id == null && !$fahrer_fahrrad){
-
-            if(Input::has("modus_id")){
-                $fahrrad->modus_id = Input::get("modus_id");
-            }
-
-            $fahrer->vorgang = str_random(20);
-            $fahrer->touch();
-            $fahrer->save();
-
-            $fahrrad->strecke = 0;
-            $fahrrad->fahrer_id = $fahrer->id;
-            $fahrrad->zugeordnet_at = time();
-
-            $fahrrad->touch();
-            $fahrrad->save();
-
-            return response()->json([
-                "fahrrad" => $fahrrad,
-                "fahrer" => $fahrer,
-                "modi" => Modus::all()
-            ], 200);
+        if($fahrer_fahrrad){
+            return response()->json(["msg" => "Fahrer schon zugeordnet", "err" => 1], 200);
         }else{
-            return response()->json(["msg" => "wird schon benutzt"], 400);
+            if($fahrrad->fahrer_id == null){
+
+                if(Input::has("modus_id")){
+                    $fahrrad->modus_id = Input::get("modus_id");
+                }
+
+                $fahrer->vorgang = str_random(20);
+                $fahrer->touch();
+                $fahrer->save();
+
+                $fahrrad->strecke = 0;
+                $fahrrad->fahrer_id = $fahrer->id;
+                $fahrrad->zugeordnet_at = time();
+
+                $fahrrad->touch();
+                $fahrrad->save();
+
+                return response()->json([
+                    "fahrrad" => $fahrrad,
+                    "fahrer" => $fahrer,
+                    "modi" => Modus::all()
+                ], 200);
+            }else{
+                return response()->json(["msg" => "Fahrrad ist besetzt", "err" => 2], 200);
+            }
         }
     }
 

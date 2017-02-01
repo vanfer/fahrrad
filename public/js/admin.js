@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     setInterval(function () {
         updateFahrradKasten();
-    }, 5000);
+    }, 1000);
 
     // autocomplete admin fahrer suche
     $("#q").autocomplete({
@@ -46,6 +46,7 @@ $(document).ready(function () {
     initDialog("#dialogValidationFailed",           "fehler",           true);
     initDialog("#dialogKeinFahrerAusgewaehlt",      "fehler",           true);
     initDialog("#dialogFahrerSchonZugeordnet",      "fehler",           true);
+    initDialog("#dialogFahrradIstBesetzt",          "fehler",           true);
     initDialog("#dialogFahrernameSchonVergeben",    "fehler",           true);
     initDialog("#dialogEinstellungen",              "einstellungen",    true);
     initDialog("#addFahrer",                        "addFahrer",        true);
@@ -476,7 +477,6 @@ $(document).ready(function () {
     });
 
     updateChartStreckeData(1);
-
     $(".radio-strecke-id").change(function (e) {
         updateChartStreckeData($(e.target).val());
     })
@@ -502,25 +502,42 @@ function zuordnungHerstellen(context, fahrrad_id, fahrer_id, modus_id){
         data: {
             modus_id: modus_id
         }
-    }).done(function (data, statusText, xhr){
+    }).done(function (data, statusText, xhr) {
         var status = xhr.status;
 
-        if(status == 200){
-            var fahrrad = data.fahrrad;
-            var fahrer = data.fahrer;
+        if (status == 200) {
+            if(typeof data.err == "undefined"){
+                var fahrrad = data.fahrrad;
+                var fahrer = data.fahrer;
 
-            initFahrradKasten(context, true, fahrrad, fahrer);
-        }
-    }).fail(function(data, statusText, xhr) {
-        $("#dialogFahrerSchonZugeordnet").dialog({
-            buttons : {
-                "OK" : function() {
-                    $(this).dialog("close");
+                initFahrradKasten(context, true, fahrrad, fahrer);
+            }else{
+                if(data.err == 1){
+                    // Fahrer schon zugeordnet
+                    $("#dialogFahrerSchonZugeordnet").dialog({
+                        buttons : {
+                            "OK" : function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+                    $("#dialogFahrerSchonZugeordnet").dialog("open");
+                    $(".ui-widget-overlay").addClass('custom-overlay');
+                }else if(data.err == 2){
+                    // Fahrrad ist besetzt
+
+                    $("#dialogFahrradIstBesetzt").dialog({
+                        buttons : {
+                            "OK" : function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+                    $("#dialogFahrradIstBesetzt").dialog("open");
+                    $(".ui-widget-overlay").addClass('custom-overlay');
                 }
             }
-        });
-        $("#dialogFahrerSchonZugeordnet").dialog("open");
-        $(".ui-widget-overlay").addClass('custom-overlay');
+        }
     });
 }
 
@@ -591,12 +608,10 @@ function updateFahrradKasten() {
     getDataFromAPI("data", true, function (response) {
         if (response && response.data) {
             $.each(response.data.fahrrad, function (index, fahrrad) {
-                var context = $("#panelBodyAdmin-" + fahrrad.id);
-
-                var btnAbmelden = context.find(".fahrradBtnAbmelden");
-                var btnAnmelden = context.find(".fahrradBtnAnmelden");
-
                 var fahrerdetailElement = $("#panelBodyAdmin-" + fahrrad.id);
+
+                var btnAbmelden = fahrerdetailElement.parents("#panelAdmin").find(".fahrradBtnAbmelden");
+                var btnAnmelden = fahrerdetailElement.parents("#panelAdmin").find(".fahrradBtnAnmelden");
 
                 if(fahrrad.fahrer != null){
                     var fahrdauer = getElapsedTime(fahrrad.zugeordnet_at);
@@ -607,13 +622,13 @@ function updateFahrradKasten() {
                     $("#strecke-anzeige-" + fahrrad.id).html(fahrrad.strecke + " m");
                     $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
 
-                    btnAbmelden.css("display", "block");
-                    btnAnmelden.css("display", "none");
+                    $(btnAbmelden).css("display", "block");
+                    $(btnAnmelden).css("display", "none");
                 }else{
                     fahrerdetailElement.html("Fahrrad ist inaktiv");
 
-                    btnAbmelden.css("display", "none");
-                    btnAnmelden.css("display", "block");
+                    $(btnAbmelden).css("display", "none");
+                    $(btnAnmelden).css("display", "block");
                 }
             });
         }
@@ -695,7 +710,7 @@ function getElapsedTime(fahrrad_timestamp) {
 }
 
 function updateChartStreckeData(id) {
-    getDataFromAPI("strecke/" + id, false, function (response) {
+    getDataFromAPI("strecke/" + id, true, function (response) {
         if (response && response.strecke) {
             window.strecke_vorschau_abschnitte = [];
             window.strecke_vorschau_data = {data: [0], labels: [0]};

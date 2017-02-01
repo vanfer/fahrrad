@@ -13,7 +13,7 @@ $(document).ready(function () {
     window.leistungData = {data: [], labels: []};
     window.gesamtleistungData = {absolute: 0, data: []};
 
-    window.max_timeout = 20;
+    window.max_timeout = 60;
     // Enthält den Zeitpunkt des letzten Leistungsupdates des Fahrrads als unix timestamp
     window.fahrrad_letzteAktion = [null, null, null];
 

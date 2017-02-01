@@ -132,6 +132,11 @@
     <p>Der ausgewählte Fahrer ist schon einem Fahrrad zugeordnet. Bitte wählen Sie einen anderen Fahrer aus, der diesem Fahrrad zugeordnet werden soll.</p>
 </div>
 
+<div id="dialogFahrradIstBesetzt" title="Fehler" style="display: none;">
+    <h3><b>Fahrrad ist besetzt</b></h3><hr/>
+    <p>Das ausgewählte Fahrrad wird gerade von einem anderen Fahrer benutzt. Bitte wählen Sie ein anderes Fahrrad aus.</p>
+</div>
+
 <div id="dialogZuordnungLoeschen" title="Warnung" style="display: none;">
     <h3><b>Zuordnung löschen</b></h3><hr/>
     <p>Die Zuordnung vom Fahrer zum Fahrrad wird gelöscht. Möchten Sie die Zuordnung wirklich löschen?</p>
