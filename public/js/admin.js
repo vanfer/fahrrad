@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     setInterval(function () {
         updateFahrradKasten();
-    }, 1000);
+    }, 5000);
 
     // autocomplete admin fahrer suche
     $("#q").autocomplete({
@@ -588,9 +588,16 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
 }
 // Im Intervall 2s ausführen
 function updateFahrradKasten() {
-    getDataFromAPI("data", false, function (response) {
+    getDataFromAPI("data", true, function (response) {
         if (response && response.data) {
             $.each(response.data.fahrrad, function (index, fahrrad) {
+                var context = $("#panelBodyAdmin-" + fahrrad.id);
+
+                var btnAbmelden = context.find(".fahrradBtnAbmelden");
+                var btnAnmelden = context.find(".fahrradBtnAnmelden");
+
+                var fahrerdetailElement = $("#panelBodyAdmin-" + fahrrad.id);
+
                 if(fahrrad.fahrer != null){
                     var fahrdauer = getElapsedTime(fahrrad.zugeordnet_at);
 
@@ -599,8 +606,14 @@ function updateFahrradKasten() {
                     $("#istLeistung-anzeige-" + fahrrad.id).html(fahrrad.istLeistung + " Watt");
                     $("#strecke-anzeige-" + fahrrad.id).html(fahrrad.strecke + " m");
                     $("#fahrdauer-anzeige-" + fahrrad.id).html(fahrdauer);
+
+                    btnAbmelden.css("display", "block");
+                    btnAnmelden.css("display", "none");
                 }else{
-                    $("#panelBodyAdmin-" + fahrrad.id).html("Fahrrad ist inaktiv");
+                    fahrerdetailElement.html("Fahrrad ist inaktiv");
+
+                    btnAbmelden.css("display", "none");
+                    btnAnmelden.css("display", "block");
                 }
             });
         }

@@ -13,7 +13,7 @@ $(document).ready(function () {
     window.leistungData = {data: [], labels: []};
     window.gesamtleistungData = {absolute: 0, data: []};
 
-    window.max_timeout = 60;
+    window.max_timeout = 20;
     // Enthält den Zeitpunkt des letzten Leistungsupdates des Fahrrads als unix timestamp
     window.fahrrad_letzteAktion = [null, null, null];
 
@@ -330,6 +330,7 @@ function updateFahrradKasten(fahrrad) {
                 $("#fahrrad-timeout-wrapper-" + fahrrad.id).css("display", "block");
             }else if(zeit_seit_letztem_timestamp >= window.max_timeout){ // Timeout ist vorbei
                 console.log("Fahrrad #" + fahrrad.id + " wird abgemeldet");
+                window.fahrrad_letzteAktion[fahrrad.id - 1] = null;
 
                 $.ajax({
                     url: BASE_PATH + "fahrrad/" + fahrrad.id,
