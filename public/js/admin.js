@@ -218,6 +218,18 @@ $(document).ready(function () {
         $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
     });
+    function numbersOnly(e) {
+        console.log(e.value);
+        e.value = e.value.replace(/[^0-9\.,]/g,'');
+        console.log(e.value);
+    }
+    // Validierung
+    $("input#groesse.form-control").keyup(function () {
+        numbersOnly(this);
+    });
+    $("input#gewicht.form-control").keyup(function () {
+        numbersOnly(this);
+    });
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
@@ -638,6 +650,7 @@ function updateFahrradKasten() {
 // Validiert die Eingaben beim Erstellen eines Fahrers
 function validateInput(form){
     var validates = true;
+    var validation_error = null;
 
     var name = $(form).find("#fahrername").val();
     if(!name){
@@ -675,7 +688,7 @@ function validateInput(form){
         }
     }
 
-    return validates;
+    return { valid: validates, err: validation_error };
 }
 
 // Drag & Drop
