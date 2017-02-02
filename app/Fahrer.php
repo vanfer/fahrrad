@@ -7,7 +7,31 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class Fahrer
+ *
  * @package App
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property int $gewicht
+ * @property float $groesse
+ * @property int $modus_id
+ * @property string $vorgang
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Fahrrad $fahrrad
+ * @property-read \App\Modus $modus
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Statistik[] $statistik
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereGewicht($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereGroesse($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereModusId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Fahrer whereVorgang($value)
+ * @mixin \Eloquent
  */
 class Fahrer extends Authenticatable
 {

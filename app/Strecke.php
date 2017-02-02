@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Strecke
+ *
  * @package App
+ * @property int $id
+ * @property string $name
+ * @method static \Illuminate\Database\Query\Builder|\App\Strecke whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Strecke whereName($value)
+ * @mixin \Eloquent
  */
 class Strecke extends Model
 {

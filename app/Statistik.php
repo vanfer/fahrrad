@@ -6,7 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Statistik
+ *
  * @package App
+ * @property int $id
+ * @property int $fahrer_id
+ * @property int $modus_id
+ * @property string $vorgang
+ * @property int $geschwindigkeit
+ * @property int $gesamtleistung
+ * @property int $strecke
+ * @property int $hoehenmeter
+ * @property int $fahrdauer
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Fahrer $fahrer
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereFahrdauer($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereFahrerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereGesamtleistung($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereGeschwindigkeit($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereHoehenmeter($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereModusId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereStrecke($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Statistik whereVorgang($value)
+ * @mixin \Eloquent
  */
 class Statistik extends Model
 {

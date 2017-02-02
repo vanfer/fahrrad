@@ -11,9 +11,16 @@
 |
 */
 
-Route::resource("fahrer", "FahrerController");
+// Fahrer Routen
+Route::get("fahrer/{fahrer}", "FahrerController@show");
+Route::post("fahrer", "FahrerController@store");
+Route::put("fahrer/{fahrer}", "FahrerController@update");
+Route::delete("fahrer/{fahrer}", "FahrerController@destroy");
+Route::get("allnames", "FahrerController@getAllNames");
 
-Route::resource("fahrrad", "FahrradController");
+// Fahrrad Routen
+Route::put("fahrrad/{fahrrad}", "FahrradController@update");
+Route::get("data", "FahrradController@getData");
 Route::get("fahrrad/{fahrrad}/fahrer/{fahrer}", "FahrradController@zuordnungHerstellen");
 Route::delete("fahrrad/{fahrrad}", "FahrradController@zuordnungLoeschen");
 
@@ -43,19 +50,10 @@ Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
 
 /*
 |--------------------------------------------------------------------------
-| Mail
-|
-|--------------------------------------------------------------------------
-*/
-Route::get('mail', "MailController@sendmail");
-
-/*
-|--------------------------------------------------------------------------
 | Datenaustausch
 |--------------------------------------------------------------------------
 */
 Route::get('search/autocomplete', 'SearchController@autocompleteName');
-Route::get("data", "FahrradController@getData");
 Route::get("leistung", "MainController@leistung");
 Route::post("abschnitt", "MainController@setAbschnitt");
 Route::get("strecke", "MainController@strecken");
@@ -67,5 +65,3 @@ Route::get("statistikupdate", "MainController@statistikUpdate");
 
 Route::get("batterie", "MainController@batterie");
 Route::get("highscore", "MainController@highscore");
-
-Route::get("allnames", "FahrerController@getAllNames");
