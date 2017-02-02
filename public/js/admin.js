@@ -689,10 +689,16 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
 
-    var fahrrad_id = $(ev.target).attr("id").split("-")[1];
+    var target = $(ev.target);
+
+    if(!target.hasClass("panel-body")) {
+        target = $(target.parents(".panel-body"));
+    }
+
+    var fahrrad_id = target.attr("id").split("-")[1];
     var user_id = ev.dataTransfer.getData("text");
     var modus_id = ev.dataTransfer.getData("modus");
-    var context = $(ev.target).parents("#panelAdmin");
+    var context = target.parents("#panelAdmin");
 
     zuordnungHerstellen(context, fahrrad_id, user_id, modus_id);
 }
