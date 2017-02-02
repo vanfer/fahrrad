@@ -33,16 +33,14 @@ class FahrerController extends Controller
 
         if($request->has("gewicht")){
             $gewicht = Input::get("gewicht");
-            $gewicht = str_replace($gewicht, ",", ".");
+            $gewicht = str_replace(".", "", $gewicht);
+            $gewicht = str_replace(",", "", $gewicht);
             $fahrer->gewicht = $gewicht;
         }
 
         if($request->has("groesse")){
-
             $groesse = Input::get("groesse");
-            dd($groesse);
-            $groesse = str_replace($groesse, ",", ".");
-            dd($groesse);
+            $groesse = str_replace(",", ".", $groesse);
             $fahrer->groesse = $groesse;
         }
 
