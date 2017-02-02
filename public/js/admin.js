@@ -122,9 +122,9 @@ $(document).ready(function () {
         });
     });
 
-    $("#btnGenerateName").click(function(){
+    function getRandomName(input_field) {
         //Zufallsnamen, max. 19 Zeichen
-        var namen = [
+        var names = [
             "Athletische Ameise",
             "Schnelle Schnecke",
             "Flinker Fuchs",
@@ -156,16 +156,32 @@ $(document).ready(function () {
             "Zackiger Zitteraal",
             "Agile Antilope"
         ];
+        var result = [];
 
-        // Gibt einen zufälligen Eintrag aus dem namen Array zurück
-        var istName = $("#fahrername").val();
+        getDataFromAPI("allnames", true, function (response) {
+            names.map(function (name) {
+                if(response.names.indexOf(name) == -1){
+                    result.push(name);
+                }
+            });
 
-        var sollName = null;
-        do{
-            sollName = namen.sort(function() {return 0.5 - Math.random()})[0];
-        }while(istName == sollName);
+            if(result.length > 0){
+                // Gibt einen zufälligen Eintrag aus dem result Array zurück
+                var istName = $(input_field).val();
+                var sollName = null;
+                do{
+                    sollName = result.sort(function() {return 0.5 - Math.random()})[0];
+                }while(istName == sollName);
 
-        $("#fahrername").val(sollName);
+                $(input_field).val(sollName);
+            }else{
+                console.log("Alle Zufallsnamen sind vergeben");
+            }
+        });
+    }
+    
+    $("#btnGenerateName").click(function(){
+        getRandomName("#fahrername");
     });
 
     $(".btnAnmelden").each(function(){
@@ -404,7 +420,7 @@ $(document).ready(function () {
     });
     $("#btnHilfeFahrer").on("click", function() {
         $("#hilfeFahrer").dialog("open");
-    })
+    });
 
     $("#btnEinstellungen").on("click", function(){
         $("#dialogEinstellungen").dialog("open");
@@ -629,6 +645,7 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
     // Hack
     window.location.reload();
 }
+
 // Im Intervall 2s ausführen
 function updateFahrradKasten() {
     getDataFromAPI("data", true, function (response) {

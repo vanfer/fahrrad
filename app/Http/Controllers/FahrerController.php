@@ -136,4 +136,17 @@ class FahrerController extends Controller
 
         return response()->json(["msg" => "error"], 400);
     }
+
+
+    public function getAllNames()
+    {
+        $names = Fahrer::all("name");
+        $result = [];
+
+        foreach($names as $name){
+            array_push($result, $name->name);
+        }
+
+        return response()->json(["msg" => "ok", "names" => $result]);
+    }
 }

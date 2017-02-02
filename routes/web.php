@@ -67,3 +67,5 @@ Route::get("statistikupdate", "MainController@statistikUpdate");
 
 Route::get("batterie", "MainController@batterie");
 Route::get("highscore", "MainController@highscore");
+
+Route::get("allnames", "FahrerController@getAllNames");
