@@ -226,7 +226,9 @@ $(document).ready(function () {
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
 
-        if(!validateInput(form)) {
+        var validation = validateInput(form);
+
+        if(!validation.valid) {
             $("#dialogValidationFailed").dialog({
                 buttons : {
                     "OK" : function() {
@@ -662,11 +664,17 @@ function updateFahrradKasten() {
 // Validiert die Eingaben beim Erstellen eines Fahrers
 function validateInput(form){
     var validates = true;
-    var validation_error = null;
+    var validation_errors = [];
 
     var name = $(form).find("#fahrername").val();
     if(!name){
         validates = false;
+        validation_errors.push("Name nicht vorhanden");
+    }
+
+    if(name.length > 19){
+        validates = false;
+        validation_errors.push("Name darf nicht länger als 19 Zeichen sein");
     }
 
     var email = $(form).find("input#email").val();
@@ -674,12 +682,14 @@ function validateInput(form){
     if(email){
         if(regex_email.test(email) == false){
             validates = false;
+            validation_errors.push("E-Mail hat falsches Format");
         }
     }
 
     var modus = $('input[name=betriebsmodus]:checked', form).val();
     if(!modus){
         validates = false;
+        validation_errors.push("Kein Modus ausgewählt");
     }
 
     var groesse = $(form).find("input#groesse").val();
@@ -688,6 +698,7 @@ function validateInput(form){
             validates = $.isNumeric(groesse);
         }catch (ex){
             validates = false;
+            validation_errors.push("Größe ist kein valider Wert");
         }
     }
 
@@ -697,10 +708,11 @@ function validateInput(form){
             validates = $.isNumeric(gewicht);
         }catch (ex){
             validates = false;
+            validation_errors.push("Gewicht ist kein valider Wert");
         }
     }
 
-    return { valid: validates, err: validation_error };
+    return { valid: validates, err: validation_errors };
 }
 
 // Drag & Drop
