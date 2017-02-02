@@ -158,9 +158,14 @@ $(document).ready(function () {
         ];
 
         // Gibt einen zufälligen Eintrag aus dem namen Array zurück
-        var name = namen.sort(function() {return 0.5 - Math.random()})[0];
+        var istName = $("#fahrername").val();
 
-        $("#fahrername").val(name);
+        var sollName = null;
+        do{
+            sollName = namen.sort(function() {return 0.5 - Math.random()})[0];
+        }while(istName == sollName);
+
+        $("#fahrername").val(sollName);
     });
 
     $(".btnAnmelden").each(function(){
@@ -217,18 +222,6 @@ $(document).ready(function () {
 
         $("#addFahrer").dialog("open");
         $('.ui-widget-overlay').addClass('custom-overlay');
-    });
-    function numbersOnly(e) {
-        console.log(e.value);
-        e.value = e.value.replace(/[^0-9\.,]/g,'');
-        console.log(e.value);
-    }
-    // Validierung
-    $("input#groesse.form-control").keyup(function () {
-        numbersOnly(this);
-    });
-    $("input#gewicht.form-control").keyup(function () {
-        numbersOnly(this);
     });
     $("#btnSubmitAddFahrer").click(function (e) {
         var form = e.currentTarget.closest("form");
@@ -296,6 +289,17 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    // Validierung
+    function numbersOnly(e) {
+        e.value = e.value.replace(/[^0-9\.,]/g,'');
+    }
+    $("input#groesse.form-control").keyup(function () {
+        numbersOnly(this);
+    });
+    $("input#gewicht.form-control").keyup(function () {
+        numbersOnly(this);
     });
 
     $("#userTable").editableTableWidget();
