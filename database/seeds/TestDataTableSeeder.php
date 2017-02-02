@@ -22,10 +22,10 @@ class TestDataTableSeeder extends Seeder
         #DB::statement('PRAGMA foreign_keys = OFF'); # Für Sqlite
 
         DB::table('fahrer')->truncate();
-        Fahrer::create(['name' => 'test', 'email' => 'test@test.local']);
-        Fahrer::create(['name' => 'test2']);
-        Fahrer::create(['name' => 'test3', 'groesse' => 1.85, 'gewicht' => 85]);
-        Fahrer::create(['name' => 'test4', 'email' => 'test4@test.local', 'gewicht' => 87]);
+        Fahrer::create(['name' => 'Maik Braun', 'email' => 'MaikBraun@cuvox.de']);
+        Fahrer::create(['name' => 'Petra Austerlitz']);
+        Fahrer::create(['name' => 'Jonas Nussbaum', 'groesse' => 1.85, 'gewicht' => 85]);
+        Fahrer::create(['name' => 'Juliane Seiler', 'email' => 'JulianeSeiler@cuvox.de', 'gewicht' => 87]);
 
 
         DB::table('strecke')->truncate();
