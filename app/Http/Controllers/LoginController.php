@@ -9,6 +9,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class LoginController
+ * @package App\Http\Controllers
+ */
 class LoginController extends Controller
 {
     /*
@@ -39,17 +43,28 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view("auth.login");
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request){
         Auth::logout();
         return redirect()->intended($this->redirectTo);
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -91,6 +106,11 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param Fahrer $fahrer
+     * @return \Illuminate\Http\RedirectResponse
+     */
     private function tryLogin(Request $request, Fahrer $fahrer)
     {
         $fahrrad = Fahrrad::where("id", $request->input("fahrrad"))->first();

@@ -9,6 +9,9 @@ use App\Strecke;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class TestDataTableSeeder
+ */
 class TestDataTableSeeder extends Seeder
 {
     /**

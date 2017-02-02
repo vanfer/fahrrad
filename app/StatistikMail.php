@@ -14,9 +14,17 @@ use Illuminate\Support\Facades\Mail;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 
+/**
+ * Class StatistikMail
+ * @package App
+ */
 class StatistikMail
 {
 
+    /**
+     * @param Fahrer $fahrer
+     * @return array|null
+     */
     public static function getData(\App\Fahrer $fahrer){
         if($fahrer){
             $fahrer_statistiken = Statistik::whereFahrerId($fahrer->id)->whereVorgang($fahrer->vorgang)->orderBy("created_at", "DESC")->get();
@@ -65,6 +73,10 @@ class StatistikMail
         }
     }
 
+    /**
+     * @param Fahrer $fahrer
+     * @return bool
+     */
     public static function sendMail(\App\Fahrer $fahrer){
         $data = StatistikMail::getData($fahrer);
         if($data){

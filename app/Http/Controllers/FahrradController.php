@@ -10,6 +10,10 @@ use App\StatistikMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class FahrradController
+ * @package App\Http\Controllers
+ */
 class FahrradController extends Controller
 {
     /**
@@ -55,6 +59,12 @@ class FahrradController extends Controller
         return $fahrrad;
     }
 
+    /**
+     * @param Request $request
+     * @param $fahrrad_id
+     * @param $fahrer_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function zuordnungHerstellen(Request $request, $fahrrad_id, $fahrer_id)
     {
         $fahrrad = Fahrrad::whereId($fahrrad_id)->first();
@@ -99,6 +109,10 @@ class FahrradController extends Controller
         }
     }
 
+    /**
+     * @param Fahrrad $fahrrad
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function zuordnungLoeschen(\App\Fahrrad $fahrrad)
     {
         $fahrer = Fahrer::whereId($fahrrad->fahrer_id)->first();
@@ -136,7 +150,10 @@ class FahrradController extends Controller
         return response()->json(["msg" => "Error"], 400);
     }
 
-    // Gibt die Daten zu allen Fahrrädern, inkl. Modi und Fahrerinformationen zurück
+    /**
+     * Gibt die Daten zu allen Fahrrädern, inkl. Modi und Fahrerinformationen zurück
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getData()
     {
         return response()->json([ "data" => ["fahrrad" => Fahrrad::with("modus")->with("fahrer")->get()] ], 200);

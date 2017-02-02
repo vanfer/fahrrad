@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use League\Flysystem\Exception;
 
+/**
+ * Class FahrerController
+ * @package App\Http\Controllers
+ */
 class FahrerController extends Controller
 {
     /**
@@ -138,6 +142,9 @@ class FahrerController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getAllNames()
     {
         $names = Fahrer::all("name");

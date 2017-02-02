@@ -4,15 +4,32 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Statistik
+ * @package App
+ */
 class Statistik extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = "statistik";
+    /**
+     * @var array
+     */
     protected $fillable = ["fahrer_id", "modus", "geschwindigkeit", "gesamtleistung", "strecke", "hoehenmeter", "fahrdauer", "vorgang"];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function fahrer(){
         return $this->belongsTo("App\Fahrer");
     }
 
+    /**
+     * @param Fahrer $fahrer
+     * @param Fahrrad $fahrrad
+     */
     public static function addEntry(\App\Fahrer $fahrer, \App\Fahrrad $fahrrad){
         if($fahrrad->istLeistung > 0){
             Statistik::create([
@@ -28,11 +45,17 @@ class Statistik extends Model
         }
     }
 
+    /**
+     * @return mixed
+     */
     public static function getTeilnehmerGesamt()
     {
         return Statistik::all()->groupBy('fahrer_id')->count();
     }
 
+    /**
+     * @return int
+     */
     public static function getKilometerGesamt()
     {
         $gesamt = 0;
@@ -46,6 +69,9 @@ class Statistik extends Model
         return $gesamt;
     }
 
+    /**
+     * @return int
+     */
     public static function getHoehenmeterGesamt()
     {
         $gesamt = 0;
@@ -59,6 +85,9 @@ class Statistik extends Model
         return $gesamt;
     }
 
+    /**
+     * @return float|int|string
+     */
     public static function getEnergieGesamt()
     {
         $gesamt = 0;
@@ -79,6 +108,9 @@ class Statistik extends Model
         return $gesamt;
     }
 
+    /**
+     * @return array
+     */
     public static function getGesamtStatistik()
     {
         return [

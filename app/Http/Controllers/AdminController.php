@@ -10,8 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use League\Flysystem\Exception;
 
+/**
+ * Class AdminController
+ * @package App\Http\Controllers
+ */
 class AdminController extends Controller
 {
+    /**
+     * @var string
+     */
     protected $admin_password = "test";
 
     /**
@@ -27,11 +34,18 @@ class AdminController extends Controller
             ->with("fahrraeder", Fahrrad::all());
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getLogin()
     {
         return view("admin.login");
     }
-    
+
+    /**
+     * @param Request $request
+     * @return $this
+     */
     public function login(Request $request)
     {
         if($request->password == $this->admin_password){
@@ -41,20 +55,11 @@ class AdminController extends Controller
             ->withErrors(["password" => ('Falsches Passwort')]);
     }
 
+    /**
+     * @return $this
+     */
     public function logout()
     {
         return redirect("admin")->cookie('admin', '1', -1);
     }
-
-    public function setData(Request $request)
-    {
-
-    }
-
-    public function getData()
-    {
-
-    }
-
-
 }

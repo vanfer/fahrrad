@@ -8,8 +8,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
+/**
+ * Class SearchController
+ * @package App\Http\Controllers
+ */
 class SearchController extends Controller
 {
+    /**
+     * @return mixed
+     */
     public function autocompleteName(){
         $term = Input::get('term');
 

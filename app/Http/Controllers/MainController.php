@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class MainController
+ * @package App\Http\Controllers
+ */
 class MainController extends Controller
 {
     /**
@@ -27,6 +31,9 @@ class MainController extends Controller
     // Fahrer wechselt den Streckenabschnitt
     // Update von fahrrad.abschnitt_id / fahrrad.sollDrehmoment (abhängig von fahrer.gewicht und fahrer.goresse)
     // Update und Berechnung der zurückgelegten Hoehenmeter im Abschnitt
+    /**
+     * @param Request $request
+     */
     public function setAbschnitt(Request $request)
     {
         $this->validate($request, [
@@ -78,16 +85,26 @@ class MainController extends Controller
         }
     }
 
+    /**
+     * @param Strecke $strecke
+     * @return array
+     */
     public function strecke(\App\Strecke $strecke)
     {
         return ["strecke" => [ "name" => $strecke->name, "abschnitte" => $strecke->abschnitte()]];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function strecken()
     {
         return Strecke::all();
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function fahrerstrecke(){
         $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
         $result = [];
@@ -103,6 +120,9 @@ class MainController extends Controller
         return response()->json(["fahrerstrecke" => $result], 200);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function leistung()
     {
         $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
@@ -119,6 +139,9 @@ class MainController extends Controller
         return response()->json(["fahrerleistung" => $result], 200);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function statistik()
     {
         return response()->json([
@@ -126,6 +149,9 @@ class MainController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Request $request
+     */
     public function statistikUpdate(Request $request)
     {
         $fahrraeder = Fahrrad::all();
@@ -138,6 +164,9 @@ class MainController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function batterie()
     {
         return response()->json([
@@ -145,6 +174,9 @@ class MainController extends Controller
         ], 200);
     }
 
+    /**
+     * @return array
+     */
     public function highscore(){
         $highscoreListe = [];
 
