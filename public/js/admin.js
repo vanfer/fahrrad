@@ -253,38 +253,46 @@ $(document).ready(function () {
             {
                 var status = xhr.status;
 
-                var template = '<tr draggable="true" id="' + data.id + '">' +
-                    '<th id="th_fahrer_id">' +
-                    '<fieldset>' +
-                    '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.id + '">' +
-                    '</fieldset>' +
-                    '</th>' +
-                    '<td id="name">' + data.name + '</td>' +
-                    '<td id="email">' + data.email + '</td>' +
-                    '<td id="gewicht">' + data.gewicht + '</td>' +
-                    '<td id="groesse">' + data.groesse + '</td>' +
-                    '<td id="betriebsmodus">' +
-                    '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
-                    '<option value="1" ' + ((data.modus_id == 1) ? 'selected' : '') + '>Strecke</option>' +
-                    '<option value="2" ' + ((data.modus_id == 2) ? 'selected' : '') + '>Konstantes Drehmoment</option>' +
-                    '<option value="3" ' + ((data.modus_id == 3) ? 'selected' : '') + '>Konstante Leistung</option>' +
-                    '</select>' +
-                    '</td>' +
-                    '<th>' +
-                    '<div class="btn btn-default btnDelete">' +
-                    '<span class="glyphicon glyphicon-trash"></span>' +
-                    '</div>' +
-                    '</th>' +
-                    '</tr>';
+                if(data.err == 0){
+                    var template = '<tr draggable="true" id="' + data.fahrer.id + '">' +
+                        '<th id="th_fahrer_id">' +
+                        '<fieldset>' +
+                        '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.fahrer.id + '">' +
+                        '</fieldset>' +
+                        '</th>' +
+                        '<td id="name">' + data.fahrer.name + '</td>' +
+                        '<td id="email">' + data.fahrer.email + '</td>' +
+                        '<td id="gewicht">' + data.fahrer.gewicht + '</td>' +
+                        '<td id="groesse">' + data.fahrer.groesse + '</td>' +
+                        '<td id="betriebsmodus">' +
+                        '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
+                        '<option value="1" ' + ((data.fahrer.modus_id == 1) ? 'selected' : '') + '>Strecke</option>' +
+                        '<option value="2" ' + ((data.fahrer.modus_id == 2) ? 'selected' : '') + '>Konstantes Drehmoment</option>' +
+                        '<option value="3" ' + ((data.fahrer.modus_id == 3) ? 'selected' : '') + '>Konstante Leistung</option>' +
+                        '</select>' +
+                        '</td>' +
+                        '<th>' +
+                        '<div class="btn btn-default btnDelete">' +
+                        '<span class="glyphicon glyphicon-trash"></span>' +
+                        '</div>' +
+                        '</th>' +
+                        '</tr>';
 
-                $('#userTable tr:last').after(template);
-                $("#userTable").editableTableWidget();
+                    $('#userTable tr:last').after(template);
+                    $("#userTable").editableTableWidget();
 
-                if(status == 200){
                     $("#addFahrer").dialog("close");
-
-                    // Hack
                     window.location.reload();
+                }else if(data.err == 1){
+                    $("#dialogFahrernameSchonVergeben").dialog({
+                        buttons : {
+                            "OK" : function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+                    $("#dialogFahrernameSchonVergeben").dialog("open");
+                    $(".ui-widget-overlay").addClass('custom-overlay');
                 }
             });
         }

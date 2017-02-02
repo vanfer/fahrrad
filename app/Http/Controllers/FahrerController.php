@@ -21,37 +21,44 @@ class FahrerController extends Controller
             "name" => "required"
         ]);
 
-        $fahrer = Fahrer::create([
-            "name" => Input::get("name")
-        ]);
+        $name = Input::get("name");
+        $fahrer_mit_name = Fahrer::whereName($name)->first();
 
-        $id = $fahrer->id;
+        if(!$fahrer_mit_name){ // Name noch nicht vorhanden
+            $fahrer = Fahrer::create([
+                "name" => $name
+            ]);
 
-        if($request->has("email")){
-            $fahrer->email = Input::get("email");
+            $id = $fahrer->id;
+
+            if($request->has("email")){
+                $fahrer->email = Input::get("email");
+            }
+
+            if($request->has("gewicht")){
+                $gewicht = Input::get("gewicht");
+                $gewicht = str_replace(".", "", $gewicht);
+                $gewicht = str_replace(",", "", $gewicht);
+                $fahrer->gewicht = $gewicht;
+            }
+
+            if($request->has("groesse")){
+                $groesse = Input::get("groesse");
+                $groesse = str_replace(",", ".", $groesse);
+                $fahrer->groesse = $groesse;
+            }
+
+            if($request->has("betriebsmodus")){
+                $fahrer->modus_id = Input::get("betriebsmodus");
+            }
+
+            $fahrer->save();
+            $fahrer->touch();
+
+            return response()->json(["msg" => "ok", "err" => 0, "fahrer" => Fahrer::whereId($id)->first()], 200);
         }
 
-        if($request->has("gewicht")){
-            $gewicht = Input::get("gewicht");
-            $gewicht = str_replace(".", "", $gewicht);
-            $gewicht = str_replace(",", "", $gewicht);
-            $fahrer->gewicht = $gewicht;
-        }
-
-        if($request->has("groesse")){
-            $groesse = Input::get("groesse");
-            $groesse = str_replace(",", ".", $groesse);
-            $fahrer->groesse = $groesse;
-        }
-
-        if($request->has("betriebsmodus")){
-            $fahrer->modus_id = Input::get("betriebsmodus");
-        }
-
-        $fahrer->save();
-        $fahrer->touch();
-
-        return Fahrer::find($id);
+        return response()->json(["msg" => "Name schon vorhanden", "err" => 1], 200);
     }
 
     /**
