@@ -53,7 +53,6 @@ Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
 | Datenaustausch
 |--------------------------------------------------------------------------
 */
-Route::get('search/autocomplete', 'SearchController@autocompleteName');
 Route::get("leistung", "MainController@leistung");
 Route::post("abschnitt", "MainController@setAbschnitt");
 Route::get("strecke", "MainController@strecken");

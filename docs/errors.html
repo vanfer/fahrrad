@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>     &raquo; Compilation errors
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+            <link href="css/template.css" rel="stylesheet" media="all"/>
+    
+            <!--[if lt IE 9]>
+        <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="js/jquery.mousewheel.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js" type="text/javascript"></script>
+        <script src="js/template.js" type="text/javascript"></script>
+        <script src="js/prettify/prettify.min.js" type="text/javascript"></script>
+    
+            <link rel="shortcut icon" href="img/favicon.ico"/>
+        <link rel="apple-touch-icon" href="img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png"/>
+    </head>
+<body>
+
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> </a>
+                <a class="brand" href="index.html">API Documentation</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                API Documentation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                                                    <li><a>Namespaces</a></li>
+                                                                        <li><a href="namespaces/App.html">App</a></li>
+                                                                                                                                </ul>
+                        </li>
+                        <li class="dropdown" id="charts-menu">
+                            <a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                Charts <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="graph_class.html">
+                                        <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" id="reports-menu">
+                            <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                Reports <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="errors.html">
+                                        <i class="icon-list-alt"></i>&#160;Errors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="markers.html">
+                                        <i class="icon-list-alt"></i>&#160;Markers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="deprecated.html">
+                                        <i class="icon-list-alt"></i>&#160;Deprecated
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="go_to_top">
+            <a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>
+        </div>
+    </div>
+    
+    <div id="___" class="container">
+        <noscript>
+            <div class="alert alert-warning">
+                Javascript is disabled; several features are only available if Javascript is enabled.
+            </div>
+        </noscript>
+
+        
+        <div class="row">
+        <div class="span4">
+
+            <ul class="side-nav nav nav-list">
+                <li class="nav-header">Filter type</li>
+                <li>
+                    <div class="btn-group type-filter" data-toggle="buttons-checkbox">
+                        <button class="btn critical">Critical</button>
+                        <button class="btn error">Error</button>
+                        <button class="btn notice">Notice</button>
+                    </div>
+                </li>
+                <li class="nav-header">Navigation</li>
+                                                                            <li><a href="#app\Http\Controllers\AdminController.php"><i class="icon-file"></i> app\Http\Controllers\AdminController.php</a></li>
+                                                                                                    <li><a href="#app\Http\Controllers\FahrerController.php"><i class="icon-file"></i> app\Http\Controllers\FahrerController.php</a></li>
+                                                                                                    <li><a href="#app\Http\Controllers\FahrradController.php"><i class="icon-file"></i> app\Http\Controllers\FahrradController.php</a></li>
+                                                                                                    <li><a href="#app\Http\Controllers\MainController.php"><i class="icon-file"></i> app\Http\Controllers\MainController.php</a></li>
+                                                                                                    <li><a href="#app\Http\Middleware\Admin.php"><i class="icon-file"></i> app\Http\Middleware\Admin.php</a></li>
+                                                                                                    <li><a href="#app\Abschnitt.php"><i class="icon-file"></i> app\Abschnitt.php</a></li>
+                                                                                                    <li><a href="#app\Batterie.php"><i class="icon-file"></i> app\Batterie.php</a></li>
+                                                                                                    <li><a href="#app\Fahrer.php"><i class="icon-file"></i> app\Fahrer.php</a></li>
+                                                                                                    <li><a href="#app\Fahrrad.php"><i class="icon-file"></i> app\Fahrrad.php</a></li>
+                                                                                                    <li><a href="#app\Modus.php"><i class="icon-file"></i> app\Modus.php</a></li>
+                                                                                                    <li><a href="#app\Statistik.php"><i class="icon-file"></i> app\Statistik.php</a></li>
+                                                                                                    <li><a href="#app\StatistikMail.php"><i class="icon-file"></i> app\StatistikMail.php</a></li>
+                                                                                                    <li><a href="#app\Strecke.php"><i class="icon-file"></i> app\Strecke.php</a></li>
+                                                                                                    <li><a href="#database\seeds\TestDataTableSeeder.php"><i class="icon-file"></i> database\seeds\TestDataTableSeeder.php</a></li>
+                                                                                                    <li><a href="#database\migrations\2016_11_06_030455_create_structure_table.php"><i class="icon-file"></i> database\migrations\2016_11_06_030455_create_structure_table.php</a></li>
+                                                                    </ul>
+        </div>
+
+        <div class="span8">
+            <ul class="breadcrumb">
+                <li><a href="?"><i class="icon-remove-sign"></i></a><span class="divider">\</span></li>
+                <li>Compilation Errors</li>
+            </ul>
+
+            
+                            <div class="package-contents">
+                                            <a name="app\Http\Controllers\AdminController.php" id="app\Http\Controllers\AdminController.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Http\Controllers\AdminController.php
+                            <span class="pull-right badge badge-info">5</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>40</td>
+                                        <td>No summary for method getLogin()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>49</td>
+                                        <td>No summary for method login()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>61</td>
+                                        <td>No summary for method logout()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $admin_password</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Http\Controllers\FahrerController.php" id="app\Http\Controllers\FahrerController.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Http\Controllers\FahrerController.php
+                            <span class="pull-right badge badge-info">5</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>74</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $fahrer in show()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>86</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $fahrer in update()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>124</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $fahrer in destroy()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>148</td>
+                                        <td>No summary for method getAllNames()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Http\Controllers\FahrradController.php" id="app\Http\Controllers\FahrradController.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Http\Controllers\FahrradController.php
+                            <span class="pull-right badge badge-info">4</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $fahrrad in update()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>68</td>
+                                        <td>No summary for method zuordnungHerstellen()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>116</td>
+                                        <td>No summary for method zuordnungLoeschen()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Http\Controllers\MainController.php" id="app\Http\Controllers\MainController.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Http\Controllers\MainController.php
+                            <span class="pull-right badge badge-info">10</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>37</td>
+                                        <td>No summary for method setAbschnitt()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>92</td>
+                                        <td>No summary for method strecke()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>100</td>
+                                        <td>No summary for method strecken()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>108</td>
+                                        <td>No summary for method fahrerstrecke()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>126</td>
+                                        <td>No summary for method leistung()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>145</td>
+                                        <td>No summary for method statistik()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>155</td>
+                                        <td>No summary for method statistikUpdate()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>170</td>
+                                        <td>No summary for method batterie()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>No summary for method highscore()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Http\Middleware\Admin.php" id="app\Http\Middleware\Admin.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Http\Middleware\Admin.php
+                            <span class="pull-right badge badge-info">1</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Abschnitt.php" id="app\Abschnitt.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Abschnitt.php
+                            <span class="pull-right badge badge-info">5</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>36</td>
+                                        <td>No summary for method strecke()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>44</td>
+                                        <td>No summary for method fahrraeder()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for property $timestamps</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Batterie.php" id="app\Batterie.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Batterie.php
+                            <span class="pull-right badge badge-info">3</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for method getCurrent()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Fahrer.php" id="app\Fahrer.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Fahrer.php
+                            <span class="pull-right badge badge-info">6</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>No summary for method fahrrad()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>74</td>
+                                        <td>No summary for method statistik()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>81</td>
+                                        <td>No summary for method modus()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>89</td>
+                                        <td>No summary for method modusName()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>43</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Fahrrad.php" id="app\Fahrrad.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Fahrrad.php
+                            <span class="pull-right badge badge-info">11</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>61</td>
+                                        <td>No summary for method fahrer()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>69</td>
+                                        <td>No summary for method modus()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>77</td>
+                                        <td>No summary for method modusName()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>86</td>
+                                        <td>No summary for method aktiv()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>No summary for method getFahrerName()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>107</td>
+                                        <td>No summary for method getFahrerID()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>120</td>
+                                        <td>No summary for method abschnitt()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>129</td>
+                                        <td>No summary for method resetData()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>52</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>56</td>
+                                        <td>No summary for property $touches</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Modus.php" id="app\Modus.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Modus.php
+                            <span class="pull-right badge badge-info">5</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>33</td>
+                                        <td>No summary for method fahrer()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>41</td>
+                                        <td>No summary for method fahrrad()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>50</td>
+                                        <td>No summary for method getName()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Statistik.php" id="app\Statistik.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Statistik.php
+                            <span class="pull-right badge badge-info">10</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>50</td>
+                                        <td>No summary for method fahrer()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>58</td>
+                                        <td>No summary for method addEntry()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>76</td>
+                                        <td>No summary for method getTeilnehmerGesamt()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>84</td>
+                                        <td>No summary for method getKilometerGesamt()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>100</td>
+                                        <td>No summary for method getHoehenmeterGesamt()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>116</td>
+                                        <td>No summary for method getEnergieGesamt()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>139</td>
+                                        <td>No summary for method getGesamtStatistik()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>41</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>45</td>
+                                        <td>No summary for property $fillable</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\StatistikMail.php" id="app\StatistikMail.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\StatistikMail.php
+                            <span class="pull-right badge badge-info">2</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>No summary for method getData()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>No summary for method sendMail()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="app\Strecke.php" id="app\Strecke.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            app\Strecke.php
+                            <span class="pull-right badge badge-info">4</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>No summary for method abschnitte()</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $table</td>
+                                    </tr>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>No summary for property $timestamps</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="database\seeds\TestDataTableSeeder.php" id="database\seeds\TestDataTableSeeder.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            database\seeds\TestDataTableSeeder.php
+                            <span class="pull-right badge badge-info">1</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="database\migrations\2016_11_06_030455_create_structure_table.php" id="database\migrations\2016_11_06_030455_create_structure_table.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            database\migrations\2016_11_06_030455_create_structure_table.php
+                            <span class="pull-right badge badge-info">1</span>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr class="error">
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+    </div>
+
+        <footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by
+            <a href="http://glyphicons.com/">Glyphicons</a>.<br/>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and<br/>
+            generated on Thu, 02 Feb 2017 22:00:19 +0100.<br/>
+    </footer>
+    </body>
+</html>
