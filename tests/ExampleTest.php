@@ -7,13 +7,14 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class ExampleTest extends TestCase
 {
     /**
-     * A basic functional test example.
+     * A test querying the central route.
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testCentralLoaded()
     {
-        $this->visit('/')
-             ->see('Laravel');
+        $this->visitRoute("central")
+             ->see("Highscore")
+             ->dontSee("Str5ecke");
     }
 }

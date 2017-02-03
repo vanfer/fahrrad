@@ -7,7 +7,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://localhost/public/fahrrad/public/';
+    protected $baseUrl = 'http://localhost/fahrrad/public';
 
     /**
      * Creates the application.

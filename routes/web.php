@@ -31,7 +31,7 @@ Route::delete("fahrrad/{fahrrad}", "FahrradController@zuordnungLoeschen");
 | Zeigt die Startseite mit Informationen an
 |--------------------------------------------------------------------------
 */
-Route::get("central", "MainController@showCentral"); /*  */
+Route::get("central", ["as" => "central", "uses" => "MainController@showCentral"]); /*  */
 Route::get("/", function (){ return redirect("central"); });
 
 /*
