@@ -81,10 +81,6 @@ body{
     padding: 15px 20px 15px 20px;
 }
 
-
-#track{
-}
-
 /* ##### Streckenmodus #####*/
 .strecken-panel{
     background: #E6E9ED!important;
@@ -137,8 +133,6 @@ body{
     padding: 2px 2px 2px 15px;
 }
 
-
-
 /* ### Fahrrad 1 ### */
 .header-f1{
     background-color:#EC87C0 !important;
@@ -172,13 +166,15 @@ body{
     min-height:235px;
 }
 
+/* ### inaktives Fahrrad ### */
 .inaktives_fahrrad{
 }
 
+
+/* ### Timeout ### */
 .timeout-meldung{
     text-align: center;
 }
-
 
 .timeout-alert{
     display:block;
@@ -241,6 +237,10 @@ span.glyphicon-alert{
     margin: 0 0 10px 0 ;
 }
 
+.highscore-medaille{
+    margin-left:0px;
+}
+
 .highscore-name{
     line-height:40px;
     margin-left:20px;
@@ -251,9 +251,6 @@ span.glyphicon-alert{
     margin-right:0px;
 }
 
-.highscore-medaille{
-    margin-left:0px;
-}
 
 /* ##### Batterie #####*/
 .batterie-panel{
@@ -459,21 +456,6 @@ span.glyphicon-alert{
 }
 
 .discharge6{
-
-}
-
-/* ##### Logout ##### */
-#btnLogout{
-    height: 50px;
-    margin-top: 25px;
-    width: 100%;
-}
-
-#logout-wrapper {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
 }
 
 /* ############################## Zentrales Display ##################################### */
@@ -513,6 +495,20 @@ span.glyphicon-alert{
 
 .panelBodyAdmin {
     background-color: #ADE073;
+}
+
+/* ##### Logout ##### */
+#btnLogout{
+    height: 50px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+#logout-wrapper {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
 }
 
 /* ##### Fahrradinformationen #####*/
@@ -637,7 +633,7 @@ span.glyphicon-alert{
 }
 
 .einstellungen.ui-dialog{
-    width: 650px !important;
+    width: 1000px !important;
     background-color: #F5F7FA;
     border: 2px solid black !important;
 }
@@ -659,18 +655,41 @@ span.glyphicon-alert{
     min-height: 400px !important;
 }
 
+/* ### Einstellungen ### */
+
 #einstellungen{
     padding:10px 10px 20px 10px;
-
 }
 
 .streckenauswahl-wrapper{
     padding-bottom:20px;
 }
 
-.streckenvorschau{
+#streckenvorschau{
     height:250px;
-    background-color: #2a88bd;
+}
+
+#infobox{
+    padding-left:0px;
+}
+#infobox li{
+    list-style-type: none;
+    padding: 2px;
+}
+
+/* ### Formular Fahrer hinzufügen ### */
+
+.validation-error-msg{
+    font-size: 0.8em;
+    color:red;
+    padding: 0 0 2px 2px;
+}
+
+.validation-error-border{
+    border-color: red;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 0, 13, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 0, 13, 0.6);
 }
 
 /* ##### Charts #### */
