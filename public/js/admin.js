@@ -528,6 +528,7 @@ $(document).ready(function () {
     });
 
     updateChartStreckeData(1);
+
     $(".radio-strecke-id").change(function (e) {
         updateChartStreckeData($(e.target).val());
     })
