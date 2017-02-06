@@ -108,6 +108,7 @@
                     Im <b>Gruppenmodus</b> wird ein Betriebsmodus ausgewählt, der für alle Fahrer gilt. </li></ul></lu>
         <li><b><u>Strecke:</u></b><br>Hier kann die Auswahl der Strecke vorgenommen werden.<br>
             Es steht, je nach Schweregrad ("leicht", "mittel", "schwer"), eine Strecke zur Auswahl.</li>
+        <li><b><u>Info</u></b><br>Enthält Informationen zur Software.</li>
     </ul>
 </div>
 
@@ -159,6 +160,7 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-xs-8 pull-left">
+                            <div id="validation-error-name" class="validation-error-msg "></div>
                             <input id="fahrername" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
                         </div>
                         <div class="col-xs-4 pull-left">
@@ -180,6 +182,7 @@
                 <label for="email" class="col-md-4 control-label">E-Mail Addresse <small>(optional)</small></label>
 
                 <div class="col-md-6">
+                    <div id ="validation-error-email" class="validation-error-msg"></div>
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" autofocus>
 
                     @if ($errors->has('email'))
@@ -203,6 +206,7 @@
                 <label for="groesse" class="col-md-4 control-label">Gr&ouml;&szlig;e <small>(optional)</small></label>
 
                 <div class="col-md-6">
+                    <div id="validation-error-groesse" class="validation-error-msg"></div>
                     <input id="groesse" type="text" class="form-control" name="groesse" value="{{ old('groesse') }}" placeholder="1.80" autofocus>
 
                     @if ($errors->has('groesse'))
@@ -217,7 +221,8 @@
                 <label for="gewicht" class="col-md-4 control-label">Gewicht <small>(optional)</small></label>
 
                 <div class="col-md-6">
-                    <input id="gewicht" type="text" class="form-control" name="gewicht" value="{{ old('gewicht') }}" placeholder="80" autofocus>
+                    <div id="validation-error-gewicht" class="validation-error-msg"></div>
+                    <input id="gewicht" type="text" class="form-control validation-error-inputborder" name="gewicht" value="{{ old('gewicht') }}" placeholder="80" autofocus>
 
                     @if ($errors->has('gewicht'))
                         <span class="help-block">
@@ -248,21 +253,24 @@
     <p>Sollen die Einstellungen wirklich gespeichert werden?</p>
 </div>
 
+<!-- Einstellungen -->
 <div id="dialogEinstellungen" title="Einstellungen" style="display: none;">
     <div class="einstellungen-wrapper">
         <form class="form-horizontal" role="form" method="POST" action="">
 
-            <!-- Tabs-Navs -->
+            <!-- Nav-Tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation"><a href="#tabAllgemein" role="tab" data-toggle="tab">Allgemein</a></li>
-                <li role="presentation" class="active"><a href="#tabStrecke" role="tab" data-toggle="tab">Strecke</a></li>
+                <li role="presentation" class="active"><a href="#tabAllgemein" role="tab" data-toggle="tab">Allgemein</a></li>
+                <li role="presentation"><a href="#tabStrecke" role="tab" data-toggle="tab">Strecke</a></li>
+                <li role="presentation"><a href="#tabInfo" role="tab" data-toggle="tab">Info</a></li>
             </ul>
 
             <!-- Tab-Inhalte -->
             <div class="tab-content">
                 <!-- Allgemeine Einstellungen -->
-                <div role="tabpanel" class="tab-pane tab-wrapper" id="tabAllgemein">
-                    <div id="einstellungen-modus" title="Funktion nicht implementiert">
+                <div role="tabpanel" class="tab-pane tab-wrapper active" id="tabAllgemein">
+                    <div id="einstellungen-modus col-md-12" title="Funktion nicht implementiert">
+                        <div class="col-md-4">
                         <label for="streckenauswahl">Individualmodus vs. Gruppenmodus</label>
                         <fieldset name="streckenauswahl" disabled>
                             <div class="radio">
@@ -286,10 +294,11 @@
                                 </div>
                             </fieldset>
                         </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Streckeneinstellungen -->
-                <div role="tabpanel" class="tab-pane tab-wrapper active" id="tabStrecke">
+                <div role="tabpanel" class="tab-pane tab-wrapper" id="tabStrecke">
                     <div class="input-group col-md-12 streckenauswahl-wrapper">
                         <div class="col-md-4 pull-left">
                             <label for="streckenauswahl">Streckenauswahl</label>
@@ -303,6 +312,7 @@
                                 <div class="radio">
                                     <label><input type="radio" name="radio-strecke-id" class="radio-strecke-id" value="3">schwer</label>
                                 </div>
+
                             </fieldset>
                         </div>
                         <div class="col-md-8 pull-right">
@@ -310,6 +320,29 @@
                             <div id="streckenvorschau"></div>
                         </div>
                         <div class="clearfix"></div>
+                    </div>
+                </div>
+                <!-- Info -->
+                <div role="tabpanel" class="tab-pane tab-wrapper" id="tabInfo">
+                    <div class="col-md-8">
+                        <ul id="infobox">
+                            <li><b>Name:</b> XXX</li>
+                            <li><b>Beschreibung:</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</li>
+                            <li><b>Maintainer:</b> SPIN/SPMI Fahrradkino</li>
+                            <li><b>Entwickler:</b> Enrico Costanzo, Alice Domandl, Clara Terbeck, Vanessa Ferrarello</li>
+                            <li><b>Erscheinungsjahr:</b> 2017</li>
+                            <li><b>Support:</b> W-HS</li>
+                            <li><b>Aktuelle Version:</b> Versionsnummer + Freigabedatum:</li>
+                            <li><b>Betriebssystem:</b> Windows, Unix, Mac OS</li>
+                            <li><b>Programmiersprache:</b></li>
+                            <li><b>deutschsprachig:</b> ja</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <!--<img src="{{--URL::asset('/img/logo.png')--}}" alt="Logo" class="softwarelogo">-->
                     </div>
                 </div>
             </div>
