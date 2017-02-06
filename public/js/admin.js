@@ -528,6 +528,7 @@ $(document).ready(function () {
     });
 
     updateChartStreckeData(1);
+
     $(".radio-strecke-id").change(function (e) {
         updateChartStreckeData($(e.target).val());
     })
@@ -788,7 +789,7 @@ function getElapsedTime(fahrrad_timestamp) {
 }
 
 function updateChartStreckeData(id) {
-    getDataFromAPI("strecke/" + id, true, function (response) {
+    getDataFromAPI("strecke/" + id, false, function (response) {
         if (response && response.strecke) {
             window.strecke_vorschau_abschnitte = [];
             window.strecke_vorschau_data = {data: [0], labels: [0]};
@@ -803,12 +804,12 @@ function updateChartStreckeData(id) {
                     window.strecke_vorschau_abschnitte.push(value.id);
                 }
             );
+
+            window.chart_strecke_vorschau.series[0].setData(window.strecke_vorschau_data.data);
+            window.chart_strecke_vorschau.xAxis[0].setCategories(window.strecke_vorschau_data.labels);
+            window.chart_strecke_vorschau.redraw();
         }
     });
-
-    window.chart_strecke_vorschau.series[0].setData(window.strecke_vorschau_data.data);
-    window.chart_strecke_vorschau.xAxis[0].setCategories(window.strecke_vorschau_data.labels);
-    window.chart_strecke_vorschau.redraw();
 }
 
 function createCookie(name,value,days) {
