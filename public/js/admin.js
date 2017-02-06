@@ -243,11 +243,20 @@ $(document).ready(function () {
         var form = e.currentTarget.closest("form");
 
         var validation = validateInput(form);
+        console.log(validation);
 
         if(!validation.valid) {
             $("#dialogValidationFailed").dialog({
                 buttons : {
                     "OK" : function() {
+                        validation.err_fields.map(function (sel, i) {
+                            $(sel).addClass("validation-error-border");
+
+                            $(sel).closest(".validation-error-msg").css("display", "block");
+
+                            var input_error_msg = ($(sel).parents(".validation-error-wrapper").find(".validation-error-msg"));
+                            $(input_error_msg).html(validation.err[i]);
+                        });
                         $(this).dialog("close");
                     }
                 }
@@ -682,11 +691,14 @@ function updateFahrradKasten() {
 function validateInput(form){
     var validates = true;
     var validation_errors = [];
+    var validation_errors_fields = [];
 
-    var name = $(form).find("#fahrername").val();
+    var selName = "#fahrername";
+    var name = $(form).find(selName).val();
     if(!name){
         validates = false;
         validation_errors.push("Name nicht vorhanden");
+        validation_errors_fields.push(selName);
     }
 
     if(name.length > 19){
@@ -694,12 +706,14 @@ function validateInput(form){
         validation_errors.push("Name darf nicht länger als 19 Zeichen sein");
     }
 
-    var email = $(form).find("input#email").val();
+    var selEmail = "input#email";
+    var email = $(form).find(selEmail).val();
     var regex_email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(email){
         if(regex_email.test(email) == false){
             validates = false;
             validation_errors.push("E-Mail hat falsches Format");
+            validation_errors_fields.push(selEmail);
         }
     }
 
@@ -709,27 +723,31 @@ function validateInput(form){
         validation_errors.push("Kein Modus ausgewählt");
     }
 
-    var groesse = $(form).find("input#groesse").val();
+    var selGroesse = "input#groesse";
+    var groesse = $(form).find(selGroesse).val();
     if(groesse){
         try{
             validates = $.isNumeric(groesse);
         }catch (ex){
             validates = false;
             validation_errors.push("Größe ist kein valider Wert");
+            validation_errors_fields.push(selGroesse);
         }
     }
 
-    var gewicht = $(form).find("input#gewicht").val();
+    var selGewicht = "input#gewicht";
+    var gewicht = $(form).find(selGewicht).val();
     if(gewicht){
         try{
             validates = $.isNumeric(gewicht);
         }catch (ex){
             validates = false;
             validation_errors.push("Gewicht ist kein valider Wert");
+            validation_errors_fields.push(selGewicht);
         }
     }
 
-    return { valid: validates, err: validation_errors };
+    return { valid: validates, err: validation_errors, err_fields: validation_errors_fields };
 }
 
 // Drag & Drop

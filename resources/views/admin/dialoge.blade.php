@@ -159,7 +159,7 @@
 
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-xs-8 pull-left">
+                        <div class="col-xs-8 pull-left validation-error-wrapper">
                             <div id="validation-error-name" class="validation-error-msg "></div>
                             <input id="fahrername" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
                         </div>
@@ -181,7 +181,7 @@
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} col-md-12 text-nowrap">
                 <label for="email" class="col-md-4 control-label">E-Mail Addresse <small>(optional)</small></label>
 
-                <div class="col-md-6">
+                <div class="col-md-6 validation-error-wrapper">
                     <div id ="validation-error-email" class="validation-error-msg"></div>
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" autofocus>
 
@@ -205,7 +205,7 @@
             <div class="form-group{{ $errors->has('groesse') ? ' has-error' : '' }} col-md-12">
                 <label for="groesse" class="col-md-4 control-label">Gr&ouml;&szlig;e <small>(optional)</small></label>
 
-                <div class="col-md-6">
+                <div class="col-md-6 validation-error-wrapper">
                     <div id="validation-error-groesse" class="validation-error-msg"></div>
                     <input id="groesse" type="text" class="form-control" name="groesse" value="{{ old('groesse') }}" placeholder="1.80" autofocus>
 
@@ -220,7 +220,7 @@
             <div class="form-group {{ $errors->has('gewicht') ? 'has-error' : '' }} col-md-12">
                 <label for="gewicht" class="col-md-4 control-label">Gewicht <small>(optional)</small></label>
 
-                <div class="col-md-6">
+                <div class="col-md-6 validation-error-wrapper">
                     <div id="validation-error-gewicht" class="validation-error-msg"></div>
                     <input id="gewicht" type="text" class="form-control validation-error-inputborder" name="gewicht" value="{{ old('gewicht') }}" placeholder="80" autofocus>
 
