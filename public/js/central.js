@@ -377,9 +377,9 @@ function updateDetails() {
             window.fahrrad_strecke = {data: [0,0,0]};
             window.gesamtleistungData = {absolute: 0, data: []};
 
-            for (var j = 0; j < window.fahrrad.length; j++) {
-                if (window.fahrrad[j].element != null) {
-                    window.fahrrad[j].element.element.remove();
+            for (var k = 0; k < window.fahrrad.length; k++) {
+                if (window.fahrrad[k].element != null) {
+                    window.fahrrad[k].element.element.remove();
                 }
             }
 
@@ -410,28 +410,29 @@ function updateDetails() {
             for (var i = 0; i < window.fahrrad.length; i++) {
                 window.fahrrad[i].gefahrene_strecke = window.fahrrad_strecke.data[i];
             }
+
+
+            window.chart_leistung.series[0].setData(window.leistungData.data);
+            window.chart_leistung.xAxis[0].setCategories(window.leistungData.labels);
+            window.chart_leistung.redraw();
+
+            // Gesamtleistung
+            for (var j = 0; j <= window.leistungData.data.length - 1; j++) {
+                window.gesamtleistungData.data.push([
+                    window.leistungData.labels[j],
+                    Math.floor((window.leistungData.data[j] * 100) / window.gesamtleistungData.absolute)
+                ]);
+            }
+
+            window.chart_gesamtleistung.setTitle({
+                text: window.gesamtleistungData.absolute + " W"
+            });
+
+            window.chart_gesamtleistung.series[0].setData([]);
+            window.chart_gesamtleistung.series[0].setData(window.gesamtleistungData.data);
+            window.chart_gesamtleistung.redraw();
         }
     });
-
-    window.chart_leistung.series[0].setData(window.leistungData.data);
-    window.chart_leistung.xAxis[0].setCategories(window.leistungData.labels);
-    window.chart_leistung.redraw();
-
-    // Gesamtleistung
-    for (var i = 0; i <= window.leistungData.data.length - 1; i++) {
-        window.gesamtleistungData.data.push([
-            window.leistungData.labels[i],
-            Math.floor((window.leistungData.data[i] * 100) / window.gesamtleistungData.absolute)
-        ]);
-    }
-
-    window.chart_gesamtleistung.setTitle({
-        text: window.gesamtleistungData.absolute + " W"
-    });
-
-    window.chart_gesamtleistung.series[0].setData([]);
-    window.chart_gesamtleistung.series[0].setData(window.gesamtleistungData.data);
-    window.chart_gesamtleistung.redraw();
 }
 
 // Lädt die Daten zur Strecke mit der angegebenen ID von der API
