@@ -424,8 +424,13 @@ function updateDetails() {
                 ]);
             }
 
+            var gesamtleistung_title = "";
+            if(window.gesamtleistungData.absolute > 0){
+                gesamtleistung_title = window.gesamtleistungData.absolute + " W";
+            }
+
             window.chart_gesamtleistung.setTitle({
-                text: window.gesamtleistungData.absolute + " W"
+                text: gesamtleistung_title
             });
 
             window.chart_gesamtleistung.series[0].setData([]);
