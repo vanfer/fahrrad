@@ -30,38 +30,33 @@ $(document).ready(function () {
     });
 
     // Dialoginitialisierungen
-    function initDialog(selector, dialogClass, modal) {
+    function initDialog(selector, dialogClass, modal, stack) {
         $(selector).dialog({
             autoOpen: false,
             dialogClass: dialogClass,
             resizable: false,
-            modal: modal
+            modal: modal,
+            stack: stack
         });
     }
 
-    initDialog("#dialogFalschesPasswort",           "warnung",          true);
-    initDialog("#dialogZuordnungLoeschen",          "warnung",          true);
-    initDialog("#dialogEinstellungenSpeichern",     "warnung",          true);
-    initDialog("#dialogFahrerLoeschen",             "warnung",          true);
-    initDialog("#dialogValidationFailed",           "fehler",           true);
-    initDialog("#dialogKeinFahrerAusgewaehlt",      "fehler",           true);
-    initDialog("#dialogFahrerSchonZugeordnet",      "fehler",           true);
-    initDialog("#dialogFahrradIstBesetzt",          "fehler",           true);
-    initDialog("#dialogFahrernameSchonVergeben",    "fehler",           true);
-    initDialog("#dialogEinstellungen",              "einstellungen",    true);
-    initDialog("#addFahrer",                        "addFahrer",        true);
-    initDialog("#hilfeAktiv",                       "hilfe",            false);
-    initDialog("#hilfeInaktiv",                     "hilfe",            false);
-    initDialog("#hilfeTabelle",                     "hilfe",            false);
-    initDialog("#hilfeEinstellungen",               "hilfe",            false);
+    initDialog("#dialogFalschesPasswort",           "warnung",          true,   false);
+    initDialog("#dialogZuordnungLoeschen",          "warnung",          true,   false);
+    initDialog("#dialogEinstellungenSpeichern",     "warnung",          true,   false);
+    initDialog("#dialogFahrerLoeschen",             "warnung",          true,   false);
+    initDialog("#dialogValidationFailed",           "fehler",           true,   false);
+    initDialog("#dialogKeinFahrerAusgewaehlt",      "fehler",           true,   false);
+    initDialog("#dialogFahrerSchonZugeordnet",      "fehler",           true,   false);
+    initDialog("#dialogFahrradIstBesetzt",          "fehler",           true,   false);
+    initDialog("#dialogFahrernameSchonVergeben",    "fehler",           true,   false);
+    initDialog("#dialogEinstellungen",              "einstellungen",    true,   false);
+    initDialog("#addFahrer",                        "addFahrer",        true,   false);
+    initDialog("#hilfeAktiv",                       "hilfe",            false,   false);
+    initDialog("#hilfeInaktiv",                     "hilfe",            false,   false);
+    initDialog("#hilfeTabelle",                     "hilfe",            false,   false);
+    initDialog("#hilfeEinstellungen",               "hilfe",            false,   false);
+    initDialog("#hilfeFahrer",                      "hilfe",            false,   true);
 
-    $("#hilfeFahrer").dialog({
-        autoOpen: false,
-        dialogClass: "hilfe",
-        modal: false,
-        resizable: false,
-        stack: true
-    });
 
     // Close Button Fix
     $(".ui-dialog-titlebar-close").each(function () {
@@ -414,7 +409,8 @@ $(document).ready(function () {
     });
     $("#userTable").DataTable({
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+            search: "_INPUT_",
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json",
         }
     });
 
