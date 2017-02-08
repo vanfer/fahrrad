@@ -40,11 +40,11 @@ Route::get("/", function (){ return redirect("central"); });
 |--------------------------------------------------------------------------
 */
 
-Route::get("admin/login", "AdminController@getLogin");
-Route::post("admin/login", "AdminController@login");
+Route::get("admin/login", ["as" => "admin/login", "uses" => "AdminController@getLogin"]);
+Route::post("admin/login", ["as" => "login", "uses" => "AdminController@login"]);
 
 Route::group(['middleware' => \App\Http\Middleware\Admin::class], function () {
-    Route::get("admin", "AdminController@index");
+    Route::get("admin", ["as" => "admin", "uses" => "AdminController@index"]);
     Route::get("admin/logout", "AdminController@logout");
 });
 

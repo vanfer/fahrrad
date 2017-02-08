@@ -7,7 +7,14 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://localhost/fahrrad/public';
+    protected $baseUrl = 'http://localhost';
+
+    public function setUp()
+    {
+        parent::setUp();
+        Artisan::call('migrate');
+        Artisan::call('db:seed');
+    }
 
     /**
      * Creates the application.
@@ -21,5 +28,10 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    public function tearDown()
+    {
+//        Artisan::call('migrate:rollback');
     }
 }
