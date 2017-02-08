@@ -1,3 +1,4 @@
+<!-- Anzeige der Batterieüberwachung -->
 <div class="panel panel-default pull-left batterie-panel ">
     <div class="panel-heading panel-heading-zd">
         <h3 class="panel-title panel-title-zd">Batterieüberwachung</h3>
@@ -9,7 +10,8 @@
             <div class="balken3"></div>
             <div class="balken4"></div>
             <div class="balken5"></div>
-            <div class="batterie discharge3" id="batterieladung"></div> {{-- hier discharge[ANZAHL]  oder charge[ANZAHL] anpassen --}}
+            <!-- Update der Ladebalken, bzw. Zuweisung der entsprechenden css-Klassen erfolgt in der central.js -->
+            <div class="batterie discharge3" id="batterieladung"></div>
         </div>
     </div>
 </div>

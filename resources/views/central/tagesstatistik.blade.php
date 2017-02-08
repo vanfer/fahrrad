@@ -1,3 +1,4 @@
+<!-- Anzeige der Tagesstatistik -->
 <div class="panel panel-default pull-left tagesstatistik-panel">
     <div class="panel-heading panel-heading-zd">
         <h3 class="panel-title panel-title-zd">Tagesstatistik</h3>
@@ -5,31 +6,35 @@
     <div class="panel-body panel-body-zd">
         <div class="row-fluid">
             <div class="col-lg-12 ">
-            <div class="col-lg-3 ">
-                <div class="circle">
-                    <div class="circle_value" id="statistik_teilnehmer">30</div>
+                <!-- Teilnehmer -->
+                <div class="col-lg-3 ">
+                    <div class="circle">
+                        <div class="circle_value" id="statistik_teilnehmer">0</div>
+                    </div>
+                    <div class="circle_headline">Teilnehmer</div>
                 </div>
-                <div class="circle_headline">Teilnehmer</div>
-            </div>
-            <div class="col-lg-3">
-                <div class="circle">
-                    <div class="circle_value" id="statistik_gesamtstrecke">300</div>
+                <!-- Kilometer -->
+                <div class="col-lg-3">
+                    <div class="circle">
+                        <div class="circle_value" id="statistik_gesamtstrecke">0</div>
+                    </div>
+                    <div class="circle_headline">Kilometer</div>
                 </div>
-                <div class="circle_headline">Kilometer</div>
-            </div>
-            <div class="col-lg-3 "
-            ><div class="circle">
-                    <div class="circle_value" id="statistik_hoehenmeter">300</div>
+                <!-- Höhenmeter -->
+                <div class="col-lg-3 ">
+                    <div class="circle">
+                        <div class="circle_value" id="statistik_hoehenmeter">0</div>
+                    </div>
+                    <div class="circle_headline">Höhenmeter</div>
                 </div>
-                <div class="circle_headline">Höhenmeter</div>
-            </div>
-            <div class="col-lg-3 ">
-                <div class="circle">
-                    <div class="circle_value" id="statistik_energie">300</div>
+                <!-- Energie -->
+                <div class="col-lg-3 ">
+                    <div class="circle">
+                        <div class="circle_value" id="statistik_energie">0</div>
+                    </div>
+                    <div class="circle_headline">Energie (kWh)</div>
                 </div>
-                <div class="circle_headline">Energie (kWh)</div>
             </div>
         </div>
-    </div>
     </div>
 </div>

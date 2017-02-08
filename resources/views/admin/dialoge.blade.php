@@ -97,6 +97,7 @@
         als inaktiv gekennzeichnet.</p>
 </div>
 
+<!-- Benutzerdokumentation Einstellungen -->
 <div id="hilfeEinstellungen" title="Hilfe" style="display: none;">
     <h3><b>Einstellungen</b></h3><hr/>
     <p>Es können folgende Einstellungen vorgenommen werden:</p>
@@ -108,10 +109,11 @@
                     Im <b>Gruppenmodus</b> wird ein Betriebsmodus ausgewählt, der für alle Fahrer gilt. </li></ul></lu>
         <li><b><u>Strecke:</u></b><br>Hier kann die Auswahl der Strecke vorgenommen werden.<br>
             Es steht, je nach Schweregrad ("leicht", "mittel", "schwer"), eine Strecke zur Auswahl.</li>
-        <li><b><u>Info</u></b><br>Enthält Informationen zur Software.</li>
     </ul>
+    <p>Des Weiteren beinhaltet der Reiter <b><u>Info</u></b> Informationen über die Anwendung.</p>
 </div>
 
+<!-- Fehler- und Warnmeldungen -->
 <div id="dialogValidationFailed" title="Fehler" style="display: none;">
     <h3><b>Üngültige Eingaben</b></h3><hr/>
     <p>Der Fahrer kann nicht hinzugefügt werden. Bitte überprüfen Sie die Eingaben und versuchen Sie es erneut.</p>
@@ -138,6 +140,13 @@
     <p>Das ausgewählte Fahrrad wird gerade von einem anderen Fahrer benutzt. Bitte wählen Sie ein anderes Fahrrad aus.</p>
 </div>
 
+{{--
+<div id="dialogFahrerNichtGefunden" title="Fehler" style="display: none;">
+    <h3><b>Fahrer nicht gefunden.</b></h3><hr/>
+    <p>Ein Fahrer mit dem eingegebenen Namen existiert nicht. Möchten Sie einen neuen Fahrer mit dem eingegebenen Namen hinzufügen?</p>
+</div>
+--}}
+
 <div id="dialogZuordnungLoeschen" title="Warnung" style="display: none;">
     <h3><b>Zuordnung löschen</b></h3><hr/>
     <p>Die Zuordnung vom Fahrer zum Fahrrad wird gelöscht. Möchten Sie die Zuordnung wirklich löschen?</p>
@@ -146,6 +155,11 @@
 <div id="dialogFahrerLoeschen" title="Warnung" style="display: none;">
     <h3><b>Fahrer löschen</b></h3><hr/>
     <p>Der Fahrer wird unwiderruflich aus der Datenbank gelöscht. Möchten Sie den Fahrer wirklich löschen?</p>
+</div>
+
+<div id="dialogEinstellungenSpeichern" title="Warnung" style="display: none;">
+    <h3><b>Einstellungen Speichern</b></h3><hr/>
+    <p>Sollen die Einstellungen wirklich gespeichert werden?</p>
 </div>
 
 <div id="addFahrer" title="Fahrer hinzufügen" style="display: none;">
@@ -222,7 +236,7 @@
 
                 <div class="col-md-6 validation-error-wrapper">
                     <div id="validation-error-gewicht" class="validation-error-msg"></div>
-                    <input id="gewicht" type="text" class="form-control validation-error-inputborder" name="gewicht" value="{{ old('gewicht') }}" placeholder="80" autofocus>
+                    <input id="gewicht" type="text" class="form-control" name="gewicht" value="{{ old('gewicht') }}" placeholder="80" autofocus>
 
                     @if ($errors->has('gewicht'))
                         <span class="help-block">
@@ -246,11 +260,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div id="dialogEinstellungenSpeichern" title="Warnung" style="display: none;">
-    <h3><b>Einstellungen Speichern</b></h3><hr/>
-    <p>Sollen die Einstellungen wirklich gespeichert werden?</p>
 </div>
 
 <!-- Einstellungen -->
@@ -280,7 +289,7 @@
                                 <label><input type="radio" name="radio-gruppenmodus" class="radio-modus" value="2">Gruppenmodus</label>
                             </div>
                         </fieldset>
-                        <div class="p-20 einstellungen-betriebsmodus" style="display: none">
+                        <div class="einstellungen-betriebsmodus" style="display: none">
                             <label for="betriebsmodus">Betriebsmodus</label>
                             <fieldset name="betriebsmodus" disabled>
                                 <div class="radio">
@@ -327,18 +336,20 @@
                     <div class="col-md-8">
                         <ul id="infobox">
                             <li><b>Name:</b> XXX</li>
-                            <li><b>Beschreibung:</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                                sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</li>
-                            <li><b>Maintainer:</b> SPIN/SPMI Fahrradkino</li>
-                            <li><b>Entwickler:</b> Enrico Costanzo, Alice Domandl, Clara Terbeck, Vanessa Ferrarello</li>
+                            <li><b>Beschreibung:</b> Die Anwendung dient dazu, ein gemeinsames Trainingserlebnis mit
+                                den zugehörigen Fahrradergometern und die direkte Nutzung der dabei erzeugten Energie
+                                zu ermöglichen, zu verwalten und darzustellen.</li>
+                            <br>
+                            <li><b>Entwickler:</b> Enrico Costanzo, Alice Domandl, Vanessa Ferrarello, Clara Terbeck </li>
+                            <li><b>Support:</b> Westfälische Hochschule Gelsenkirchen</li>
+                            <li><b>Aktuelle Version:</b> v1.0.0 </li>
                             <li><b>Erscheinungsjahr:</b> 2017</li>
-                            <li><b>Support:</b> W-HS</li>
-                            <li><b>Aktuelle Version:</b> Versionsnummer + Freigabedatum:</li>
-                            <li><b>Betriebssystem:</b> Windows, Unix, Mac OS</li>
-                            <li><b>Programmiersprache:</b></li>
-                            <li><b>deutschsprachig:</b> ja</li>
+                            <br>
+                            <li><b>Libraries & Frameworks:</b>
+                                    <li><a href="https://laravel.com/" target="_blank">Laravel v5.3</a></li>
+                                    <li><a href="http://getbootstrap.com" target="_blank">Bootstrap v3.3.7</a></li>
+                                    <li><a href="https://jquery.com/" target="_blank">jQuery JavaScript Library v3.1.1</a></li>
+                                    <li><a href="www.highcharts.com/license" target="_blank">Highcharts JS v5.0.6</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4">
@@ -358,10 +369,4 @@
     </div>
 </div>
 
-{{--
-<div id="dialogFahrerNichtGefunden" title="Fehler" style="display: none;">
-    <h3><b>Fahrer nicht gefunden.</b></h3><hr/>
-    <p>Ein Fahrer mit dem eingegebenen Namen existiert nicht. Möchten Sie einen neuen Fahrer mit dem eingegebenen Namen hinzufügen?</p>
-</div>
---}}
 

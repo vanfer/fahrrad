@@ -51,11 +51,12 @@ $(document).ready(function () {
         xAxis: {
             labels: {
                 formatter: function () {
-                    if (window.streckeData.labels[this.value]) return window.streckeData.labels[this.value].toFixed(2) + " m";
+                    if (window.streckeData.labels[this.value]) return window.streckeData.labels[this.value] + " m";
                 },
                 style: {
                     fontSize: '14px',
-                }
+                },
+                rotation: -45,
             }
         },
         yAxis: {
@@ -165,7 +166,7 @@ $(document).ready(function () {
             spacingRight: 0
         },
         title: {
-            text: '0 W',
+            text: '',
             style: {
                 fontSize: '30px'
             }
@@ -328,6 +329,8 @@ function updateFahrradKasten(fahrrad) {
 
                 $("#fahrrad-aktiv-wrapper-" + fahrrad.id).css("display", "none");
                 $("#fahrrad-timeout-wrapper-" + fahrrad.id).css("display", "block");
+                $("#timeout-restzeit-" + fahrrad.id).html( window.max_timeout - zeit_seit_letztem_timestamp );
+
             }else if(zeit_seit_letztem_timestamp >= window.max_timeout){ // Timeout ist vorbei
                 console.log("Fahrrad #" + fahrrad.id + " wird abgemeldet");
                 window.fahrrad_letzteAktion[fahrrad.id - 1] = null;

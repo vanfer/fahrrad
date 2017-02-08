@@ -483,11 +483,12 @@ $(document).ready(function () {
         xAxis: {
             labels: {
                 formatter: function () {
-                    if (window.strecke_vorschau_data.labels[this.value]) return window.strecke_vorschau_data.labels[this.value].toFixed(2) + " m";
+                    if (window.strecke_vorschau_data.labels[this.value]) return window.strecke_vorschau_data.labels[this.value] + " m";
                 },
                 style: {
                     fontSize: '14px'
-                }
+                },
+                rotation: -45,
             }
         },
         yAxis: {
