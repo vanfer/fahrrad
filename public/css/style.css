@@ -525,8 +525,7 @@ span.glyphicon-alert{
 }
 
 #modusSlider .slider-selection {
-    background: #C9DCB5;
-    border: solid 1px;
+    background: #72B128;
 }
 
 #modusSlider .slider-handle {
@@ -536,7 +535,6 @@ span.glyphicon-alert{
 
 #modusSlider .slider-tick.round.in-selection {
     background: #72B128;
-    border: solid 1px;
 }
 
 /* ##### Fahrer #####*/
@@ -575,7 +573,18 @@ span.glyphicon-alert{
     cursor: default!important;
 }
 
-/* ##### Dialoge #####*/
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover,
+.pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+    background-color: #72B128;
+    border-color: #72B128;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #C9DCB5 !important;
+    border-color: #CAECA7 !important;
+}
+
+    /* ##### Dialoge #####*/
 .hilfe.ui-dialog {
     width: 600px !important;
     background-color: #F5F7FA;

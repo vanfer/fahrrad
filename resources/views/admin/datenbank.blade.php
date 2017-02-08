@@ -8,10 +8,6 @@
                         <span class="glyphicon glyphicon-plus"></span>
                         Fahrer hinzufügen
                     </button>
-                <div class="input-group col-md-4 pull-right">
-                    <input type="text" class="form-control" placeholder="Suche" id="q" name="q">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-                </div>
             </div>
             <span class="clearfix"></span>
         </div>

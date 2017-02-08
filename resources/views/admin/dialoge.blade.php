@@ -113,7 +113,7 @@
 </div>
 
 <div id="dialogValidationFailed" title="Fehler" style="display: none;">
-    <h3><b>Üngültige Eingaben</b></h3><hr/>
+    <h3><b>Ungültige Eingaben</b></h3><hr/>
     <p>Der Fahrer kann nicht hinzugefügt werden. Bitte überprüfen Sie die Eingaben und versuchen Sie es erneut.</p>
 </div>
 
