@@ -30,15 +30,17 @@
     </script>
 </head>
 <body>
-
+    <!-- Overlay beim Zugriff von mobilen Geräten -->
     <div class="smartphone-overlay">
-        <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="logo-smartphone">
+        <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="smartphone-overlay-logo">
         <div class="smartphone-overlay-text">
             <span>Die von Ihnen gewünschte Seite oder Funktion steht leider nicht zur Verfügung.</span>
         </div>
     </div>
 
+    <!-- App -->
     <div id="app">
+        <!-- Header -->
         <div class="header">
             <nav class="container-fluid">
                 <div class="logo">
@@ -52,14 +54,13 @@
             </nav>
         </div>
 
+        <!-- Content -->
         <div class="main-wrapper">
             @yield('content')
         </div>
-
     </div>
 
     <!-- Scripts -->
-
     <script src="{{ asset("js/libs/jquery.js") }}"></script>
     <script src="{{ asset("js/libs/jquery-ui.min.js") }}"></script>
     <script src="{{ asset("js/libs/jquery.dataTables.min.js") }}"></script>

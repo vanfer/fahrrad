@@ -8,7 +8,7 @@
     {{-- Anzeige der Diagramme  --}}
     @include("partial.charts")
 
-    {{-- Anzeige der Fahrerdetails  --}}
+    {{-- Anzeige der Fahrerinformationen  --}}
     @include("central.fahrrad-information")
 
     <div class ="container-fluid">
@@ -16,7 +16,7 @@
         @include("central.tagesstatistik")
         {{-- Anzeige der Highscore  --}}
         @include("central.highscore")
-        {{-- Anzeige der Batterieladung  --}}
+        {{-- Anzeige der Batterieüberwachung  --}}
         @include("central.batterieladung")
         <div class="clearfix"></div>
     </div>

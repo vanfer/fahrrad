@@ -1,4 +1,4 @@
-/* ##### General ##### */
+/* ############################## General ##################################### */
 * {}
 
 body{
@@ -6,35 +6,19 @@ body{
     font-family: "Arial";
 }
 
-.p-20{
-    padding: 20px !important;
-}
-
-.smartphone-overlay{
-    display: none;
-}
-
-.smartphone-overlay-text{
-    display: none;
-}
-
-.logo-smartphone{
-    display: none;
-}
-
 .main-wrapper{
-    width:100%;
-    margin:auto;
     height:100%;
+    margin:auto;
+    width:100%;
 }
 
 .header{
     background-color: #F5F7FA;
     border-color: #F5F7FA;
-    width:100%;
     margin:auto;
     padding-top: 1%;
     padding-bottom: 1%;
+    width:100%;
 }
 
 .softwaretitel-wrapper{
@@ -49,8 +33,8 @@ body{
 }
 
 .softwaretitel:hover{
-    text-decoration: none;
     color:#323133;
+    text-decoration: none;
 }
 
 .logo{
@@ -123,10 +107,10 @@ body{
     border: solid 1px black;
     border-radius: 2px;
     margin-bottom: 1.5% !important;
-    width:31%;
     margin-left:2%;
     min-height:293px;
     min-width: 300px;
+    width:31%;
 }
 
 .fahrerinformation{
@@ -170,7 +154,6 @@ body{
 .inaktives_fahrrad{
 }
 
-
 /* ### Timeout ### */
 .timeout-meldung{
     text-align: center;
@@ -181,9 +164,6 @@ body{
     margin: 0 auto 20px auto;
 }
 
-span.glyphicon-alert{
-    font-size: 2em;
-}
 
 /* ##### Tagesstatistik #####*/
 .tagesstatistik-panel{
@@ -273,52 +253,52 @@ span.glyphicon-alert{
     border-right:6px solid #AAB2BD;
     content:"";
     display:block;
-    height:88px;
-    width:40px;
     float:left;
-    z-index: 20000;
+    height:88px;
     position: absolute;
+    width:40px;
+    z-index: 20000;
 }
 
 .balken2{
     border-right:6px solid #AAB2BD;
     content:"";
     display:block;
-    height:88px;
-    width:40px;
-    margin-left:40px;
     float:left;
-    z-index: 20000;
+    height:88px;
+    margin-left:40px;
     position: absolute;
+    width:40px;
+    z-index: 20000;
 }
 
 .balken3{
     border-right:6px solid #AAB2BD;
     content:"";
     display:block;
-    height:88px;
-    width:40px;
-    margin-left:80px;
     float:left;
-    z-index: 20000;
+    height:88px;
+    margin-left:80px;
     position: absolute;
+    width:40px;
+    z-index: 20000;
 }
 
 .balken4{
     border-right:6px solid #AAB2BD;
     content:"";
     display:block;
-    height:88px;
-    width:40px;
-    margin-left:120px;
     float:left;
-    z-index: 20000;
+    height:88px;
+    margin-left:120px;
     position: absolute;
+    width:40px;
+    z-index: 20000;
 }
 
 .balken5{
-    margin-left:160px;
     border-right:none;
+    margin-left:160px;
 }
 
 .batterie{
@@ -458,11 +438,32 @@ span.glyphicon-alert{
 .discharge6{
 }
 
+/* ##### Charts #### */
+
+.highcharts-axis-line {
+    stroke:#3C3B3D;
+}
+.highcharts-xaxis-grid .highcharts-grid-line {
+    stroke-width: 1px;
+    stroke: #CCD1D9;
+}
+
+/* ############################## Login ##################################### */
+.alertFalschesPasswort{
+    background-color: #D8334A;
+    border: 1px solid black;
+    border-radius: 4px;
+    color: white;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
 /* ############################## Zentrales Display ##################################### */
 
 .btn {
     border: solid 1px;
-    margin-left:5px; /* oder 2px oder -1 px damit die doppelkante weg geht*/
+    margin-left:5px;
 }
 
 .form-control {
@@ -598,9 +599,9 @@ span.glyphicon-alert{
 }
 
 .warnung.ui-dialog{
-    width:400px !important;
     background-color: #F5F7FA;
     border:2px solid black !important;
+    width:400px !important;
 }
 
 .warnung.ui-dialog > .ui-dialog-buttonpane{
@@ -608,15 +609,15 @@ span.glyphicon-alert{
 }
 
 .warnung.ui-dialog > .ui-widget-header{
+    color: white;
     background-color: #BF263C;
     border-color: black;
-    color: white;
 }
 
 .fehler.ui-dialog{
-    width:400px !important;
     background-color: #F5F7FA;
     border:2px solid black !important;
+    width:400px !important;
 }
 
 .fehler.ui-dialog > .ui-dialog-buttonpane{
@@ -624,33 +625,33 @@ span.glyphicon-alert{
 }
 
 .fehler.ui-dialog > .ui-widget-header{
+    color: white;
     background-color: #AAB2BD;
     border-color: black;
-    color: white;
 }
 
 .addFahrer.ui-dialog{
-    width: 650px !important;
     background-color: #F5F7FA;
     border: 2px solid black !important;
+    width: 650px !important;
 }
 
 .addFahrer.ui-dialog > .ui-widget-header{
+    color: white;
     background-color: #72B128;
     border-color: black;
-    color: white;
 }
 
 .einstellungen.ui-dialog{
-    width: 1000px !important;
     background-color: #F5F7FA;
     border: 2px solid black !important;
+    width: 1000px !important;
 }
 
 .einstellungen.ui-dialog > .ui-widget-header{
+    color: white;
     background-color: #72B128;
     border-color: black;
-    color: white;
 }
 
 .ui-widget-overlay.custom-overlay {
@@ -659,15 +660,31 @@ span.glyphicon-alert{
     z-index: 1040;
 }
 
-.tab-wrapper{
-    padding:10px;
-    min-height: 400px !important;
+.validation-error-msg{
+    color:red;
+    font-size: 0.8em;
+    padding: 0 0 2px 2px;
+}
+
+.validation-error-border{
+    border-color: red;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 0, 13, 0.6);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 0, 13, 0.6);
 }
 
 /* ### Einstellungen ### */
+.tab-wrapper{
+    min-height: 400px !important;
+    padding:10px;
+}
 
 #einstellungen{
     padding:10px 10px 20px 10px;
+}
+
+.einstellungen-betriebsmodus{
+    padding: 20px !important;
 }
 
 .streckenauswahl-wrapper{
@@ -686,63 +703,45 @@ span.glyphicon-alert{
     padding: 2px;
 }
 
-/* ### Formular Fahrer hinzufügen ### */
+/* ### Overlay beim Zugriff von mobilen Geräten ### */
 
-.validation-error-msg{
-    font-size: 0.8em;
-    color:red;
-    padding: 0 0 2px 2px;
+.smartphone-overlay{
+    display: none;
+}
+.smartphone-overlay-text{
+    display: none;
+}
+.smartphone-overlay-logo{
+    display: none;
 }
 
-.validation-error-border{
-    border-color: red;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 0, 13, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 0, 13, 0.6);
-}
-
-/* ##### Charts #### */
-
-.highcharts-axis-line {
-    stroke:#3C3B3D;
-}
-.highcharts-xaxis-grid .highcharts-grid-line {
-    stroke-width: 1px;
-    stroke: #CCD1D9;
-}
-
-/* ##### Misc ##### */
-
-/* Breite beträgt höchstens 1366px */
-/*@media handheld and (max-device-width: 1366px)  {
-
+/*
+@media screen and (max-device-width: 1366px)  {
     #app{
        display: none;
     }
-
     .smartphone-overlay{
-        display: block;
-        width:100%;
-        height:100%;
         background-color: #F5F7FA;
-        position: absolute;
+        display: block;
+        height:100%;
         padding:5%;
+        position: absolute;
+        width:100%;
     }
-
-    .logo-smartphone{
+    .smartphone-overlay-logo{
         display: block;
         margin:auto;
     }
-
     .smartphone-overlay-text{
         display: block;
         margin:auto;
         padding:25px;
         text-align: center;
     }
-}*/
+}
+*/
 
-/* ##### Mobile ##### */
+/* #################################### Mobile ################################## */
 #fahrrad-information-wrapper-mobile{
     height: 25%;
 }
