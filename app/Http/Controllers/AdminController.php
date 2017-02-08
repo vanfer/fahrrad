@@ -4,25 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Fahrer;
 use App\Fahrrad;
-use App\Http\Middleware\Admin;
 use App\Modus;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
-use League\Flysystem\Exception;
 
 /**
  * Class AdminController
+ *
+ * Diese Klasse verwaltet den Login/Logout des Adminbereiches.
+ *
  * @package App\Http\Controllers
  */
 class AdminController extends Controller
 {
     /**
+     * Admin Passwort.
+     *
+     * Das Passwort wird für den Zugang zum Adminbereich benötigt.
+     *
      * @var string
      */
     protected $admin_password = "test";
 
     /**
-     * Show the application dashboard.
+     * Zeigt den Adminbereich an.
+     *
+     * Es werden die folgenden Datensätze übergeben:
+     * * Alle Fahrer
+     * * Alle Modi
+     * * Alle Fahrräder
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,6 +44,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Zeigt die Loginseite zum Adminbereich.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getLogin()
@@ -43,8 +54,17 @@ class AdminController extends Controller
     }
 
     /**
+     * Verarbeitet den Login Request.
+     *
+     * Erfolg:
+     * * Der Benutzer wird in den Adminbereich weitergeleitet
+     * * Ein Cookie wird gesetzt
+     *
+     * Fehler:
+     * * Der Benutzer bleibt auf der Seite und bekommt eine Fehlermeldung angezeigt
+     *
      * @param Request $request
-     * @return $this
+     * @return Redirect(Admin)
      */
     public function login(Request $request)
     {
@@ -56,6 +76,10 @@ class AdminController extends Controller
     }
 
     /**
+     * Meldet den Benutzer aus dem Adminbereich ab.
+     *
+     * * Der Cookie wird gelöscht.
+     *
      * @return $this
      */
     public function logout()

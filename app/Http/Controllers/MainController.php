@@ -14,12 +14,22 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * Class MainController
+ *
+ * Diese Klasse stellt allgemeine Funktionalität bereit, die nicht an bestimmte Klassen gebunden ist.
+ *
  * @package App\Http\Controllers
  */
 class MainController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Zeigt die Zentrale Ansicht an.
+     *
+     * Die Ansicht beinhaltet die Diagramme für
+     * * Strecke
+     * * Leistung
+     * * Gesamtleistung
+     *
+     * Außerdem beinhaltet sie die Informationen zu den Fahrrädern und Statistik, sowie Highscore und die Batterieanzeige.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,10 +38,17 @@ class MainController extends Controller
         return view('central.index')->with("fahrraeder", Fahrrad::all());
     }
 
-    // Fahrer wechselt den Streckenabschnitt
-    // Update von fahrrad.abschnitt_id / fahrrad.sollDrehmoment (abhängig von fahrer.gewicht und fahrer.goresse)
-    // Update und Berechnung der zurückgelegten Hoehenmeter im Abschnitt
     /**
+     * Ändert den Abschnitt auf dem sich ein Fahrrad im Streckenmodus befindet.
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrrad-ID
+     * * Abschnitt-ID
+     *
+     * Folgende Aktionen werden ausgeführt:
+     * * Update von fahrrad.abschnitt_id und fahrrad.sollDrehmoment (abhängig von fahrer.gewicht und fahrer.goresse)
+     * * Update und Berechnung der zurückgelegten Hoehenmeter im Abschnitt
+     *
      * @param Request $request
      */
     public function setAbschnitt(Request $request)
@@ -86,8 +103,16 @@ class MainController extends Controller
     }
 
     /**
+     * Gibt Informationen zur Strecke und deren zugehörige Abschnitte zurück
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Strecke-ID
+     *
      * @param Strecke $strecke
-     * @return array
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung:
+     *  * { "strecke" : { "name": Streckenname, "abschnitte" : Abschnitte (JSON Array) } }
      */
     public function strecke(\App\Strecke $strecke)
     {
@@ -95,7 +120,11 @@ class MainController extends Controller
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * Gibt Informationen zu allen Strecken in der Datenbank zurück.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung:
+     *  * Strecken (JSON Array)
      */
     public function strecken()
     {
@@ -103,7 +132,11 @@ class MainController extends Controller
     }
 
     /**
+     * Gibt die zurückgelegte Strecke aller Fahrer zurück.
+     *
      * @return \Illuminate\Http\JsonResponse
+     * Rückmeldung (JSON Array):
+     * * { "fahrerstrecke" : { "id" : Fahrer-ID, "name": Fahrer-Name, "strecke" : Zurückgelegte Strecke in Metern } }
      */
     public function fahrerstrecke(){
         $fahrraeder = Fahrrad::where("fahrer_id", "<>", null)->get();
@@ -121,7 +154,11 @@ class MainController extends Controller
     }
 
     /**
+     * Gibt die momentan erzeugte Leistung aller Fahrer zurück.
+     *
      * @return \Illuminate\Http\JsonResponse
+     * Rückmeldung (JSON Array):
+     * * { "fahrerleistung" : { "id" : Fahrer-ID, "name": Fahrer-Name, "istLeistung" : Erzeugte Leistung in Watt } }
      */
     public function leistung()
     {
@@ -140,7 +177,11 @@ class MainController extends Controller
     }
 
     /**
+     * Gibt die aktuelle Gesamtstatistik aller Teilnehmer zurück:
+     *
      * @return \Illuminate\Http\JsonResponse
+     * Rückmeldung:
+     * * { "statistik" : {"teilnehmer" : Anzahl Teilnehmer, "kilometer": Gesamtstrecke in Km, "hoehenmeter": Gesamthoehenmeter in Meter, "energie": Gesamtenergie (Durchschnitt) } }
      */
     public function statistik()
     {
@@ -150,9 +191,11 @@ class MainController extends Controller
     }
 
     /**
-     * @param Request $request
+     * Statistik hinzufügen.
+     *
+     * Fügt einen Eintrag für alle aktiven Fahrer in die Statistik Tabelle ein, anhand der aktuell vorliegenden Daten
      */
-    public function statistikUpdate(Request $request)
+    public function statistikUpdate()
     {
         $fahrraeder = Fahrrad::all();
 
@@ -165,7 +208,11 @@ class MainController extends Controller
     }
 
     /**
+     * Gibt die aktuellen Batteriespannung zurück.
+     *
      * @return \Illuminate\Http\JsonResponse
+     * Rückmeldung:
+     * * { "batterie" : Spannung in Volt }
      */
     public function batterie()
     {
@@ -175,6 +222,10 @@ class MainController extends Controller
     }
 
     /**
+     * Gibt die aktuelle Highscoreliste zurück.
+     *
+     * Die besten (bis zu) 3 Fahrer werden mit Namen und Durchschnittsleistung angegeben.
+     *
      * @return array
      */
     public function highscore(){

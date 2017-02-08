@@ -12,16 +12,35 @@ use Illuminate\Support\Facades\Input;
 
 /**
  * Class FahrradController
+ *
+ * Diese Klasse stellt Methoden bereit um Fahrraddatensätze
+ * * auszugeben
+ * * zu ändern
+ * * eine Zuordnung herzustellen
+ * * eine Zuordnung zu löschen
+ *
  * @package App\Http\Controllers
  */
 class FahrradController extends Controller
 {
     /**
-     * Update the specified resource in storage.
+     * Update des Fahrraddatensatzes.
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrrad-ID
+     *
+     * Zusätzlich die zu verändernden Felder:
+     *
+     * * strecke_update_drehmoment (float) (optional)
+     * * * Das Drehmoment hängt von der gewählten Strecke ab und kann mit dem Parameter verändert werden
+     * * modus_id (int)
+     * * modus_value (int)
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  \App\Fahrrad $fahrrad
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung:
+     *  Fahrraddatensatz (JSON Array)
      */
     public function update(Request $request, \App\Fahrrad $fahrrad)
     {
@@ -60,10 +79,31 @@ class FahrradController extends Controller
     }
 
     /**
+     * Stellt eine Zuordnung von Fahrer zu Fahrrad her.
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrrad-ID
+     * * Fahrer-ID
+     *
      * @param Request $request
-     * @param $fahrrad_id
-     * @param $fahrer_id
+     * @param Int $fahrrad_id
+     * @param Int $fahrer_id
      * @return \Illuminate\Http\JsonResponse
+     * Rückmeldung bei Erfolg:
+     * * { "fahrrad" : Fahrraddatensatz (JSON Array), "fahrer" : Fahrerdatensatz (JSON Array), "modi" : Alle Modi (JSON Array) }, Status 200
+     *
+     * Rückmeldung bei Fehler:
+     * * Fahrer schon zugeordnet:
+     * { msg: "Fahrer schon zugeordnet", "err" : 1 }, Status 200
+     *
+     * * Fahrrad ist besetzt:
+     * { msg: "Fahrrad ist besetzt", "err" : 2 }, Status 200
+     *
+     * * Fahrrad nicht gefunden:
+     * { msg: "Fahrrad nicht gefunden", "err" : 3 }, Status 200
+     *
+     * * Fahrer nicht gefunden:
+     * { msg: "Fahrer nicht gefunden", "err" : 4 }, Status 200
      */
     public function zuordnungHerstellen(Request $request, $fahrrad_id, $fahrer_id)
     {
@@ -110,8 +150,17 @@ class FahrradController extends Controller
     }
 
     /**
+     * Löscht die Zuordnung eines Fahrers zum angegebenen Fahrrad
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrrad-ID (int)
+     *
      * @param Fahrrad $fahrrad
      * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung bei Erfolg:
+     * { msg: "ok", "email" : Boolean=Statistik-Email wurde gesendet }, Status 200
+     * * Rückmeldung bei Fehler:
+     * { msg: "error" }, Status 400
      */
     public function zuordnungLoeschen(\App\Fahrrad $fahrrad)
     {
@@ -147,12 +196,15 @@ class FahrradController extends Controller
             }
         }
 
-        return response()->json(["msg" => "Error"], 400);
+        return response()->json(["msg" => "error"], 400);
     }
 
     /**
      * Gibt die Daten zu allen Fahrrädern, inkl. Modi und Fahrerinformationen zurück
+     *
      * @return \Illuminate\Http\JsonResponse
+     * Rückmeldung:
+     * * { data: { "fahrrad" : Fahrraddatensatz  (JSON Array) } }, Status 200
      */
     public function getData()
     {

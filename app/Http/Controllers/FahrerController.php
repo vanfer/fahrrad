@@ -9,15 +9,34 @@ use League\Flysystem\Exception;
 
 /**
  * Class FahrerController
+ *
+ * Diese Klasse stellt Methoden bereit um Fahrer
+ * * anzuzeigen
+ * * hinzuzufügen
+ * * zu löschen
+ * * zu ändern
+ * * alle Fahrernamen auszugeben.
+ *
  * @package App\Http\Controllers
  */
 class FahrerController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * Erstellt einen neuen Fahrer und speichert diesen in der Datenbank
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Name (string)
+     * * E-Mail (string) (optional)
+     * * Gewicht in kg (float) (optional, Standard 80)
+     * * Größe in Metern (float) (optional, Standard 1.80)
+     * * Wunschbetriebsmodus (int) (optional, Standard 1 [Strecke])
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse, Status 200
+     * * Rückmeldung bei Erfolg:
+     * { "msg" : "ok", "err" : 0, "fahrer" : Fahrerdatensatz }
+     * * Rückmeldung bei Fehler:
+     * { "msg" : "Name schon vorhanden", "err" : 1 }
      */
     public function store(Request $request)
     {
@@ -66,10 +85,17 @@ class FahrerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Gibt einen vorhandenen Fahrerdatensatz zurück
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrer-ID (int)
      *
      * @param  int  \App\Fahrer $fahrer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung bei Erfolg:
+     *  Fahrerdatensatz (JSON Array)
+     * * Rückmeldung bei Fehler:
+     * Exception
      */
     public function show(\App\Fahrer $fahrer)
     {
@@ -77,11 +103,25 @@ class FahrerController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update eines vorhandenen Fahrerdatensatzes
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrer-ID (int)
+     *
+     * Zusätzlich die zu verändernden Felder:
+     * * Name (string) (optional)
+     * * E-Mail (string) (optional)
+     * * Gewicht in kg (float) (optional)
+     * * Größe in Metern (float) (optional)
+     * * Wunschbetriebsmodus (int) (optional)
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  \App\Fahrer $fahrer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung bei Erfolg:
+     *  Fahrerdatensatz (JSON Array)
+     * * Rückmeldung bei Fehler:
+     * Exception
      */
     public function update(Request $request, \App\Fahrer $fahrer)
     {
@@ -116,10 +156,17 @@ class FahrerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Entfernt einen Fahrer aus der Datenbank
+     *
+     * Es wird folgender Input im Request erwartet:
+     * * Fahrer-ID (int)
      *
      * @param  int  \App\Fahrer $fahrer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung bei Erfolg:
+     * { msg: "ok" }, Status 200
+     * * Rückmeldung bei Fehler:
+     * { msg: "error" }, Status 400
      */
     public function destroy(\App\Fahrer $fahrer)
     {
@@ -143,7 +190,12 @@ class FahrerController extends Controller
 
 
     /**
+     * Gibt alle in der Datenbank vorhandenen Fahrernamen zurück.
+     *
      * @return \Illuminate\Http\JsonResponse
+     * * Rückmeldung:
+     * * Das "names" Feld kann leer sein.
+     * * { msg: "ok", "names": Fahrernamen (JSON Array) }, Status 200
      */
     public function getAllNames()
     {
@@ -154,6 +206,6 @@ class FahrerController extends Controller
             array_push($result, $name->name);
         }
 
-        return response()->json(["msg" => "ok", "names" => $result]);
+        return response()->json(["msg" => "ok", "names" => $result], 200);
     }
 }

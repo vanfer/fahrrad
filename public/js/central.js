@@ -1,4 +1,4 @@
-// WICHTIG: IP ändern, oder einfach localhost nehmen!
+// Basispfad der API
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
 $(document).ready(function () {
