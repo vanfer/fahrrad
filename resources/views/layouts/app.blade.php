@@ -44,11 +44,14 @@
         <div class="header">
             <nav class="container-fluid">
                 <div class="logo">
-                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo" class="pull-right">
+                    <img src="{{URL::asset('/img/whs_logo.png')}}" alt="Logo der W-HS" class="pull-right">
                 </div>
                 <div class="softwaretitel-wrapper">
+                    <div class="logo">
+                            <img src="{{URL::asset('/img/cynergy_logo.png')}}" alt="Logo CyNergy" class="pull-left">
+                        </div>
                     <a class="softwaretitel" href="{{ url('/') }}">
-                        <span>SPIN WiSe 16/17 Fahrradergometer</span>
+                       <span>Softwareprojekt WiSe 16/17</span>
                     </a>
                 </div>
             </nav>
