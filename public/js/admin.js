@@ -238,8 +238,6 @@ $(document).ready(function () {
         var form = e.currentTarget.closest("form");
 
         var validation = validateInput(form);
-        console.log(validation);
-
         if(!validation.valid) {
             $("#dialogValidationFailed").dialog({
                 buttons : {
@@ -269,7 +267,10 @@ $(document).ready(function () {
                 var status = xhr.status;
 
                 if(data.err == 0){
-                    var template = '<tr draggable="true" id="' + data.fahrer.id + '">' +
+                    var element = $('#userTable tbody tr:last').attr("class");
+                    var even_odd = element == "even" ? "odd" : "even";
+
+                    var template = '<tr draggable="true" id="' + data.fahrer.id + '" ondragstart="drag(event)" role="row" class="' + even_odd + '">' +
                         '<th id="th_fahrer_id">' +
                         '<fieldset>' +
                         '<input type="radio" name="radio_fahrer_id" class="radio-fahrer-id" value="' + data.fahrer.id + '">' +
@@ -293,11 +294,16 @@ $(document).ready(function () {
                         '</th>' +
                         '</tr>';
 
-                    $('#userTable tr:last').after(template);
+                    var num_rows = $("#userTable tr").length - 1;
+                    if(num_rows == 1 && $("#userTable tbody tr:first td").length == 1){
+                        console.log("was empty");
+                        $("#userTable tbody").html("");
+                    }
+
+                    $('#userTable tbody').append(template);
                     $("#userTable").editableTableWidget();
 
                     $("#addFahrer").dialog("close");
-                    window.location.reload();
                 }else if(data.err == 1){
                     $("#dialogFahrernameSchonVergeben").dialog({
                         buttons : {
@@ -342,6 +348,12 @@ $(document).ready(function () {
 
                         if(status == 200){
                             $(fahrer_tr).remove();
+
+                            var num_rows = $("#userTable tr").length - 1;
+                            if(num_rows == 0){
+                                var template_empty = '<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">Keine Daten in der Tabelle vorhanden</td></tr>';
+                                $("#userTable tbody").html(template_empty);
+                            }
 
                             var fahrrad_kasten = $("#panelBodyAdmin-"+data.id);
                             fahrrad_kasten.html("Fahrrad ist inaktiv");
