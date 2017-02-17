@@ -348,6 +348,19 @@ $(document).ready(function () {
         numbersOnly(this);
     });
 
+
+    /*
+    * Fixme:
+    * Neue Zeilen werden im DOM hinzugefügt, das DataTable Plugin kann aber DOM Änderungen nicht neu laden.
+    * Daher sollten diese per rows.add() Methode eingefügt / per rows.delete() Methode gelöscht werden.
+    * Dies erfordert eine neue Implementierung der Tabelle.
+    * */
+    $("#userTable").DataTable({
+        "language": {
+            search: "_INPUT_",
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+        }
+    });
     $("#userTable").editableTableWidget();
     $("#userTable").on("click", ".btnDelete", function () {
         var form = $(this).closest("form");
@@ -436,12 +449,6 @@ $(document).ready(function () {
     $("#userTable").on("click", ".radio-fahrer-id", function () {
         window.selectedUserRow = $(this).val();
         window.selectedUserMode = $(this).parents("tr").find("select").val();
-    });
-    $("#userTable").DataTable({
-        "language": {
-            search: "_INPUT_",
-            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
     });
 
     $("#btnHilfeTabelle").on("click", function() {
