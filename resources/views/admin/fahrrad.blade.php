@@ -73,11 +73,9 @@
                             <div class="col-md-6">Modus Option</div>
                             <div id="modus-option-{{ $fahrrad->id }}" class="col-md-3">
                                 @if($fahrrad->modus_id == 2)     <!-- Drehmoment -->
-                                    <input data-slider-id="modusSlider" id="{{ $fahrrad->modus_id }}" class="modus_option" type="text" data-provide="slider" data-slider-ticks="[3, 6, 9]" data-slider-ticks-labels='["leicht", "mittel", "schwer"]' data-slider-step="3" data-slider-value="{{ ($fahrrad->sollDrehmoment == null) ? 200 : $fahrrad->sollDrehmoment }}" data-slider-tooltip="hide"/>
-                                    <!-- <input type="range" min="3" max="9" step="3" value="{{ ($fahrrad->sollDrehmoment == null) ? 200 : $fahrrad->sollDrehmoment }}" id="{{ $fahrrad->modus_id }}" class="modus_option" /> -->
+                                    <input data-slider-id="modusSlider" id="{{ $fahrrad->modus_id }}" class="modus_option" type="text" data-provide="slider" data-slider-ticks="[3, 6, 9]" data-slider-ticks-labels='["leicht", "mittel", "schwer"]' data-slider-step="3" data-slider-value="{{ ($fahrrad->sollDrehmoment == null) ? 6 : $fahrrad->sollDrehmoment }}" data-slider-tooltip="hide"/>
                                 @elseif($fahrrad->modus_id == 3) <!--  Leistung  -->
-                                    <input data-slider-id="modusSlider" id="{{ $fahrrad->modus_id }}" class="modus_option" type="text" data-provide="slider" data-slider-ticks="[30, 60, 90]" data-slider-ticks-labels='["leicht", "mittel", "schwer"]' data-slider-step="30" data-slider-value="{{ ($fahrrad->sollLeistung == null) ? 200 : $fahrrad->sollLeistung }}" data-slider-tooltip="hide"/>
-                                    <!-- <input type="range" min="30" max="90" step="30" value="{{ ($fahrrad->sollLeistung == null) ? 200 : $fahrrad->sollLeistung }}" id="{{ $fahrrad->modus_id }}" class="modus_option" /> -->
+                                    <input data-slider-id="modusSlider" id="{{ $fahrrad->modus_id }}" class="modus_option" type="text" data-provide="slider" data-slider-ticks="[30, 60, 90]" data-slider-ticks-labels='["leicht", "mittel", "schwer"]' data-slider-step="30" data-slider-value="{{ ($fahrrad->sollLeistung == null) ? 60 : $fahrrad->sollLeistung }}" data-slider-tooltip="hide"/>
                                 @endif
                             </div>
                         </div>

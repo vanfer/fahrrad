@@ -125,6 +125,11 @@ class FahrradController extends Controller
 
                 if(Input::has("modus_id")){
                     $fahrrad->modus_id = Input::get("modus_id");
+                    if($fahrrad->modus_id == 2){
+                        $fahrrad->sollDrehmoment = 6;
+                    }elseif ($fahrrad->modus_id == 3){
+                        $fahrrad->sollLeistung = 60;
+                    }
                 }
 
                 $fahrer->vorgang = str_random(20);

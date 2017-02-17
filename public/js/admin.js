@@ -81,41 +81,57 @@ $(document).ready(function () {
             data: { modus_id: $(this).val() }
         }).done(function (data, statusText, xhr){
             if(xhr.status == 200){
-                // Hack
-                window.location.reload();
+                var el = $(context).find("div.row.modus");
+                if(el.length > 0){
+                    el.remove();
+                }
+
+                if(data.modus_id != 1){
+                    var template =  '<div class="row modus">' +
+                                    '	<div class="col-md-6">Modus Option</div>' +
+                                    '<div id="modus-option-' + data.id + '" class="col-md-3">';
+                        template += '<div id="modus-slider-' + data.id + '" class="modus_option"></div>';
+                        template += '</div>' +
+                                    '</div>';
+
+                    $(context).append(template);
+                }
+
+                updateModusSlider(data.modus_id, data.id);
             }
         });
     });
 
     // Modus Option anpassen
-    $(".modus_option").each(function () {
-        $(this).on("change", function () {
-            var value_html = $(this).parents(".row").find(".modus_value");
+    setInterval(function(){
+        $(".modus_option").each(function(){
+            $(this).off("change").on("change", function () {
+                var value_html = $(this).parents(".row").find(".modus_value");
 
-            var modus_id = $(this).parents(".row").find("#betriebsmodusAuswahlFahrrad").val();
-            var modus_value = $(this).val();
+                var modus_id = $(this).parents(".row").find("#betriebsmodusAuswahlFahrrad").val();
+                var modus_value = $(this).val();
 
-            var einheit = (modus_id == 2) ? "Nm" : ((modus_id == 3) ? "W" : "");
-            value_html.html($(this).val() + " " + einheit);
+                var einheit = (modus_id == 2) ? "Nm" : ((modus_id == 3) ? "W" : "");
+                value_html.html($(this).val() + " " + einheit);
 
-            var fahrrad_id = $(this).parents(".panelBodyAdmin").attr("id").split("-")[1];
+                var fahrrad_id = $(this).parents(".panelBodyAdmin").attr("id").split("-")[1];
 
-            // Ajax /fahrrad/ID PUT - modus_id, modus_value
-            $.ajax({
-                url: BASE_PATH + "fahrrad/" + fahrrad_id,
-                method: "PUT",
-                data: {
-                    modus_id: modus_id,
-                    modus_value: modus_value
-                }
-            }).done(function (data, statusText, xhr){
-                if(xhr.status == 200){
-                    // Hack
-                    window.location.reload();
-                }
+                // Ajax /fahrrad/ID PUT - modus_id, modus_value
+                $.ajax({
+                    url: BASE_PATH + "fahrrad/" + fahrrad_id,
+                    method: "PUT",
+                    data: {
+                        modus_id: modus_id,
+                        modus_value: modus_value
+                    }
+                }).done(function (data, statusText, xhr){
+                    if(xhr.status == 200){
+                        console.log("modus value update: ", fahrrad_id, modus_id, modus_value);
+                    }
+                });
             });
         });
-    });
+    },1000);
 
     function getRandomName(input_field) {
         //Zufallsnamen, max. 19 Zeichen
@@ -280,13 +296,13 @@ $(document).ready(function () {
                         '<td id="email">' + data.fahrer.email + '</td>' +
                         '<td id="gewicht">' + data.fahrer.gewicht + '</td>' +
                         '<td id="groesse">' + data.fahrer.groesse + '</td>' +
-                        '<td id="betriebsmodus">' +
+                        '<th id="betriebsmodus">' +
                         '<select class="form-control" id="betriebsmodusAuswahlFahrer">' +
                         '<option value="1" ' + ((data.fahrer.modus_id == 1) ? 'selected' : '') + '>Strecke</option>' +
                         '<option value="2" ' + ((data.fahrer.modus_id == 2) ? 'selected' : '') + '>Konstantes Drehmoment</option>' +
                         '<option value="3" ' + ((data.fahrer.modus_id == 3) ? 'selected' : '') + '>Konstante Leistung</option>' +
                         '</select>' +
-                        '</td>' +
+                        '</th>' +
                         '<th>' +
                         '<div class="btn btn-default btnDelete">' +
                         '<span class="glyphicon glyphicon-trash"></span>' +
@@ -296,12 +312,14 @@ $(document).ready(function () {
 
                     var num_rows = $("#userTable tr").length - 1;
                     if(num_rows == 1 && $("#userTable tbody tr:first td").length == 1){
-                        console.log("was empty");
                         $("#userTable tbody").html("");
                     }
 
                     $('#userTable tbody').append(template);
-                    $("#userTable").editableTableWidget();
+
+                    setTimeout(function () {
+                        $("#userTable").editableTableWidget();
+                    },500);
 
                     $("#addFahrer").dialog("close");
                 }else if(data.err == 1){
@@ -422,7 +440,7 @@ $(document).ready(function () {
     $("#userTable").DataTable({
         "language": {
             search: "_INPUT_",
-            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json",
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         }
     });
 
@@ -648,7 +666,18 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
                 '	</form>' +
                 '</div>';
 
+            if(fahrrad.modus_id != 1){ // Nicht Streckenmodus
+                template += '<div class="row modus">' +
+                    '	<div class="col-md-6">Modus Option</div>' +
+                    '<div id="modus-option-' + fahrrad.id + '" class="col-md-3">';
+                template += '<div id="modus-slider-' + fahrrad.id + '" class="modus_option"></div>';
+                template += '</div>' +
+                            '</div>';
+            }
+
             $(fahrerdetailElement).html(template);
+
+            updateModusSlider(fahrrad.modus_id, fahrrad.id);
 
             $(btnAbmelden).css("display", "block");
             $(btnAnmelden).css("display", "none");
@@ -660,9 +689,32 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
         $(btnAbmelden).css("display", "none");
         $(btnAnmelden).css("display", "block");
     }
+}
 
-    // Hack
-    window.location.reload();
+function updateModusSlider(modus, id){
+    if(modus == 2){ // Drehmoment
+        $("#modus-slider-" + id).slider({
+            id: "modusSlider",
+            min: 3,
+            max: 9,
+            step: 3,
+            ticks: [3,6,9],
+            ticks_labels: ["leicht", "mittel", "schwer"],
+            value: 6,
+            tooltip: "hide"
+        });
+    }else if(modus == 3){ // Leistung
+        $("#modus-slider-" + id).slider({
+            id: "modusSlider",
+            min: 30,
+            max: 90,
+            step: 30,
+            ticks: [30,60,90],
+            ticks_labels: ["leicht", "mittel", "schwer"],
+            value: 60,
+            tooltip: "hide"
+        });
+    }
 }
 
 // Im Intervall 2s ausführen
