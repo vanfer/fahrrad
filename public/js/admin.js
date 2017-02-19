@@ -658,7 +658,7 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
                 '</div>' +
                 '<div class="row">' +
                 '   <div class="col-md-6">Fahrdauer</div>' +
-                '   <div id="fahrdauer-anzeige-{{ $fahrrad->id }}" class="col-md-4">00:00:00</div>' +
+                '   <div id="fahrdauer-anzeige-' + fahrrad.id + '" class="col-md-4">00:00:00</div>' +
                 '</div>' +
                 '<div class="row">' +
                 '	<form action="./fahrrad/'+fahrrad.id+'" method="PUT">' +
