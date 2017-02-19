@@ -209,7 +209,7 @@ body{
     background: #E6E9ED!important;
     border: solid 1px black;
     border-radius: 2px;
-    min-height:250px;
+    height:250px;
     margin-left:2%;
     margin-bottom: 1.5% !important;
     min-width: 300px;
@@ -757,6 +757,8 @@ body{
 
 @media screen and (max-device-width: 1900px) {
     .highscore-panel{
+        height: inherit;
+        min-height: 250px;
         min-width: 250px;
     }
 

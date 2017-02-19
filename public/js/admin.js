@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     setInterval(function () {
         updateFahrradKasten();
-    }, 1000);
+    }, 2000);
 
     // autocomplete admin fahrer suche
     $("#q").autocomplete({
@@ -645,19 +645,19 @@ function initFahrradKasten(context, modus, fahrrad, fahrer){
                 '	<div id="fahrername-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrer.name + '</div>' +
                 '</div>' +
                 '<div class="row">' +
-                '	<div class="col-md-6 ">Geschwindigkeit</div>' +
+                '	<div class="col-md-6 ">Geschwindigkeit:</div>' +
                 '	<div id="geschwindigkeit-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.geschwindigkeit + ' km/h</div>' +
                 '</div>' +
                 '<div class="row">' +
-                '	<div class="col-md-6">Gesamtleistung</div>' +
+                '	<div class="col-md-6">Leistung:</div>' +
                 '	<div id="istLeistung-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.istLeistung + '</div>' +
                 '</div>' +
                 '<div class="row">' +
-                '	<div class="col-md-6">Zurückgelegte Strecke</div>' +
+                '	<div class="col-md-6">Zurückgelegte Strecke:</div>' +
                 '	<div id="strecke-anzeige-' + fahrrad.id + '" class="col-md-4">' + fahrrad.strecke + '</div>' +
                 '</div>' +
                 '<div class="row">' +
-                '   <div class="col-md-6">Fahrdauer</div>' +
+                '   <div class="col-md-6">Fahrdauer:</div>' +
                 '   <div id="fahrdauer-anzeige-' + fahrrad.id + '" class="col-md-4">00:00:00</div>' +
                 '</div>' +
                 '<div class="row">' +
