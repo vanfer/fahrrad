@@ -248,7 +248,6 @@ function updateStatistik() {
 function updateHighscore() {
     getDataFromAPI("highscore", false, function (response) {
         if (response) {
-
             try {
                 if (typeof response[0] != "undefined") {
                     $("#hs_name_1").html(response[0][0]);
@@ -264,11 +263,8 @@ function updateHighscore() {
                     $("#hs_name_3").html(response[2][0]);
                     $("#hs_val_3").html(response[2][1] + " Wh");
                 }
-
             } catch (ex) {
             }
-
-
         }
     });
 }
@@ -535,30 +531,26 @@ function updateChartStreckeFahrer() {
 
         if (window.fahrrad[i].modus == 1) {
             if (abschnitt < strecke.points.length) {
+                if (window.strecke_fahrrad_abschnitte.indexOf(i) != -1) {
+                    if (window.strecke_fahrrad_abschnitte[i] != abschnitt) {
+                        // Abschnitt letzter merken
+                        window.strecke_fahrrad_abschnitte[i] = abschnitt;
 
-                //if (window.strecke_fahrrad_abschnitte.indexOf(i) != -1) {
-                //if (window.strecke_fahrrad_abschnitte[i] != abschnitt) {
-                // Abschnitt letzter merken
-                window.strecke_fahrrad_abschnitte[i] = abschnitt;
-
-                // Set Abschnitt to
-                // window.strecke_abschnitte[abschnitt];
-                $.ajax({
-                    url: BASE_PATH + "abschnitt",
-                    type: 'post',
-                    data: {
-                        fahrrad_id: window.fahrrad[i].id,
-                        abschnitt_id: window.strecke_abschnitte[window.strecke_fahrrad_abschnitte[i]]
-                    },
-                    async: true,
-                    success: function (data) {
+                        $.ajax({
+                            url: BASE_PATH + "abschnitt",
+                            type: 'post',
+                            data: {
+                                fahrrad_id: window.fahrrad[i].id,
+                                abschnitt_id: window.strecke_abschnitte[window.strecke_fahrrad_abschnitte[i]]
+                            },
+                            async: true,
+                            success: function (data) {
+                            }
+                        });
                     }
-                });
-                //}
-                //}
+                }
             }
         }
-
 
         if (typeof x_wert != "undefined") {
             window.fahrrad[i].x = parseFloat(x_wert);
