@@ -203,6 +203,22 @@ $(document).ready(function () {
     }, 1000);
 });
 
+// Für die Diagramme Leistung und Gesamtleistung werden jeweils die Farben der aktiven Fahrräder geladen
+function getDiagramColors() {
+    // '#EC87C0' // Pink
+    // '#5D9CEC' // Blau
+    // '#FFCE54' // Gelb
+
+    colors = [];
+    window.fahrrad.map(function (fahrrad) {
+        if(fahrrad.aktiv){
+            colors.push(fahrrad.color);
+        }
+    });
+
+    return colors;
+}
+
 function updateStatistik() {
     getDataFromAPI("statistik", false, function (response) {
         if (response && response.statistik) {
@@ -389,26 +405,29 @@ function updateDetails() {
             resetFahrrad();
 
             $.each(response.data.fahrrad, function (index, fahrrad) {
-                    updateFahrradKasten(fahrrad);
+                updateFahrradKasten(fahrrad);
 
-                    if (fahrrad.fahrer_id != null) {
-                        for (var i = 1; i <= window.fahrrad.length; i++) {
-                            if (fahrrad.id == i) {
-                                window.fahrrad[i-1].modus = fahrrad.modus_id;
-                                window.fahrrad[i-1].abschnitt_id = fahrrad.abschnitt_id;
-                                window.fahrrad[i-1].aktiv = true;
+                if (fahrrad.fahrer_id != null) {
+                    for (var i = 1; i <= window.fahrrad.length; i++) {
+                        if (fahrrad.id == i) {
+                            window.fahrrad[i-1].modus = fahrrad.modus_id;
+                            window.fahrrad[i-1].abschnitt_id = fahrrad.abschnitt_id;
+                            window.fahrrad[i-1].aktiv = true;
 
-                                window.fahrrad_strecke.data[i-1] = fahrrad.strecke;
-                            }
+                            window.fahrrad_strecke.data[i-1] = fahrrad.strecke;
                         }
-
-                        window.leistungData.labels.push(fahrrad.fahrer.name);
-                        window.leistungData.data.push(fahrrad.istLeistung);
-
-                        window.gesamtleistungData.absolute += fahrrad.istLeistung;
                     }
+
+                    window.leistungData.labels.push(fahrrad.fahrer.name);
+                    window.leistungData.data.push(fahrrad.istLeistung);
+
+                    window.gesamtleistungData.absolute += fahrrad.istLeistung;
                 }
-            );
+            });
+
+            var current_colors = getDiagramColors();
+            window.chart_leistung.options.colors        = current_colors;
+            window.chart_gesamtleistung.options.colors  = current_colors;
 
             for (var i = 0; i < window.fahrrad.length; i++) {
                 window.fahrrad[i].gefahrene_strecke = window.fahrrad_strecke.data[i];
