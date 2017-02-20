@@ -1,4 +1,7 @@
 <?php
+/**
+ * Hauptverantwortlich: Enrico Costanzo
+ */
 
 use App\Abschnitt;
 use App\Fahrer;

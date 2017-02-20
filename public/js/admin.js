@@ -1,3 +1,12 @@
+/*
+ * Hauptverantwortlich: Enrico Costanzo
+ * Teilverantwortlich:
+ *      Vanessa Ferrarello
+ *          Dialoge
+ *      Clara Terbeck
+ *          DataTable Initialisierung
+ */
+
 // WICHTIG: IP ändern, oder einfach localhost nehmen!
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
@@ -17,17 +26,6 @@ $(document).ready(function () {
     setInterval(function () {
         updateFahrradKasten();
     }, 2000);
-
-    // autocomplete admin fahrer suche
-    $("#q").autocomplete({
-        source: "search/autocomplete",
-        minLength: 1,
-        select: function (event, ui) {
-            $('#q').val(ui.item.label);
-        },
-        change: function (event, ui) {
-        }
-    });
 
     // Dialoginitialisierungen
     function initDialog(selector, dialogClass, modal, stack) {

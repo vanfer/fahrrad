@@ -1,3 +1,7 @@
+/*
+ * Hauptverantwortlich: Enrico Costanzo
+ */
+
 // Basispfad der API
 var BASE_PATH = "http://localhost/fahrrad/public/";
 
