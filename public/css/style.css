@@ -66,7 +66,6 @@ body{
     height:65px;
 }
 
-
 .panel {
     box-shadow: 5px 5px 5px #999;
 }
@@ -186,7 +185,6 @@ body{
     margin: 0 auto 20px auto;
 }
 
-
 /* ##### Tagesstatistik #####*/
 .tagesstatistik-panel{
     background: #E6E9ED!important;
@@ -252,7 +250,6 @@ body{
     width:40%
 }
 
-
 .highscore-name{
     line-height:40px;
     margin-left:0px;
@@ -261,7 +258,6 @@ body{
 .highscore-wert{
     line-height:40px;
 }
-
 
 /* ##### Batterie #####*/
 .batterie-panel{
@@ -746,16 +742,21 @@ body{
 /* ###################################### Media Queries Zentrales Display ######################################### */
 
 @media screen and (max-width: 1900px) {
-    .highscore-panel{
-        height: inherit;
-        min-height: 250px;
-        min-width: 250px;
-        height:inherit;
+    .batterie-panel{
         min-height:350px;
     }
+    .circle_headline{
+        font-size: 15pt;
+        width:136px;
+    }
+    .highscore-panel{
+        height: inherit;
+        min-height:350px;
+        min-width: 250px;
+    }
     .highscore-medaille-wrapper{
-        width:15%;
         margin-right:2%;
+        width:15%;
     }
     .highscore-name-wrapper{
         width:83%;
@@ -763,7 +764,6 @@ body{
     .highscore-wert-wrapper{
         text-align: left;
         width:83%;
-
     }
     .highscore-wert{
         line-height: 0;
@@ -771,60 +771,12 @@ body{
     .highscore-medaille{
         margin-top:20%;
     }
-    .circle_headline{
-        font-size: 15pt;
-        width:136px;
-    }
-    .batterie-panel{
-        min-height:350px;
-    }
     .tagesstatistik-panel{
         height:350px;
     }
 }
 
 @media screen and (max-width: 1600px)  {
-
-    .panel-title-zd{
-        font-size: 18pt;
-    }
-    .panel-body-zd{
-        font-size: 14pt;
-        padding: 10px 15px 10px 15px;
-
-    }
-    .fahrrad-information-panel{
-        min-height: inherit ! important;
-
-    }
-    .highscore-panel{
-        max-width: 280px;
-        min-height:300px;
-        height:300px;
-        min-width:48% !important;
-    }
-    .highscore-name-wrapper{
-        width:78%;
-        margin-left: 5%;
-    }
-    .highscore-wert-wrapper{
-        width:78%;
-        margin-left: 5%;
-    }
-    .tagesstatistik-panel .panel-body-zd{
-        padding-top:20px;
-    }
-    .tagesstatistik-panel{
-        min-width: 97% !important;
-        margin-bottom:20px !important;
-        height:280px;
-
-    }
-    .tagesstatistik-panel .panel-body-zd div div .col-lg-3{
-        float:left;
-        width:25%;
-        margin:auto;
-    }
     .batterie-panel{
         min-height:300px;
         min-width:47% !important;
@@ -836,25 +788,72 @@ body{
     .circle_value{
         font-size:18pt;
     }
+    .fahrrad-information-panel{
+        min-height: inherit ! important;
+    }
     .highscore-panel .panel-body-zd{
-        width:100%;
         margin:auto;
         padding: 15px 20px 15px 20px;
+        width:100%;
     }
     .highscore-medaille-wrapper{
         width:inherit;
     }
-    .highscore-wert-wrapper{
-        margin-left: 10px;
+    .highscore-panel{
+        height:300px;
+        max-width: 280px;
+        min-height:300px;
+        min-width:48% !important;
     }
     .highscore-name-wrapper{
-        margin-left: 10px;
+        margin-left: 5%;
+        width:78%;
+    }
+    .highscore-wert-wrapper{
+        width:78%;
+        margin-left: 5%;
+    }
+    .panel-title-zd{
+        font-size: 18pt;
+    }
+    .panel-body-zd{
+        font-size: 14pt;
+        padding: 10px 15px 10px 15px;
+    }
+    .tagesstatistik-panel .panel-body-zd{
+        padding-top:20px;
+    }
+    .tagesstatistik-panel{
+        height:280px;
+        min-width: 97% !important;
+        margin-bottom:20px !important;
+    }
+    .tagesstatistik-panel .panel-body-zd div div .col-lg-3{
+        float:left;
+        margin:auto;
+        width:25%;
     }
 }
 
 @media screen and (max-width: 1024px) {
-    .softwaretitel-wrapper .logo img {
-        margin-top: 5%;
+    .batterie-panel{
+        height:300px;
+        min-width:47% !important;
+    }
+    .circle{
+        height: 100px;
+        width: 100px;
+    }
+    .circle_headline{
+        font-size: 14pt;
+        margin-bottom:10px;
+        width: inherit;
+    }
+    .circle_value{
+        font-size:14pt;
+    }
+    .highscore-panel{
+        min-width:47% !important;
     }
     .logo{
         float:left !important;
@@ -875,88 +874,75 @@ body{
         font-size: 12pt;
         padding: 10px 15px 10px 15px;
     }
-    .fahrrad-information-panel{
-
+    .softwaretitel-wrapper .logo img {
+        margin-top: 5%;
     }
     .tagesstatistik-panel{
         min-height: 320px;
-
     }
     .tagesstatistik-panel .panel-body-zd div div .col-lg-3{
         float:left;
-        width:50%;
         padding-left:2%;
-
-    }
-    .circle{
-        height: 100px;
-        width: 100px;
-    }
-    .circle_headline{
-        font-size: 14pt;
-        margin-bottom:10px;
-        width: inherit;
-
-    }
-    .circle_value{
-        font-size:14pt;
-    }
-    .batterie-panel{
-        height:300px;
-        min-width:47% !important;
-    }
-    .highscore-panel{
-        min-width:47% !important;
+        width:50%;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .softwaretitel{
-        display: inline-block;
-        font-size: 16pt;
-    }
-    .panel{
-        min-width: 95% !important;
-        margin-bottom:20px !important;
-
-    }
-    .tagesstatistik-panel{
-        min-height: 320px;
-    }
     .batterie-panel{
         min-height:280px;
-    }
-    .highscore-panel .panel-body-zd{
-        width:100%;
-        margin:auto;
-        padding: 15px 20px 15px 20px;
     }
     .highscore-medaille-wrapper{
         width:inherit;
     }
-    .highscore-wert-wrapper{
-        margin-left: 10px;
-    }
     .highscore-name-wrapper{
         margin-left: 10px;
     }
-
+    .highscore-panel .panel-body-zd{
+        margin:auto;
+        padding: 15px 20px 15px 20px;
+        width:100%;
+    }
+    .highscore-wert-wrapper{
+        margin-left: 10px;
+    }
+    .panel{
+        min-width: 95% !important;
+        margin-bottom:20px !important;
+    }
+    .softwaretitel{
+        display: inline-block;
+        font-size: 16pt;
+    }
+    .tagesstatistik-panel{
+        min-height: 320px;
+    }
 }
 
 @media screen and (max-width: 320px) {
-    .softwaretitel{
-        font-size: 16pt;
+
+    .batterie-panel{
+        height:200px;
+    }
+    .circle{
+        border-width: 3px;
+        height:90px;
+        width:90px;
+    }
+    .circle_headline{
+        font-size: 14pt;
+        margin-bottom:10px;
+        width:100%;
+    }
+    .circle_value{
+        font-size: 14pt;
     }
     .fahrerinformation {
         padding:5px !important;
     }
-    .tagesstatistik-panel .panel-body-zd div div .col-lg-3{
-        padding-left:0px;
-    }
     .highscore-panel .panel-body-zd{
-        width:100%;
         margin:auto;
         padding: 15px 20px 15px 20px;
+        width:100%;
     }
     .highscore-name{
         margin-left: 5%;
@@ -964,23 +950,11 @@ body{
     .highscore-wert{
         margin-left:5%;
     }
-    .circle_headline{
-        font-size: 14pt;
-        margin-bottom:10px;
-        width:100%;
-
+    .softwaretitel{
+        font-size: 16pt;
     }
-    .circle_value{
-        font-size: 14pt;
-    }
-    .circle{
-        border-width: 3px;
-        height:90px;
-        width:90px;
-
-    }
-    .batterie-panel{
-        height:200px;
+    .tagesstatistik-panel .panel-body-zd div div .col-lg-3{
+        padding-left:0px;
     }
 }
 
